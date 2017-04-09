@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Développement on Deux ou trois choses apprises</title>
+    <link>https://jppop.github.io/categories/d%C3%A9veloppement/index.xml</link>
+    <description>Recent content in Développement on Deux ou trois choses apprises</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Powered by [Hugo](//gohugo.io). Theme by [PPOffice](http://github.com/ppoffice).</copyright>
+    <atom:link href="https://jppop.github.io/categories/d%C3%A9veloppement/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Spring config et modularité</title>
+      <link>https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9</link>
+      <pubDate>Mon, 10 Apr 2017 00:56:56 +0200</pubDate>
+      
+      <guid>https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9</guid>
+      <description>&lt;p&gt;Comment éviter que l&amp;rsquo;injection de dépendances deviennent un plat de spaghettis.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;le-problème&#34;&gt;Le problème&lt;/h2&gt;
+
+&lt;p&gt;Il y a quelques temps, je suis intervenu sur un projet Java composé de plusieurs modules Maven.
+Nous développions une application de bureau en JavaFX embarquant une base données synchronisée avec des données serveurs via des API REST.
+Dans ce projet, &lt;strong&gt;Spring Configuration&lt;/strong&gt; est utilisé pour injecter les dépendances.&lt;/p&gt;
+
+&lt;div class=&#34;note&#34;&gt;
+L&#39;injection de dépendances est utilisée dans ce projet pour pouvoir remplacer simplement certaines implémentations par des implementations de tests (&#34;bouchons&#34;, _mockup_). Comme dans la plupart des cas.
+&lt;/div&gt;
+
+&lt;p&gt;Le module Maven de l&amp;rsquo;application principale inclut les autres modules et configure l&amp;rsquo;injection des dépendances. De &lt;em&gt;tous&lt;/em&gt; les modules. Plusieurs fichiers de configuration Spring &lt;code&gt;applicationContext*.xml&lt;/code&gt; ainsi que plusieurs fichiers &lt;code&gt;persistence.xml&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Dans les autres modules, des tests unitaires et d&amp;rsquo;intégration sont implémentés. Là encore, les développeurs ont inclus des fichiers de configuration Spring. Les mêmes ou presque que ceux du module de l&amp;rsquo;application principale.&lt;/p&gt;
+
+&lt;p&gt;Finalement, le projet s&amp;rsquo;est retrouvé avec une multitude de fichiers de configuration : 28 fichiers pour une demi douzaine de modules utilisant l&amp;rsquo;injection.
+Pire, certains développeurs, pour éviter certainement de déclarer à nouveau les injections, ont développé des tests dans des modules qui les déclaraient déjà mais qui n&amp;rsquo;avait rien à voir avec la nature des tests.&lt;/p&gt;
+
+&lt;h2 id=&#34;la-solution&#34;&gt;La solution&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://jppop.github.io/images/dry-soc-low.jpg&#34; alt=&#34;DRY - Separation of Concerns&#34; style=&#34;width: 50%&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Evidemment, il s&amp;rsquo;agit d&amp;rsquo;un problème couvert par les patterns &lt;strong&gt;&lt;em&gt;Don&amp;rsquo;t Repeat Yourself&lt;/em&gt;&lt;/strong&gt; et, surtout, &lt;strong&gt;&lt;em&gt;Separation of concerns&lt;/em&gt;&lt;/strong&gt;. Séparation des responsabilités parce que l&amp;rsquo;injection des dépendances d&amp;rsquo;un module ne devrait être que de sa responsabilité. Un module implémentant une couche d&amp;rsquo;accès aux données, par exemple, a, &lt;em&gt;lui seul&lt;/em&gt;, la responsabilité des bibliothèques qu&amp;rsquo;il utilise.&lt;/p&gt;
+
+&lt;p&gt;La plupart des moteurs d&amp;rsquo;injection (mais pas ceux à injection), Guice, HK2 et Spring Configuration, permettent facilement de résoudre ce problème.
+Pour Spring, il suffit d&amp;rsquo;utiliser la possibilité d&amp;rsquo;importer des définitions.&lt;/p&gt;
+
+&lt;p&gt;Par exemple, dans un module &amp;ldquo;client&amp;rdquo; :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;@Configuration
+@Import({ DataConfig.class, CommonConfig.class, SyncConfig.class })
+public class AppConfig {
+
+  // ... autres définitions propres à l&#39;application
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Les classes de configuration importées, &lt;code&gt;DataConfig&lt;/code&gt;, &lt;code&gt;CommonConfig&lt;/code&gt; et &lt;code&gt;SyncConfig&lt;/code&gt;, proviennent d&amp;rsquo;autres modules (d&amp;rsquo;autres jars). Chacune de ces classes définissent leurs dépendances.
+Et &lt;code&gt;SyncConfig&lt;/code&gt; définit des dépendances (d&amp;rsquo;autres modules du projet) :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;@Configuration
+@Import({ CommonConfig.class, RepositoryConfig.class,  NomadeJaxRsServiceConfig.class })
+@Lazy
+public class SyncConfig {
+  // ...
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Et si on a besoin de remplacer une implémentation dans un module client ? Il suffit de surcharger la défition du bean, avec Spring, c&amp;rsquo;est celui qui parle en dernier qui a raison.&lt;/p&gt;
+
+&lt;p&gt;Par exemple, j&amp;rsquo;ai besoin d&amp;rsquo;une configuration où je veux tous les services sauf la base de données (utilisation de PostgreSQL embarquée de test) et un service qui ne synchronise pas les données modifiées localement (le bean Uploader).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;@Configuration
+@Profile(&amp;quot;mock&amp;quot;)
+@Import({AppConfig.class, EmbeddedPgConfig.class})
+@Lazy
+public class MockConfig {
+
+	@Bean
+	public Uploader uploader() {
+		return new MockUploaderImpl();
+	}
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;La classe de configuration &lt;code&gt;MockConfig&lt;/code&gt; définit tous les services &amp;ldquo;réels&amp;rdquo; en important la classe &lt;code&gt;AppConfig&lt;/code&gt;, importe une classe de configuration, &lt;code&gt;EmbeddedPgConfig&lt;/code&gt; qui va modifier la configuration de PostgreSQL et redéfinit le bean Uploader en le remplaçant par un &lt;em&gt;mock&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;Voila. Le but est atteint :&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;La configuration des dépendances n&amp;rsquo;est pas répétée deux fois.&lt;/li&gt;
+&lt;li&gt;Chaque module définit ses propres dépendances dans une classe qu&amp;rsquo;il expose.&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
