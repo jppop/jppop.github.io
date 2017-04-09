@@ -2,30 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://jppop.github.io/2017/04/08/good-to-great</loc>
-    <lastmod>2017-04-08T11:09:35+02:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://jppop.github.io/</loc>
-    <lastmod>2017-04-08T11:09:35+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/post/</loc>
-    <lastmod>2017-04-08T11:09:35+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/tags/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/tags/test/</loc>
-    <lastmod>2017-04-08T11:09:35+02:00</lastmod>
     <priority>0</priority>
   </url>
   
