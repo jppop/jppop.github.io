@@ -32,7 +32,7 @@
 
 
 
-<meta property="og:updated_time" content="2017-04-10T00:56:56&#43;02:00"/>
+<meta property="og:updated_time" content="2017-09-27T17:18:55&#43;02:00"/>
 
 
 
@@ -178,12 +178,12 @@ ga('send', 'pageview');
     </div>
     <div class="article-info profile-block">
       <div class="article-info-block">
-        2
+        3
         <span>Posts</span>
       </div>
       <div class="article-info-block">
         
-          3
+          4
         
         <span>
             Tags
@@ -258,6 +258,168 @@ ga('send', 'pageview');
 
     <section id="main">
     
+    
+    <article class="article article-type-post" itemscope="" itemprop="blogPost">
+        <div class="article-inner">
+            
+            </a>
+
+            <header class="article-header">
+    <a href="https://jppop.github.io/2017/09/27/chauchemard-en-dev-tu">
+    <h1 class="article-title" itemprop="name">
+        Chauchemard en DEV-TU
+    </h1>
+    </a>
+    <div class="article-meta">
+
+        
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2017-09-27 17:18:55 &#43;0200 CEST" itemprop="datePublished">2017-09-27</time>
+            &middot;
+            1672
+            words
+            &middot;
+            8
+            minute read
+        </div>
+        
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-folder"></i>
+                
+                
+                <a class="article-category-link" href="https://jppop.github.io/categories/internal">internal</a>
+                
+                
+            </div>
+            
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                
+                <a class="article-category-link" href="https://jppop.github.io/tags/dev">dev</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://jppop.github.io/tags/java">java</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://jppop.github.io/tags/spring">spring</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+            <div class="article-entry" itemprop="articleBody">
+                <p>
+                    <br/>
+<div class="note">
+<strong>Avertissement : post à usage interne. Cet article s&rsquo;inscrit dans un contexte particulier, privé.</strong>
+</div></p>
+
+<p>La fabrication du SI Nice pose de nombreux problèmes aux développeurs dès que, et c’est toujours le cas, plusieurs équipes sont impliquées. Par exemple, une équipe pour développer le front, une pour le back. Et on ajoute une troisième, les utilisateurs qui testent le tout. Comment éviter que ces trois-là ne se fassent pas la guerre ?
+Le développement en parallèle n’est pas une nouveauté. Des solutions éprouvées existent. Comment les adapter à la fabrication du SI Nice ? Comment, pratiquement, éviter de se gêner les uns les autres pendant le build et le run ?</p>
+
+<p>
+                    <br>
+                </p>
+                <p class="article-more-link">
+                    <a href="https://jppop.github.io/2017/09/27/chauchemard-en-dev-tu">
+                        Read more
+                    </a>
+                </p>
+            </div>
+            <footer class="article-footer">
+    <a data-url="https://jppop.github.io/2017/09/27/chauchemard-en-dev-tu" data-id="f49a815be462790db14ee5e8e3384264" class="article-share-link">
+        <i class="fa fa-share"></i>
+        Share
+    </a>
+    
+    <a href="https://jppop.github.io/2017/09/27/chauchemard-en-dev-tu#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+
+    <script>
+    (function ($) {
+        
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+    </script>
+</footer>
+
+        </div>
+    </article>
     
     <article class="article article-type-post" itemscope="" itemprop="blogPost">
         <div class="article-inner">
@@ -435,7 +597,7 @@ ga('send', 'pageview');
             <i class="fa fa-calendar"></i>
             <time datetime="2017-04-10 00:56:44 &#43;0200 CEST" itemprop="datePublished">2017-04-10</time>
             &middot;
-            780
+            781
             words
             &middot;
             4
@@ -583,6 +745,32 @@ ga('send', 'pageview');
             
             <li>
                 <div class="item-thumbnail">
+                  <a href="https://jppop.github.io/2017/09/27/chauchemard-en-dev-tu" class="thumbnail">
+                    
+                        <span class="thumbnail-image thumbnail-none"></span>
+                    
+                    </a>
+                </div>
+                <div class="item-inner">
+                    
+                    
+                    <p class="item-category">
+                        
+                        <a class="article-category-link" href="https://jppop.github.io/categories/internal">
+                        internal
+                        </a>
+                    </p>
+                    
+                    
+                    <p class="item-title"><a href="https://jppop.github.io/2017/09/27/chauchemard-en-dev-tu" class="title">Chauchemard en DEV-TU</a></p>
+                    <p class="item-date">
+                        <time datetime="2017-09-27 17:18:55 &#43;0200 CEST" itemprop="datePublished">2017-09-27</time>
+                    </p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="item-thumbnail">
                   <a href="https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9" class="thumbnail">
                     
                         <span style="background-image:url(https://jppop.github.io/images/spring-modularity.png)" alt="Deux ou trois choses apprises" class="thumbnail-image"></span>
@@ -662,6 +850,14 @@ ga('send', 'pageview');
                 <span class="category-list-count">1</span>
             </li>
             
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://jppop.github.io/categories/internal">
+                    internal
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
         </ul>
     </div>
 </div>
@@ -681,10 +877,18 @@ ga('send', 'pageview');
             
             <li class="category-list-item">
                 
+                <a class="category-list-link" href="https://jppop.github.io/tags/dev">
+                    dev
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
                 <a class="category-list-link" href="https://jppop.github.io/tags/java">
                     java
                 </a>
-                <span class="category-list-count">1</span>
+                <span class="category-list-count">2</span>
             </li>
             
             <li class="category-list-item">
@@ -700,7 +904,7 @@ ga('send', 'pageview');
                 <a class="category-list-link" href="https://jppop.github.io/tags/spring">
                     spring
                 </a>
-                <span class="category-list-count">1</span>
+                <span class="category-list-count">2</span>
             </li>
             
         </ul>
