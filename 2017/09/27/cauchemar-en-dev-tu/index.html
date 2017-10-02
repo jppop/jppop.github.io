@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <title>Cauchemar en DEV-TU &middot; Deux ou trois choses apprises</title>
+    <meta name="generator" content="Hugo 0.27.1" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="JpPop">
+    
+      <meta name="description" content="">
+    
+    
+    <link rel="canonical" href="https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/"/>
+    <link rel="icon" href="https://jppop.github.io/favicon.ico">
+    <link rel="apple-touch-icon" href="https://jppop.github.io/apple-touch-icon.png"/>
+    <link rel="stylesheet" href="https://jppop.github.io/css/style.css">
+    <link rel="stylesheet" href="https://jppop.github.io/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://jppop.github.io/css/monokai.css">
+    <link rel="stylesheet" href="https://jppop.github.io/fancybox/jquery.fancybox.css">
+    
+    <link rel="stylesheet" href="https://jppop.github.io/css/custom.css">
+    
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <meta property="og:title" content="Cauchemar en DEV-TU" />
+<meta property="og:description" content="
+
+Avertissement : post à usage interne. Cet article s&rsquo;inscrit dans un contexte particulier, privé.
+
+
+La fabrication du SI Nice pose de nombreux problèmes aux développeurs dès que, et c’est toujours le cas, plusieurs équipes sont impliquées. Par exemple, une équipe pour développer le front, une pour le back. Et on ajoute une troisième, les utilisateurs qui testent le tout. Comment éviter que ces trois-là ne se fassent pas la guerre ?
+Le développement en parallèle n’est pas une nouveauté. Des solutions éprouvées existent. Comment les adapter à la fabrication du SI Nice ? Comment, pratiquement, éviter de se gêner les uns les autres pendant le build et le run ?
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/" />
+
+
+
+<meta property="article:published_time" content="2017-09-27T17:18:55&#43;02:00"/>
+<meta property="article:modified_time" content="2017-09-27T17:18:55&#43;02:00"/>
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+<meta itemprop="name" content="Cauchemar en DEV-TU">
+<meta itemprop="description" content="
+
+Avertissement : post à usage interne. Cet article s&rsquo;inscrit dans un contexte particulier, privé.
+
+
+La fabrication du SI Nice pose de nombreux problèmes aux développeurs dès que, et c’est toujours le cas, plusieurs équipes sont impliquées. Par exemple, une équipe pour développer le front, une pour le back. Et on ajoute une troisième, les utilisateurs qui testent le tout. Comment éviter que ces trois-là ne se fassent pas la guerre ?
+Le développement en parallèle n’est pas une nouveauté. Des solutions éprouvées existent. Comment les adapter à la fabrication du SI Nice ? Comment, pratiquement, éviter de se gêner les uns les autres pendant le build et le run ?
+
+">
+
+
+<meta itemprop="dateModified" content="2017-09-27T17:18:55&#43;02:00" />
+<meta itemprop="wordCount" content="1672">
+
+
+
+<meta itemprop="keywords" content="dev,java,spring," />
+
+    <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Cauchemar en DEV-TU"/>
+<meta name="twitter:description" content="
+
+Avertissement : post à usage interne. Cet article s&rsquo;inscrit dans un contexte particulier, privé.
+
+
+La fabrication du SI Nice pose de nombreux problèmes aux développeurs dès que, et c’est toujours le cas, plusieurs équipes sont impliquées. Par exemple, une équipe pour développer le front, une pour le back. Et on ajoute une troisième, les utilisateurs qui testent le tout. Comment éviter que ces trois-là ne se fassent pas la guerre ?
+Le développement en parallèle n’est pas une nouveauté. Des solutions éprouvées existent. Comment les adapter à la fabrication du SI Nice ? Comment, pratiquement, éviter de se gêner les uns les autres pendant le build et le run ?
+
+"/>
+<meta name="twitter:site" content="@jppop"/>
+
+    
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-97120341-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+
+
+<div id="container">
+	<header id="header">
+  <div id="header-main" class="header-inner">
+    <div class="outer">
+      <a href="https://jppop.github.io/" id="logo">
+          
+          <i class="logo" style="background-image: url('https://jppop.github.io/css/images/what.jpg')"></i>
+          
+          <span class="site-title">Deux ou trois choses apprises</span>
+      </a>
+      <nav id="main-nav">
+          
+          
+          <a class="main-nav-link" href="https://jppop.github.io/">Home</a>
+          
+          
+          
+          
+          
+          
+
+          
+
+          
+          
+          
+          
+          <a class="main-nav-link" href="https://jppop.github.io/tags/">Tags</a>
+          
+          
+          
+          <a class="main-nav-link" href="https://jppop.github.io/categories/">Categories</a>
+          
+          
+      </nav>
+        <nav id="sub-nav">
+          <div class="profile" id="profile-nav">
+            <a id="profile-anchor" href="javascript:;"><img class="avatar" src="https://jppop.github.io/css/images/me.png"><i class="fa fa-caret-down"></i></a>
+          </div>
+        </nav>
+        <div id="search-form-wrap">
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+              <input type="search" name="q" class="search-form-input" placeholder="Search">
+              <button type="submit" class="search-form-submit">
+              </button>
+              <input type="hidden" name="sitesearch" value="https://jppop.github.io/" />
+         </form>
+        </div>
+    </div>
+  </div>
+  <div id="main-nav-mobile" class="header-sub header-inner">
+    <table class="menu outer">
+      <tbody>
+          <tr>
+          
+          
+          <td><a class="main-nav-link" href="https://jppop.github.io/">Home</a></td>
+          
+          
+          
+          
+          
+          
+
+          
+
+          
+          
+          
+          
+          <td><a class="main-nav-link" href="https://jppop.github.io/tags/">Tags</a></td>
+          
+          
+          
+          <td><a class="main-nav-link" href="https://jppop.github.io/categories/">Categories</a></td>
+          
+          
+          <td>
+          <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form">
+          <input type="search" name="q" class="search-form-input" placeholder="Search">
+          <input type="hidden" name="sitesearch" value="https://jppop.github.io/" />
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</header>
+
+   	
+   	<div class="outer">
+   	
+
+    <section id="main">
+    
+    
+<section id="main-article">
+
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+        <div class="article-inner">
+            
+
+            <header class="article-header">
+    <a href="https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/">
+    <h1 class="article-title" itemprop="name">
+        Cauchemar en DEV-TU
+    </h1>
+    </a>
+    <div class="article-meta">
+
+        
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2017-09-27 17:18:55 &#43;0200 CEST" itemprop="datePublished">2017-09-27</time>
+            &middot;
+            1672
+            words
+            &middot;
+            8
+            minute read
+        </div>
+        
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-folder"></i>
+                
+                
+                <a class="article-category-link" href="https://jppop.github.io/categories/internal">internal</a>
+                
+                
+            </div>
+            
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                
+                <a class="article-category-link" href="https://jppop.github.io/tags/dev">dev</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://jppop.github.io/tags/java">java</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://jppop.github.io/tags/spring">spring</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+            <div class="article-entry" itemprop="articleBody">
+                <p><br/>
+<div class="note">
+<strong>Avertissement : post à usage interne. Cet article s&rsquo;inscrit dans un contexte particulier, privé.</strong>
+</div></p>
+
+<p>La fabrication du SI Nice pose de nombreux problèmes aux développeurs dès que, et c’est toujours le cas, plusieurs équipes sont impliquées. Par exemple, une équipe pour développer le front, une pour le back. Et on ajoute une troisième, les utilisateurs qui testent le tout. Comment éviter que ces trois-là ne se fassent pas la guerre ?
+Le développement en parallèle n’est pas une nouveauté. Des solutions éprouvées existent. Comment les adapter à la fabrication du SI Nice ? Comment, pratiquement, éviter de se gêner les uns les autres pendant le build et le run ?</p>
+
+<p></p>
+
+<h2 id="problème">Problème</h2>
+
+<p>Le front consomme des ressources produites par le back. Dans la phase de développement, les ressources évoluent très vite (jusqu’à plusieurs fois par jour) alors que les consommateurs ont besoin de stabilité.
+L’objectif est donc de proposer au front des ressources stables tout en permettant aux développeurs du back de les faire évoluer rapidement. En d’autres termes, il faut que chaque ressource exposée dispose de deux cycles de vie : celui des producteurs et celui des consommateurs.</p>
+
+<h2 id="des-solutions">Des solutions</h2>
+
+<p>Une solution simple pour proposer deux cycles de vie est de disposer de deux environnements de développement : un pour le front et un pour le back. La plateforme de fabrication distingue déjà deux environnements : les branches A et B. Il me semble difficile d’en introduire facilement d’autres. Par contre, il existe déjà un environnement justement prévu pour intégrer un consommateur et un producteur : la plateforme d’intégration, la VMOE.</p>
+
+<p>La première piste consiste donc à utiliser la VMOE pour pousser les ressources en garantissant aux consommateurs une certaine stabilité. Le problème est résolu coté back (il est quand même nécessaire d’adopter les bonnes pratiques de gestions des sources, abordé dans un post ultérieur). Mais il est transféré coté front : comment, en DEV-TU, consommer des ressources de la VMOE ?</p>
+
+<p>Une deuxième piste, permettant à tous de rester dans l’environnement DEV-TU, consiste à mettre à disposition des consommateurs une autre ressource, stable dans le temps : un bouchon. Là encore, il faut résoudre le problème « comment consommer ce bouchon ».</p>
+
+<p>Avant de voir comment résoudre pratiquement l’utilisation d’une ressource différente (bouchon ou VMOE), il est important d’examiner comment les ressources sont consommées par le front (on se limitera au PUC pour l’instant).</p>
+
+<h3 id="consommation-des-services-soa">Consommation des services SOA</h3>
+
+<p>Une UA consomme un service en utilisant un clieant SOAP : les classes Java générées par un plugin Eclipse. Le <em>endpoint</em> du service est configuré dans le fichier de contexte Spring (<code>applicationContext.xml</code>) :</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+	xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;
+	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd&quot;&gt;
+
+	&lt;context:property-placeholder location=&quot;classpath:ua_rechercherdossiersinistre_version.properties&quot; /&gt;
+
+	&lt;bean id=&quot;ua_rechercherdossiersinistre.srvt_rechercherdossiersinistre&quot; class=&quot;x.y.z.ihm.ws.WsConf&quot;&gt;
+		&lt;property name=&quot;serviceInterface&quot; value=&quot;x.y.z.ihm.rechercherdossiersinistre.client.srvtrechercherdossiersinistre.generated.SRVTRechercherDossierSinistre&quot; /&gt;
+		&lt;property name=&quot;wsdlDocumentUrl&quot; value=&quot;WEB-INF/wsdl/ua_rechercherdossiersinistre/SRVT_RechercherDossierSinistre/wsdl/SRVT_RechercherDossierSinistre.wsdl&quot; /&gt;
+		&lt;property name=&quot;namespaceUri&quot; value=&quot;http://ca.cat.fr/df/Assurances/RechercherDossierSinistre/2/SRVT_RechercherDossierSinistre/&quot; /&gt;
+		&lt;property name=&quot;serviceName&quot; value=&quot;SRVT_RechercherDossierSinistrePort&quot; /&gt;
+		&lt;property name=&quot;portName&quot; value=&quot;SRVT_RechercherDossierSinistrePort&quot; /&gt;
+		&lt;property name=&quot;endpointAddress&quot; value=&quot;${ua_rechercherdossiersinistre.service.srvtrechercherdossiersinistre.adresse}&quot; /&gt;
+	&lt;/bean&gt;
+
+&lt;/beans&gt;
+
+</code></pre>
+
+<p>Un proxy est ensuite utilisé pour obtenir le client (le framework ajoute certaines informations liées à la sécurité) :</p>
+
+<pre><code class="language-java">WsConf wsConf = (WsConf) getBean(&quot;ua_rechercherdossiersinistre.srvt_rechercherdossiersinistre&quot;);
+SRVTRechercherDossierSinistre srvtRechercherSini = getWsProxy(wsConf);
+</code></pre>
+
+<p>Jusqu&rsquo;ici tout va bien : l&rsquo;URL du endpoint est externalisée et le client du service est injecté. On peut donc espérer résoudre notre problème en spécifiant une URL particulière ou bien en injectant un autre bean qui simulera l&rsquo;appel au service réel.</p>
+
+<h3 id="consommation-de-services-rest">Consommation de services REST</h3>
+
+<p><em>todo (assez similaire à la consommation de services SOA)</em></p>
+
+<h2 id="consommation-de-services-vmoe-en-dev-tu">Consommation de services VMOE en DEV-TU</h2>
+
+<div class="note">
+<strong>Avertissement :</strong>
+Il n'est pas certain que cette méthode fonctionne (je ne l'ai pas testé jusqu'au bout). Il ne serait pas étonnant que des barrières de sécurité existent et empêchent à un client de DEV-TU d'accéder à une ressource de VMOE. Si tel était le cas, un accès direct au serveur WAS (sans passer par le médiateur) pourrait fonctionner. Sinon, le bouchon restera la seule solution possible.
+</div>
+
+<p>Pour rappel, nous allons faire en sorte que le client pointe sur le serveur de VMOE. Trivialement, on pourrait bien sur coder en dur l&rsquo;URL dans le fichier de properties. Mais cela conviendrait à une règle importante : les sources ne sont pas modifiés en fonction de la cible de déploiement.</p>
+
+<p>Maven et ses profils sont là pour ça.</p>
+
+<p>L&rsquo;URL du endpoint est externalisée dans le fichier <code>ua_rechercherdossiersinistre_version.properties</code> chargé par Spring :</p>
+
+<pre><code>ua_rechercherdossiersinistre.service.srvtrechercherdossiersinistre.adresse=${WSO2_MEDCHost}/${WSO2_adabo}/SRVT_RechercherDossierSinistre_vs_2
+</code></pre>
+
+<p>Les variables WSO2_MEDCHost et WSO2_adabo sont instanciées par les builders PIC selon la cible. Elles référencent le bus WSO2 (le médiateur).
+Pour pouvoir spécifier une URL spécifique pour un service (on ne change pas le bus), on va utiliser une autre variable :</p>
+
+<pre><code>ua_rechercherdossiersinistre.service.srvtrechercherdossiersinistre.adresse=${SRVT_RechercherDossierSinistre.endpoint}
+</code></pre>
+
+<p>Le <code>pom.xml</code> contient la valeur du endpoint :</p>
+
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+
+	...
+	&lt;properties&gt;
+		...
+		&lt;SRVT_RechercherDossierSinistre.endpoint&gt;${WSO2_MEDCHost}/${WSO2_adabo}/SRVT_RechercherDossierSinistre_vs_2&lt;/SRVT_RechercherDossierSinistre.endpoint&gt;			
+	&lt;/properties&gt;
+	...
+&lt;/project&gt;
+</code></pre>
+
+<p><div class="note" style="font-style: italic;">
+<strong>Note : </strong>Pas de magie dans l&rsquo;instanciation des variables. Les builder PIC s&rsquo;appuie sur le plugin Maven Resource pour instancier les variables. L&rsquo;examen des pom parent des projets UA, SRVT le montre clairement.
+</div>
+Du point de vue de l&rsquo;assemblage du projet, nous n&rsquo;avons rien changé. Mais nous avons introduit une variable qui va permettre d&rsquo;adpater l&rsquo;URL à un contexte : déboguage du service en local ou utilisation du service déployé en intégration (VMOE).
+Pour modifier l&rsquo;URL au build, il suffit de fournir l&rsquo;URL au moment de la spécialisation :</p>
+
+<pre><code class="language-shell">mvn pic:specialisation -P specialisation,local -DSRVT_RechercherDossierSinistre.endpoint=&quot;http://locahost:9080/SRVT_RechercherDossierSinistre&quot;
+</code></pre>
+
+<p>On peut préférer ajouter un profil dans le pom :</p>
+
+<pre><code class="language-xml">&lt;profiles&gt;
+	&lt;profile&gt;
+		&lt;id&gt;pre-integration&lt;/id&gt;
+		&lt;activation&gt;
+			&lt;property&gt;
+				&lt;name&gt;env&lt;/name&gt;
+				&lt;value&gt;pre-integration&lt;/value&gt;
+			&lt;/property&gt;
+		&lt;/activation&gt;
+		&lt;properties&gt;
+			&lt;SRVT_RechercherDossierSinistre.endpoint&gt;http://slzuys6wso03.yres.ytech:19204/${WSO2_adabo}/SRVT_RechercherDossierSinistre_vs_2&lt;/SRVT_RechercherDossierSinistre.endpoint&gt;
+		&lt;/properties&gt;
+	&lt;/profile&gt;
+&lt;/profiles&gt;
+</code></pre>
+
+<p>Le host de l&rsquo;URL du service est défini avec le médiateur de l&rsquo;environnement VMOE (le site phisio donne les serveurs de chaque environnement).</p>
+
+<p>Le profil est activé en définissant la propriété <code>env</code> à la valeur pre-integration` :</p>
+
+<pre><code>mvn pic:specialisation -P specialisation,local -Denv=pre-integration
+</code></pre>
+
+<p>Pour le build sur la plateforme DEV-TU effectué par la PIC, il faudra définir la propriété dans la définition de la génération demandée :
+<img src="/images/builder-define-prop.png" alt="Lancement de la génération" /></p>
+
+<h2 id="simulation-des-services">Simulation des services</h2>
+
+<p>L&rsquo;autre moyen de garantir la stabilité du service est de simuler les appels. Nous allons donc remplacer le service réel par un <em>fake</em>.</p>
+
+<p>Le client du service est instancié comme suit :</p>
+
+<pre><code class="language-java">WsConf wsConf = (WsConf) getBean(&quot;ua_rechercherdossiersinistre.srvt_rechercherdossiersinistre&quot;);
+SRVTRechercherDossierSinistre srvtRechercherSini = getWsProxy(wsConf);
+</code></pre>
+
+<p>Le bean wsConf est un POJO définissant les informations du services (le endpoint, la classe d&rsquo;interface). Il sera également utilisé par le service fake.
+L&rsquo;obtention du proxy est plus problématique : la méthode est <em>protected</em> et finale. C&rsquo;est normal. Les concepteurs adressent un message clair aux développeurs : ne surchargez pas cette méthode, en cas de modification, cela risque de ne plus marcher. Soit. On devrait stopper ici mais, un changement impose de faire évoluer le framework ET que le projet intègre cette modification (changement de la version de la dépendance). Donc si la méthode <code>getWsProxy</code> évolue, le projet ne sera impacté que s&rsquo;il le décide. Bref, nous allons contourner l&rsquo;interdiction.</p>
+
+<p>Le code cette méthode est le suivant :</p>
+
+<pre><code class="language-java">protected final &lt;T&gt; T getWsProxy(WsConf wsConf)
+	throws TechnicalException
+{
+	return (T)WsProxyFactory.getWsProxy(wsConf, getContext(), getUaID(), getUaVersion());
+}
+</code></pre>
+
+<p>La méthode getWsProxy de la classe WsProxyFactory est publique. Les arguments qui lui sont passés sont, en plus de la configuration du WS, des informations liées au <em>controler</em> implémenté par l&rsquo;UA.
+Nous pouvons la ré-écrire :</p>
+
+<pre><code class="language-java">package x.y.z.ihm.rechercherdossiersinistre.utils;
+
+import x.y.z.ihm.catalog.tools.Version;
+import x.y.z.ihm.controller.bean.Context;
+import x.y.z.ihm.exception.TechnicalException;
+import x.y.z.ihm.ws.WsConf;
+import x.y.z.ihm.ws.WsProxyFactory;
+
+public class WsProxyManager {
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public &lt;T&gt; T getWsProxy(WsConf wsConf, Context context, String uaId, Version uaVersion) throws TechnicalException {
+		return (T) WsProxyFactory.getWsProxy(wsConf, context, uaId,
+				uaVersion);
+	}
+}
+</code></pre>
+
+<p>et changer l&rsquo;appel :</p>
+
+<pre><code class="language-java">WsProxyManager proxyMgr = (WsProxyManager) getBean(&quot;WsProxyManager&quot;);
+SRVTRechercherDossierSinistre srvtRechercherSini =
+		proxyMgr.getWsProxy(wsConf, getContext(), getUaID(), getUaVersion());
+</code></pre>
+
+<p>Le bean WsProxyManager est déclaré dans le contexte :</p>
+
+<pre><code class="language-xml">&lt;bean id=&quot;WsProxyManager&quot; class=&quot;x.y.z.WsProxyManager&quot; /&gt;
+</code></pre>
+
+<p>Nous avons maintenant la base pour pourvoir fournir un fake service en changeant l&rsquo;implémentation de WsProxyManager :</p>
+
+<pre><code class="language-java">
+public class FakeWsProxyManager {
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public &lt;T&gt; T getWsProxy(WsConf wsConf, Context context, String uaId, Version uaVersion) throws TechnicalException {
+
+		if (wsConf.getServiceInterface().isAssignableFrom(SRVTRechercherDossierSinistre.class)) {
+			return (T) new SRVTRechercherDossierSinistreFake();
+		}
+		return (T) WsProxyFactory.getWsProxy(wsConf, context, uaId,
+				uaVersion);
+	}
+
+}
+</code></pre>
+
+<p>FakeWsProxyManager permet de fournir la classe de simulation pour le client SRVTRechercherDossierSinistre. Cette classe implémente l&rsquo;interface du service et créera des données de la façon la plus appropriée (codées en dur, générées aléatoirement, lues depuis un fichier de configuration, dans une base embarquée, etc.)</p>
+
+<p>Reste à essayer de régler un problème : nos bonnes pratiques voudraient que le build &ldquo;cible&rdquo; (pour la VMOE et au delà) produise les binaires et la configuration prévus pour cette cible. On ne doit pas risquer de déployer en VMOE une UA qui utiliserait un fake.</p>
+
+<p>On pourrait s&rsquo;appuyer les profils Spring (introduits en 3.1). Mais ces derniers sont activables à l&rsquo;exécution. Je ne sais pas s&rsquo;il est possible de faire ajouter une option dans les serveurs WAS en DEV-TU.
+Le build doit donc résoudre ce problème. Les profils maven vont encore une fois nous aider.</p>
+
+<p>Ce que nous devons faire c&rsquo;est changer l&rsquo;implémentation du bean WsProxyManger en fonction du profile choisi.
+Commençons par ajouter dans le pom une propriété référençant la classe d&rsquo;implémentation :</p>
+
+<pre><code class="language-xml">	...
+	&lt;properties&gt;
+		...
+		&lt;SRVT_RechercherDossierSinistre.WsProxyManager&gt;x.y.z.WsProxyManager&lt;/SRVT_RechercherDossierSinistre.WsProxyManager&gt;			
+	&lt;/properties&gt;
+	...
+&lt;/project&gt;
+</code></pre>
+
+<p>Cette variable référence la classe immplémentant le proxy cible.
+On ajoute ensuite un profil qui va permettre de remplacer cette implémentation par un fake :</p>
+
+<pre><code class="language-xml">&lt;profiles&gt;
+	&lt;profile&gt;
+		&lt;id&gt;pre-integration&lt;/id&gt;
+		&lt;activation&gt;
+			&lt;property&gt;
+				&lt;name&gt;env&lt;/name&gt;
+				&lt;value&gt;pre-integration&lt;/value&gt;
+			&lt;/property&gt;
+		&lt;/activation&gt;
+		&lt;properties&gt;
+			...
+			&lt;SRVT_RechercherDossierSinistre.WsProxyManager&gt;x.y.z.FakeWsProxyManager&lt;/SRVT_RechercherDossierSinistre.WsProxyManager&gt;			
+		&lt;/properties&gt;
+	&lt;/profile&gt;
+&lt;/profiles&gt;
+</code></pre>
+
+<p>Le profil est activé en définissant la propriété <code>env</code> à la valeur pre-integration` :</p>
+
+<pre><code>mvn pic:specialisation -P specialisation,local -Denv=pre-integration
+</code></pre>
+
+<p>Voili voila !</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>Nous avons deux solutions pour que les développeurs du front vivent leur vie sans gêner ceux du back. Ils peuvent consommer les services déployés en VMOE ou bien utiliser les fakes.
+La première solution présente l&rsquo;avantage de n&rsquo;avoir rien à développer alors qu&rsquo;il faut développer du code pour simuler les données dans la deuxième solution. Ceci-dit, développer un bouchon devrait être la première chose faite, indépendamment du partage de responsabilité. Cela peut paraitre fastidieux mais cela fait gagner du temps par la suite.
+Reste une question : qui est responsable du bouchon : le front ou le back ? Idéalement, les deux. C&rsquo;est le back qui doit proposer un bouchon mais le front doit pouvoir l&rsquo;adapter à ses <em>use cases</em>. La responsabilité doit être partagée. En plus cela permet aux deux équipes de se parler et de mieux se comprendre.</p>
+            </div>
+            <footer class="article-footer">
+    <a data-url="https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/" data-id="f49a815be462790db14ee5e8e3384264" class="article-share-link">
+        <i class="fa fa-share"></i>
+        Share
+    </a>
+    
+    <a href="https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+
+    <script>
+    (function ($) {
+        
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+    </script>
+</footer>
+
+        </div>
+
+        
+<nav id="article-nav">
+    
+    <a href="https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">Spring config et modularité</div>
+    </a>
+    
+
+    
+</nav>
+
+
+    </article>
+
+    
+    <section id="comments">
+        <div id="disqus_thread">
+            <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jppop" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    </section>
+    
+</section>
+
+
+    </section>
+
+   	
+    	<aside id="sidebar">
+    
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Recents
+    </h3>
+    <div class="widget">
+        <ul id="recent-post">
+            
+            <li>
+                <div class="item-thumbnail">
+                  <a href="https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/" class="thumbnail">
+                    
+                        <span class="thumbnail-image thumbnail-none"></span>
+                    
+                    </a>
+                </div>
+                <div class="item-inner">
+                    
+                    
+                    <p class="item-category">
+                        
+                        <a class="article-category-link" href="https://jppop.github.io/categories/internal">
+                        internal
+                        </a>
+                    </p>
+                    
+                    
+                    <p class="item-title"><a href="https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/" class="title">Cauchemar en DEV-TU</a></p>
+                    <p class="item-date">
+                        <time datetime="2017-09-27 17:18:55 &#43;0200 CEST" itemprop="datePublished">2017-09-27</time>
+                    </p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="item-thumbnail">
+                  <a href="https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9/" class="thumbnail">
+                    
+                        <span style="background-image:url(https://jppop.github.io/images/spring-modularity.png)" alt="Cauchemar en DEV-TU" class="thumbnail-image"></span>
+                    
+                    </a>
+                </div>
+                <div class="item-inner">
+                    
+                    
+                    <p class="item-category">
+                        
+                        <a class="article-category-link" href="https://jppop.github.io/categories/d%C3%A9veloppement">
+                        développement
+                        </a>
+                    </p>
+                    
+                    
+                    <p class="item-title"><a href="https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9/" class="title">Spring config et modularité</a></p>
+                    <p class="item-date">
+                        <time datetime="2017-04-10 00:56:56 &#43;0200 CEST" itemprop="datePublished">2017-04-10</time>
+                    </p>
+                </div>
+            </li>
+            
+            <li>
+                <div class="item-thumbnail">
+                  <a href="https://jppop.github.io/2017/04/10/good-to-great/" class="thumbnail">
+                    
+                        <span style="background-image:url(https://jppop.github.io/images/lechat-megalo.gif)" alt="Cauchemar en DEV-TU" class="thumbnail-image"></span>
+                    
+                    </a>
+                </div>
+                <div class="item-inner">
+                    
+                    
+                    <p class="item-category">
+                        
+                        <a class="article-category-link" href="https://jppop.github.io/categories/id%C3%A9es">
+                        idées
+                        </a>
+                    </p>
+                    
+                    
+                    <p class="item-title"><a href="https://jppop.github.io/2017/04/10/good-to-great/" class="title">good to great</a></p>
+                    <p class="item-date">
+                        <time datetime="2017-04-10 00:56:44 &#43;0200 CEST" itemprop="datePublished">2017-04-10</time>
+                    </p>
+                </div>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://jppop.github.io/categories/d%C3%A9veloppement">
+                    développement
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://jppop.github.io/categories/id%C3%A9es">
+                    idées
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://jppop.github.io/categories/internal">
+                    internal
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+
+    
+
+
+<div class="widget-wrap">
+    <h3 class="widget-title">
+        Tags
+    </h3>
+    <div class="widget">
+        <ul class="category-list">
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://jppop.github.io/tags/dev">
+                    dev
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://jppop.github.io/tags/java">
+                    java
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://jppop.github.io/tags/quality">
+                    quality
+                </a>
+                <span class="category-list-count">1</span>
+            </li>
+            
+            <li class="category-list-item">
+                
+                <a class="category-list-link" href="https://jppop.github.io/tags/spring">
+                    spring
+                </a>
+                <span class="category-list-count">2</span>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+
+
+
+
+    
+
+
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+    
+	</div>
+</div>
+
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017
+      Powered by <a href="//gohugo.io">Hugo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-97120341-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+<script src="https://jppop.github.io/fancybox/jquery.fancybox.pack.js"></script>
+<script src="https://jppop.github.io/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']]}
+  });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+</body>
+</html>

@@ -2,20 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Deux ou trois choses apprises</title>
-    <link>https://jppop.github.io/index.xml</link>
+    <link>https://jppop.github.io/</link>
     <description>Recent content on Deux ou trois choses apprises</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Powered by [Hugo](//gohugo.io). Theme by [PPOffice](http://github.com/ppoffice).</copyright>
     <lastBuildDate>Wed, 27 Sep 2017 17:18:55 +0200</lastBuildDate>
-    <atom:link href="https://jppop.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="https://jppop.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
-      <title>Chauchemard en DEV-TU</title>
-      <link>https://jppop.github.io/2017/09/27/chauchemard-en-dev-tu</link>
+      <title>Cauchemar en DEV-TU</title>
+      <link>https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/</link>
       <pubDate>Wed, 27 Sep 2017 17:18:55 +0200</pubDate>
       
-      <guid>https://jppop.github.io/2017/09/27/chauchemard-en-dev-tu</guid>
+      <guid>https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/</guid>
       <description>&lt;p&gt;&lt;br/&gt;
 &lt;div class=&#34;note&#34;&gt;
 &lt;strong&gt;Avertissement : post à usage interne. Cet article s&amp;rsquo;inscrit dans un contexte particulier, privé.&lt;/strong&gt;
@@ -24,418 +26,28 @@
 &lt;p&gt;La fabrication du SI Nice pose de nombreux problèmes aux développeurs dès que, et c’est toujours le cas, plusieurs équipes sont impliquées. Par exemple, une équipe pour développer le front, une pour le back. Et on ajoute une troisième, les utilisateurs qui testent le tout. Comment éviter que ces trois-là ne se fassent pas la guerre ?
 Le développement en parallèle n’est pas une nouveauté. Des solutions éprouvées existent. Comment les adapter à la fabrication du SI Nice ? Comment, pratiquement, éviter de se gêner les uns les autres pendant le build et le run ?&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;problème&#34;&gt;Problème&lt;/h2&gt;
-
-&lt;p&gt;Le front consomme des ressources produites par le back. Dans la phase de développement, les ressources évoluent très vite (jusqu’à plusieurs fois par jour) alors que les consommateurs ont besoin de stabilité.
-L’objectif est donc de proposer au front des ressources stables tout en permettant aux développeurs du back de les faire évoluer rapidement. En d’autres termes, il faut que chaque ressource exposée dispose de deux cycles de vie : celui des producteurs et celui des consommateurs.&lt;/p&gt;
-
-&lt;h2 id=&#34;des-solutions&#34;&gt;Des solutions&lt;/h2&gt;
-
-&lt;p&gt;Une solution simple pour proposer deux cycles de vie est de disposer de deux environnements de développement : un pour le front et un pour le back. La plateforme de fabrication distingue déjà deux environnements : les branches A et B. Il me semble difficile d’en introduire facilement d’autres. Par contre, il existe déjà un environnement justement prévu pour intégrer un consommateur et un producteur : la plateforme d’intégration, la VMOE.&lt;/p&gt;
-
-&lt;p&gt;La première piste consiste donc à utiliser la VMOE pour pousser les ressources en garantissant aux consommateurs une certaine stabilité. Le problème est résolu coté back (il est quand même nécessaire d’adopter les bonnes pratiques de gestions des sources, abordé dans un post ultérieur). Mais il est transféré coté front : comment, en DEV-TU, consommer des ressources de la VMOE ?&lt;/p&gt;
-
-&lt;p&gt;Une deuxième piste, permettant à tous de rester dans l’environnement DEV-TU, consiste à mettre à disposition des consommateurs une autre ressource, stable dans le temps : un bouchon. Là encore, il faut résoudre le problème « comment consommer ce bouchon ».&lt;/p&gt;
-
-&lt;p&gt;Avant de voir comment résoudre pratiquement l’utilisation d’une ressource différente (bouchon ou VMOE), il est important d’examiner comment les ressources sont consommées par le front (on se limitera au PUC pour l’instant).&lt;/p&gt;
-
-&lt;h3 id=&#34;consommation-des-services-soa&#34;&gt;Consommation des services SOA&lt;/h3&gt;
-
-&lt;p&gt;Une UA consomme un service en utilisant un clieant SOAP : les classes Java générées par un plugin Eclipse. Le &lt;em&gt;endpoint&lt;/em&gt; du service est configuré dans le fichier de contexte Spring (&lt;code&gt;applicationContext.xml&lt;/code&gt;) :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
-&amp;lt;beans xmlns=&amp;quot;http://www.springframework.org/schema/beans&amp;quot;
-	xmlns:context=&amp;quot;http://www.springframework.org/schema/context&amp;quot;
-	xmlns:mvc=&amp;quot;http://www.springframework.org/schema/mvc&amp;quot;
-	xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot;
-	xsi:schemaLocation=&amp;quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd&amp;quot;&amp;gt;
-
-	&amp;lt;context:property-placeholder location=&amp;quot;classpath:ua_rechercherdossiersinistre_version.properties&amp;quot; /&amp;gt;
-
-	&amp;lt;bean id=&amp;quot;ua_rechercherdossiersinistre.srvt_rechercherdossiersinistre&amp;quot; class=&amp;quot;x.y.z.ihm.ws.WsConf&amp;quot;&amp;gt;
-		&amp;lt;property name=&amp;quot;serviceInterface&amp;quot; value=&amp;quot;x.y.z.ihm.rechercherdossiersinistre.client.srvtrechercherdossiersinistre.generated.SRVTRechercherDossierSinistre&amp;quot; /&amp;gt;
-		&amp;lt;property name=&amp;quot;wsdlDocumentUrl&amp;quot; value=&amp;quot;WEB-INF/wsdl/ua_rechercherdossiersinistre/SRVT_RechercherDossierSinistre/wsdl/SRVT_RechercherDossierSinistre.wsdl&amp;quot; /&amp;gt;
-		&amp;lt;property name=&amp;quot;namespaceUri&amp;quot; value=&amp;quot;http://ca.cat.fr/df/Assurances/RechercherDossierSinistre/2/SRVT_RechercherDossierSinistre/&amp;quot; /&amp;gt;
-		&amp;lt;property name=&amp;quot;serviceName&amp;quot; value=&amp;quot;SRVT_RechercherDossierSinistrePort&amp;quot; /&amp;gt;
-		&amp;lt;property name=&amp;quot;portName&amp;quot; value=&amp;quot;SRVT_RechercherDossierSinistrePort&amp;quot; /&amp;gt;
-		&amp;lt;property name=&amp;quot;endpointAddress&amp;quot; value=&amp;quot;${ua_rechercherdossiersinistre.service.srvtrechercherdossiersinistre.adresse}&amp;quot; /&amp;gt;
-	&amp;lt;/bean&amp;gt;
-
-&amp;lt;/beans&amp;gt;
-
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Un proxy est ensuite utilisé pour obtenir le client (le framework ajoute certaines informations liées à la sécurité) :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;WsConf wsConf = (WsConf) getBean(&amp;quot;ua_rechercherdossiersinistre.srvt_rechercherdossiersinistre&amp;quot;);
-SRVTRechercherDossierSinistre srvtRechercherSini = getWsProxy(wsConf);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Jusqu&amp;rsquo;ici tout va bien : l&amp;rsquo;URL du endpoint est externalisée et le client du service est injecté. On peut donc espérer résoudre notre problème en spécifiant une URL particulière ou bien en injectant un autre bean qui simulera l&amp;rsquo;appel au service réel.&lt;/p&gt;
-
-&lt;h3 id=&#34;consommation-de-services-rest&#34;&gt;Consommation de services REST&lt;/h3&gt;
-
-&lt;p&gt;&lt;em&gt;todo (assez similaire à la consommation de services SOA)&lt;/em&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;consommation-de-services-vmoe-en-dev-tu&#34;&gt;Consommation de services VMOE en DEV-TU&lt;/h2&gt;
-
-&lt;div class=&#34;note&#34;&gt;
-&lt;strong&gt;Avertissement :&lt;/strong&gt;
-Il n&#39;est pas certain que cette méthode fonctionne (je ne l&#39;ai pas testé jusqu&#39;au bout). Il ne serait pas étonnant que des barrières de sécurité existent et empêchent à un client de DEV-TU d&#39;accéder à une ressource de VMOE. Si tel était le cas, un accès direct au serveur WAS (sans passer par le médiateur) pourrait fonctionner. Sinon, le bouchon restera la seule solution possible.
-&lt;/div&gt;
-
-&lt;p&gt;Pour rappel, nous allons faire en sorte que le client pointe sur le serveur de VMOE. Trivialement, on pourrait bien sur coder en dur l&amp;rsquo;URL dans le fichier de properties. Mais cela conviendrait à une règle importante : les sources ne sont pas modifiés en fonction de la cible de déploiement.&lt;/p&gt;
-
-&lt;p&gt;Maven et ses profils sont là pour ça.&lt;/p&gt;
-
-&lt;p&gt;L&amp;rsquo;URL du endpoint est externalisée dans le fichier &lt;code&gt;ua_rechercherdossiersinistre_version.properties&lt;/code&gt; chargé par Spring :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ua_rechercherdossiersinistre.service.srvtrechercherdossiersinistre.adresse=${WSO2_MEDCHost}/${WSO2_adabo}/SRVT_RechercherDossierSinistre_vs_2
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Les variables WSO2_MEDCHost et WSO2_adabo sont instanciées par les builders PIC selon la cible. Elles référencent le bus WSO2 (le médiateur).
-Pour pouvoir spécifier une URL spécifique pour un service (on ne change pas le bus), on va utiliser une autre variable :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ua_rechercherdossiersinistre.service.srvtrechercherdossiersinistre.adresse=${SRVT_RechercherDossierSinistre.endpoint}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Le &lt;code&gt;pom.xml&lt;/code&gt; contient la valeur du endpoint :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;
-&amp;lt;project xmlns=&amp;quot;http://maven.apache.org/POM/4.0.0&amp;quot; xmlns:xsi=&amp;quot;http://www.w3.org/2001/XMLSchema-instance&amp;quot;
-	xsi:schemaLocation=&amp;quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&amp;quot;&amp;gt;
-
-	...
-	&amp;lt;properties&amp;gt;
-		...
-		&amp;lt;SRVT_RechercherDossierSinistre.endpoint&amp;gt;${WSO2_MEDCHost}/${WSO2_adabo}/SRVT_RechercherDossierSinistre_vs_2&amp;lt;/SRVT_RechercherDossierSinistre.endpoint&amp;gt;			
-	&amp;lt;/properties&amp;gt;
-	...
-&amp;lt;/project&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;div class=&#34;note&#34; style=&#34;font-style: italic;&#34;&gt;
-&lt;strong&gt;Note : &lt;/strong&gt;Pas de magie dans l&amp;rsquo;instanciation des variables. Les builder PIC s&amp;rsquo;appuie sur le plugin Maven Resource pour instancier les variables. L&amp;rsquo;examen des pom parent des projets UA, SRVT le montre clairement.
-&lt;/div&gt;
-Du point de vue de l&amp;rsquo;assemblage du projet, nous n&amp;rsquo;avons rien changé. Mais nous avons introduit une variable qui va permettre d&amp;rsquo;adpater l&amp;rsquo;URL à un contexte : déboguage du service en local ou utilisation du service déployé en intégration (VMOE).
-Pour modifier l&amp;rsquo;URL au build, il suffit de fournir l&amp;rsquo;URL au moment de la spécialisation :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-shell&#34;&gt;mvn pic:specialisation -P specialisation,local -DSRVT_RechercherDossierSinistre.endpoint=&amp;quot;http://locahost:9080/SRVT_RechercherDossierSinistre&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;On peut préférer ajouter un profil dans le pom :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;profiles&amp;gt;
-	&amp;lt;profile&amp;gt;
-		&amp;lt;id&amp;gt;pre-integration&amp;lt;/id&amp;gt;
-		&amp;lt;activation&amp;gt;
-			&amp;lt;property&amp;gt;
-				&amp;lt;name&amp;gt;env&amp;lt;/name&amp;gt;
-				&amp;lt;value&amp;gt;pre-integration&amp;lt;/value&amp;gt;
-			&amp;lt;/property&amp;gt;
-		&amp;lt;/activation&amp;gt;
-		&amp;lt;properties&amp;gt;
-			&amp;lt;SRVT_RechercherDossierSinistre.endpoint&amp;gt;http://slzuys6wso03.yres.ytech:19204/${WSO2_adabo}/SRVT_RechercherDossierSinistre_vs_2&amp;lt;/SRVT_RechercherDossierSinistre.endpoint&amp;gt;
-		&amp;lt;/properties&amp;gt;
-	&amp;lt;/profile&amp;gt;
-&amp;lt;/profiles&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Le host de l&amp;rsquo;URL du service est défini avec le médiateur de l&amp;rsquo;environnement VMOE (le site phisio donne les serveurs de chaque environnement).&lt;/p&gt;
-
-&lt;p&gt;Le profil est activé en définissant la propriété &lt;code&gt;env&lt;/code&gt; à la valeur pre-integration` :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mvn pic:specialisation -P specialisation,local -Denv=pre-integration
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Pour le build sur la plateforme DEV-TU effectué par la PIC, il faudra définir la propriété dans la définition de la génération demandée :
-&lt;img src=&#34;https://jppop.github.io/images/builder-define-prop.png&#34; alt=&#34;Lancement de la génération&#34; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;simulation-des-services&#34;&gt;Simulation des services&lt;/h2&gt;
-
-&lt;p&gt;L&amp;rsquo;autre moyen de garantir la stabilité du service est de simuler les appels. Nous allons donc remplacer le service réel par un &lt;em&gt;fake&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Le client du service est instancié comme suit :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;WsConf wsConf = (WsConf) getBean(&amp;quot;ua_rechercherdossiersinistre.srvt_rechercherdossiersinistre&amp;quot;);
-SRVTRechercherDossierSinistre srvtRechercherSini = getWsProxy(wsConf);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Le bean wsConf est un POJO définissant les informations du services (le endpoint, la classe d&amp;rsquo;interface). Il sera également utilisé par le service fake.
-L&amp;rsquo;obtention du proxy est plus problématique : la méthode est &lt;em&gt;protected&lt;/em&gt; et finale. C&amp;rsquo;est normal. Les concepteurs adressent un message clair aux développeurs : ne surchargez pas cette méthode, en cas de modification, cela risque de ne plus marcher. Soit. On devrait stopper ici mais, un changement impose de faire évoluer le framework ET que le projet intègre cette modification (changement de la version de la dépendance). Donc si la méthode &lt;code&gt;getWsProxy&lt;/code&gt; évolue, le projet ne sera impacté que s&amp;rsquo;il le décide. Bref, nous allons contourner l&amp;rsquo;interdiction.&lt;/p&gt;
-
-&lt;p&gt;Le code cette méthode est le suivant :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;protected final &amp;lt;T&amp;gt; T getWsProxy(WsConf wsConf)
-	throws TechnicalException
-{
-	return (T)WsProxyFactory.getWsProxy(wsConf, getContext(), getUaID(), getUaVersion());
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;La méthode getWsProxy de la classe WsProxyFactory est publique. Les arguments qui lui sont passés sont, en plus de la configuration du WS, des informations liées au &lt;em&gt;controler&lt;/em&gt; implémenté par l&amp;rsquo;UA.
-Nous pouvons la ré-écrire :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;package x.y.z.ihm.rechercherdossiersinistre.utils;
-
-import x.y.z.ihm.catalog.tools.Version;
-import x.y.z.ihm.controller.bean.Context;
-import x.y.z.ihm.exception.TechnicalException;
-import x.y.z.ihm.ws.WsConf;
-import x.y.z.ihm.ws.WsProxyFactory;
-
-public class WsProxyManager {
-
-	@SuppressWarnings(&amp;quot;unchecked&amp;quot;)
-	public &amp;lt;T&amp;gt; T getWsProxy(WsConf wsConf, Context context, String uaId, Version uaVersion) throws TechnicalException {
-		return (T) WsProxyFactory.getWsProxy(wsConf, context, uaId,
-				uaVersion);
-	}
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;et changer l&amp;rsquo;appel :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;WsProxyManager proxyMgr = (WsProxyManager) getBean(&amp;quot;WsProxyManager&amp;quot;);
-SRVTRechercherDossierSinistre srvtRechercherSini =
-		proxyMgr.getWsProxy(wsConf, getContext(), getUaID(), getUaVersion());
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Le bean WsProxyManager est déclaré dans le contexte :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;bean id=&amp;quot;WsProxyManager&amp;quot; class=&amp;quot;x.y.z.WsProxyManager&amp;quot; /&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Nous avons maintenant la base pour pourvoir fournir un fake service en changeant l&amp;rsquo;implémentation de WsProxyManager :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;
-public class FakeWsProxyManager {
-
-	@SuppressWarnings(&amp;quot;unchecked&amp;quot;)
-	public &amp;lt;T&amp;gt; T getWsProxy(WsConf wsConf, Context context, String uaId, Version uaVersion) throws TechnicalException {
-
-		if (wsConf.getServiceInterface().isAssignableFrom(SRVTRechercherDossierSinistre.class)) {
-			return (T) new SRVTRechercherDossierSinistreFake();
-		}
-		return (T) WsProxyFactory.getWsProxy(wsConf, context, uaId,
-				uaVersion);
-	}
-
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;FakeWsProxyManager permet de fournir la classe de simulation pour le client SRVTRechercherDossierSinistre. Cette classe implémente l&amp;rsquo;interface du service et créera des données de la façon la plus appropriée (codées en dur, générées aléatoirement, lues depuis un fichier de configuration, dans une base embarquée, etc.)&lt;/p&gt;
-
-&lt;p&gt;Reste à essayer de régler un problème : nos bonnes pratiques voudraient que le build &amp;ldquo;cible&amp;rdquo; (pour la VMOE et au delà) produise les binaires et la configuration prévus pour cette cible. On ne doit pas risquer de déployer en VMOE une UA qui utiliserait un fake.&lt;/p&gt;
-
-&lt;p&gt;On pourrait s&amp;rsquo;appuyer les profils Spring (introduits en 3.1). Mais ces derniers sont activables à l&amp;rsquo;exécution. Je ne sais pas s&amp;rsquo;il est possible de faire ajouter une option dans les serveurs WAS en DEV-TU.
-Le build doit donc résoudre ce problème. Les profils maven vont encore une fois nous aider.&lt;/p&gt;
-
-&lt;p&gt;Ce que nous devons faire c&amp;rsquo;est changer l&amp;rsquo;implémentation du bean WsProxyManger en fonction du profile choisi.
-Commençons par ajouter dans le pom une propriété référençant la classe d&amp;rsquo;implémentation :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;	...
-	&amp;lt;properties&amp;gt;
-		...
-		&amp;lt;SRVT_RechercherDossierSinistre.WsProxyManager&amp;gt;x.y.z.WsProxyManager&amp;lt;/SRVT_RechercherDossierSinistre.WsProxyManager&amp;gt;			
-	&amp;lt;/properties&amp;gt;
-	...
-&amp;lt;/project&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Cette variable référence la classe immplémentant le proxy cible.
-On ajoute ensuite un profil qui va permettre de remplacer cette implémentation par un fake :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-xml&#34;&gt;&amp;lt;profiles&amp;gt;
-	&amp;lt;profile&amp;gt;
-		&amp;lt;id&amp;gt;pre-integration&amp;lt;/id&amp;gt;
-		&amp;lt;activation&amp;gt;
-			&amp;lt;property&amp;gt;
-				&amp;lt;name&amp;gt;env&amp;lt;/name&amp;gt;
-				&amp;lt;value&amp;gt;pre-integration&amp;lt;/value&amp;gt;
-			&amp;lt;/property&amp;gt;
-		&amp;lt;/activation&amp;gt;
-		&amp;lt;properties&amp;gt;
-			...
-			&amp;lt;SRVT_RechercherDossierSinistre.WsProxyManager&amp;gt;x.y.z.FakeWsProxyManager&amp;lt;/SRVT_RechercherDossierSinistre.WsProxyManager&amp;gt;			
-		&amp;lt;/properties&amp;gt;
-	&amp;lt;/profile&amp;gt;
-&amp;lt;/profiles&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Le profil est activé en définissant la propriété &lt;code&gt;env&lt;/code&gt; à la valeur pre-integration` :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;mvn pic:specialisation -P specialisation,local -Denv=pre-integration
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Voili voila !&lt;/p&gt;
-
-&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
-
-&lt;p&gt;Nous avons deux solutions pour que les développeurs du front vivent leur vie sans gêner ceux du back. Ils peuvent consommer les services déployés en VMOE ou bien utiliser les fakes.
-La première solution présente l&amp;rsquo;avantage de n&amp;rsquo;avoir rien à développer alors qu&amp;rsquo;il faut développer du code pour simuler les données dans la deuxième solution. Ceci-dit, développer un bouchon devrait être la première chose faite, indépendamment du partage de responsabilité. Cela peut paraitre fastidieux mais cela fait gagner du temps par la suite.
-Reste une question : qui est responsable du bouchon : le front ou le back ? Idéalement, les deux. C&amp;rsquo;est le back qui doit proposer un bouchon mais le front doit pouvoir l&amp;rsquo;adapter à ses &lt;em&gt;use cases&lt;/em&gt;. La responsabilité doit être partagée. En plus cela permet aux deux équipes de se parler et de mieux se comprendre.&lt;/p&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Spring config et modularité</title>
-      <link>https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9</link>
+      <link>https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9/</link>
       <pubDate>Mon, 10 Apr 2017 00:56:56 +0200</pubDate>
       
-      <guid>https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9</guid>
+      <guid>https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9/</guid>
       <description>&lt;p&gt;Comment éviter que l&amp;rsquo;injection de dépendances deviennent un plat de spaghettis.&lt;/p&gt;
 
-&lt;p&gt;&lt;/p&gt;
-
-&lt;h2 id=&#34;le-problème&#34;&gt;Le problème&lt;/h2&gt;
-
-&lt;p&gt;Il y a quelques temps, je suis intervenu sur un projet Java composé de plusieurs modules Maven.
-Nous développions une application de bureau en JavaFX embarquant une base données synchronisée avec des données serveurs via des API REST.
-Dans ce projet, &lt;strong&gt;Spring Configuration&lt;/strong&gt; est utilisé pour injecter les dépendances.&lt;/p&gt;
-
-&lt;div class=&#34;note&#34;&gt;
-L&#39;injection de dépendances est utilisée dans ce projet pour pouvoir remplacer simplement certaines implémentations par des implementations de tests (&#34;bouchons&#34;, _mockup_). Comme dans la plupart des cas.
-&lt;/div&gt;
-
-&lt;p&gt;Le module Maven de l&amp;rsquo;application principale inclut les autres modules et configure l&amp;rsquo;injection des dépendances. De &lt;em&gt;tous&lt;/em&gt; les modules. Plusieurs fichiers de configuration Spring &lt;code&gt;applicationContext*.xml&lt;/code&gt; ainsi que plusieurs fichiers &lt;code&gt;persistence.xml&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Dans les autres modules, des tests unitaires et d&amp;rsquo;intégration sont implémentés. Là encore, les développeurs ont inclus des fichiers de configuration Spring. Les mêmes ou presque que ceux du module de l&amp;rsquo;application principale.&lt;/p&gt;
-
-&lt;p&gt;Finalement, le projet s&amp;rsquo;est retrouvé avec une multitude de fichiers de configuration : 28 fichiers pour une demi douzaine de modules utilisant l&amp;rsquo;injection.
-Pire, certains développeurs, pour éviter certainement de déclarer à nouveau les injections, ont développé des tests dans des modules qui les déclaraient déjà mais qui n&amp;rsquo;avait rien à voir avec la nature des tests.&lt;/p&gt;
-
-&lt;h2 id=&#34;la-solution&#34;&gt;La solution&lt;/h2&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://jppop.github.io/images/dry-soc-low.jpg&#34; alt=&#34;DRY - Separation of Concerns&#34; style=&#34;width: 50%&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;Evidemment, il s&amp;rsquo;agit d&amp;rsquo;un problème couvert par les patterns &lt;strong&gt;&lt;em&gt;Don&amp;rsquo;t Repeat Yourself&lt;/em&gt;&lt;/strong&gt; et, surtout, &lt;strong&gt;&lt;em&gt;Separation of concerns&lt;/em&gt;&lt;/strong&gt;. Séparation des responsabilités parce que l&amp;rsquo;injection des dépendances d&amp;rsquo;un module ne devrait être que de sa responsabilité. Un module implémentant une couche d&amp;rsquo;accès aux données, par exemple, a, &lt;em&gt;lui seul&lt;/em&gt;, la responsabilité des bibliothèques qu&amp;rsquo;il utilise.&lt;/p&gt;
-
-&lt;p&gt;La plupart des moteurs d&amp;rsquo;injection (mais pas ceux à injection), Guice, HK2 et Spring Configuration, permettent facilement de résoudre ce problème.
-Pour Spring, il suffit d&amp;rsquo;utiliser la possibilité d&amp;rsquo;importer des définitions.&lt;/p&gt;
-
-&lt;p&gt;Par exemple, dans un module &amp;ldquo;client&amp;rdquo; :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;@Configuration
-@Import({ DataConfig.class, CommonConfig.class, SyncConfig.class })
-public class AppConfig {
-
-  // ... autres définitions propres à l&#39;application
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Les classes de configuration importées, &lt;code&gt;DataConfig&lt;/code&gt;, &lt;code&gt;CommonConfig&lt;/code&gt; et &lt;code&gt;SyncConfig&lt;/code&gt;, proviennent d&amp;rsquo;autres modules (d&amp;rsquo;autres jars). Chacune de ces classes définissent leurs dépendances.
-Et &lt;code&gt;SyncConfig&lt;/code&gt; définit des dépendances (d&amp;rsquo;autres modules du projet) :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;@Configuration
-@Import({ CommonConfig.class, RepositoryConfig.class,  NomadeJaxRsServiceConfig.class })
-@Lazy
-public class SyncConfig {
-  // ...
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Et si on a besoin de remplacer une implémentation dans un module client ? Il suffit de surcharger la défition du bean, avec Spring, c&amp;rsquo;est celui qui parle en dernier qui a raison.&lt;/p&gt;
-
-&lt;p&gt;Par exemple, j&amp;rsquo;ai besoin d&amp;rsquo;une configuration où je veux tous les services sauf la base de données (utilisation de PostgreSQL embarquée de test) et un service qui ne synchronise pas les données modifiées localement (le bean Uploader).&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-java&#34;&gt;@Configuration
-@Profile(&amp;quot;mock&amp;quot;)
-@Import({AppConfig.class, EmbeddedPgConfig.class})
-@Lazy
-public class MockConfig {
-
-	@Bean
-	public Uploader uploader() {
-		return new MockUploaderImpl();
-	}
-
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;La classe de configuration &lt;code&gt;MockConfig&lt;/code&gt; définit tous les services &amp;ldquo;réels&amp;rdquo; en important la classe &lt;code&gt;AppConfig&lt;/code&gt;, importe une classe de configuration, &lt;code&gt;EmbeddedPgConfig&lt;/code&gt; qui va modifier la configuration de PostgreSQL et redéfinit le bean Uploader en le remplaçant par un &lt;em&gt;mock&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;Voila. Le but est atteint :&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;La configuration des dépendances n&amp;rsquo;est pas répétée deux fois.&lt;/li&gt;
-&lt;li&gt;Chaque module définit ses propres dépendances dans une classe qu&amp;rsquo;il expose.&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>good to great</title>
-      <link>https://jppop.github.io/2017/04/10/good-to-great</link>
+      <link>https://jppop.github.io/2017/04/10/good-to-great/</link>
       <pubDate>Mon, 10 Apr 2017 00:56:44 +0200</pubDate>
       
-      <guid>https://jppop.github.io/2017/04/10/good-to-great</guid>
+      <guid>https://jppop.github.io/2017/04/10/good-to-great/</guid>
       <description>&lt;p&gt;Pourquoi ce blog.
-&lt;/p&gt;
-
-&lt;h1 id=&#34;améliorer-la-qualité&#34;&gt;Améliorer la qualité&lt;/h1&gt;
-
-&lt;p&gt;Cela fait quelques temps que j&amp;rsquo;ai envie d&amp;rsquo;écrire un blog pour partager quelques trucs simples et pratiques essentiellement destinés aux développeurs débutant.
-J&amp;rsquo;ai choisi &lt;a href=&#34;http://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; pour l&amp;rsquo;écrire. Son tuto commence par un post &amp;ldquo;&lt;em&gt;Good to Great&lt;/em&gt;&amp;rdquo; qui est le debut d&amp;rsquo;une critique du livre du même nom. Je n&amp;rsquo;ai pas lu le livre mais il m&amp;rsquo;a donné envie de réfléchir comment, à notre niveau de développeur (le livre semble s&amp;rsquo;adresser à des managers), nous pouvons &lt;strong&gt;améliorer la qualité&lt;/strong&gt; de ce que nous produisons.&lt;/p&gt;
-
-&lt;h2 id=&#34;la-qualité&#34;&gt;La qualité ?&lt;/h2&gt;
-
-&lt;p&gt;La qualité dont il est question ici est bien sûr la qualité logicielle. La &lt;a href=&#34;https://fr.wikipedia.org/wiki/Qualit%C3%A9_logicielle&#34;&gt;page Wikipedia sur le sujet&lt;/a&gt; définit très clairement ce qu&amp;rsquo;est la qualité logicielle et les critères qui permettent de la mesurer (définis par des normes dont ISO/IEC 25010).&lt;/p&gt;
-
-&lt;p&gt;Ce qui peut paraître étrange, c&amp;rsquo;est que la &amp;ldquo;mauvaise&amp;rdquo; qualité logicielle est un problème décrit depuis 1960 :&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Un phénomène de baisse des prix du matériel informatique et d&amp;rsquo;augmentation des prix du logiciel, accompagné d&amp;rsquo;une baisse de la qualité des logiciels a été identifié à la fin des années 1960.&lt;/p&gt;
-
-&lt;p&gt;&amp;ndash; &lt;cite&gt;&lt;a href=&#34;https://fr.wikipedia.org/wiki/Qualit%C3%A9_logicielle&#34;&gt;Wikipedia, La qualité logicielle&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&#34;difficile-de-faire-de-la-qualité&#34;&gt;Difficile de faire de la qualité&lt;/h2&gt;
-
-&lt;p&gt;La mauvaise qualité logicielle est donc un problème connu et assez généralisé. Certains facteurs de ce problème sont inhérents au métier même de la production logicielle : difficulté d&amp;rsquo;exprimer et de comprendre un besoin, impossibilité de ne pas faire d&amp;rsquo;erreur en programmation et de le vérifier, erreur de conception, etc.&lt;/p&gt;
-
-&lt;p&gt;Il existe cependant des moyens (des méthodes de productions logicielle, de contrôle de qualité, &amp;hellip;), connus de tous, qui permettent de diminuer les cas où un logiciel n&amp;rsquo;atteint pas ses objectifs de qualité.&lt;/p&gt;
-
-&lt;p&gt;D&amp;rsquo;autres moyens &amp;ldquo;émergent&amp;rdquo; comme le mouvement &lt;strong&gt;&lt;em&gt;DevOps&lt;/em&gt;&lt;/strong&gt;. Certaines compagnies arrivent, par exemple, à déployer leur logiciel en production très fréquemment. Par exemple &lt;a href=&#34;http://swreflections.blogspot.fr/2013/09/this-is-how-facebook-develops-and.html&#34;&gt;Facebook&lt;/a&gt; s&amp;rsquo;appuie, en autre, sur la revue de code, les tests automatisés et responsabilise fortement chaque développeur pour la mise en production de ce qu&amp;rsquo;il a développé. Le &lt;a href=&#34;https://www.theguardian.com/info/developer-blog/2015/jan/05/delivering-continuous-delivery-continuously&#34;&gt;Guardian&lt;/a&gt; décrit aussi comment ils ont amélioré la qualité de leur site en &amp;ldquo;responsabilisant&amp;rdquo; leurs développeurs.&lt;/p&gt;
-
-&lt;p&gt;Bien. Que ce soit des moyens anciens (tests automatisés, revue de code, intégration continue) ou nouveau, la réalité est quelque peu différente dans nos projets de tous les jours.
-Parce que nous constatons que tous ces &amp;ldquo;principes&amp;rdquo; ne sont souvent pas mis en oeuvre ou que partiellement. Et dans la plupart des cas, par manque de temps.&lt;/p&gt;
-
-&lt;h2 id=&#34;prix-tirés-vers-le-bas&#34;&gt;Prix tirés vers le bas&lt;/h2&gt;
-
-&lt;p&gt;Notre métier, spécialement en SSII, est soumis à une très grande concurrence, nous devons constamment tirer les prix vers le bas.&lt;/p&gt;
-
-&lt;p&gt;A titre d&amp;rsquo;exemple, je prendrai le taux que nous appliquons sur les coûts &amp;ldquo;Développement + Tests&amp;rdquo; pour obtenir le coût total du développement d&amp;rsquo;un projet Ce taux permet d&amp;rsquo;obtenir le coût total en fonction d&amp;rsquo;abaques. Par expérience, nous savons que pour produire 1 jour de code, il faut avoir produit 0,6 jours de spécifications, il faudra produire 0,4 jour de tests d&amp;rsquo;intégration. Et d&amp;rsquo;autres taux encore pour la qualification, le packaging, la VABF, VSR et le pilotage. Bref, ce taux est aujourd&amp;rsquo;hui (dans ma boîte en tout cas) proche de 2. Il y a 15 ans, il était de 3.&lt;/p&gt;
-
-&lt;p&gt;Un gain de productivité de 66% ! Qu&amp;rsquo;est ce qui a pu nous faire gagner autant ? De meilleurs outils ? Des meilleurs frameworks ? Certes, il y eu des amelioration mais jamais dans de telle proportions.&lt;/p&gt;
-
-&lt;p&gt;C&amp;rsquo;est tout simplement que nous avons baissé nos prix de ventes mais en prétendant faire toujours la même qualité.&lt;/p&gt;
-
-&lt;h2 id=&#34;rester-positif&#34;&gt;Rester positif&lt;/h2&gt;
-
-&lt;p&gt;Je pourrais continuer à developper ma vision de ce qu&amp;rsquo;est devenu notre métier mais je préfère réfléchir à comment continuer à nous améliorer (c&amp;rsquo;est moins déprimant). Proposer des idées simples, avec les moyens à notre disposition, pour tenter de produire des logiciels de qualité.&lt;/p&gt;
-
-&lt;h2 id=&#34;quelques-idées-à-développer&#34;&gt;Quelques idées (à développer)&lt;/h2&gt;
-
-&lt;p&gt;Je continuerai à proposer des idées et à les poster ici.&lt;/p&gt;
-
-&lt;p&gt;Des premières pistes :
-&lt;dl&gt;
-  &lt;dt&gt;Développement ouvert&lt;/dt&gt;
-    &lt;dd&gt;
-    Le modèle courant des développements en SSII (et chez nos clients) est le modèle fermé. Je suis convaincu que si nous développions tout ou partie en mode ouvert (&lt;em&gt;Open source&lt;/em&gt;), nous pourrions sans doute améliorer la qualité de nos développements mais, aussi, réduire nos coûts en favorisant la réutilisation. Pour se convaincre, on peut penser aux &lt;a href=&#34;https://github.com/explore&#34;&gt;projets open source&lt;/a&gt; de Google (Guice, Guava et beaucoup d&amp;rsquo;autres), &lt;a href=&#34;https://github.com/Netflix/&#34;&gt;Netflix&lt;/a&gt;, à &lt;a href=&#34;http://graphql.org/&#34;&gt;GraphQL&lt;/a&gt;, &lt;a href=&#34;https://github.com/facebook/react&#34;&gt;React&lt;/a&gt;, &lt;a href=&#34;https://github.com/facebook/react-native&#34;&gt;React Native&lt;/a&gt; de &lt;a href=&#34;https://code.facebook.com/projects/&#34;&gt;Facebook&lt;/a&gt;, &lt;a href=&#34;https://github.com/Microsoft/vscode&#34;&gt;VS Code&lt;/a&gt;, &lt;a href=&#34;https://github.com/Microsoft/TypeScript&#34;&gt;TypeScript&lt;/a&gt; de Microsoft. Et aussi Backbone.js (développé par DocumentCloud, un regroupement de journaux, dont le New York Times).&lt;/br&gt;
-    &lt;em&gt;à developer dans un autre post&lt;/em&gt;
-    &lt;/dd&gt;
-    &lt;dt&gt;Documentation&lt;/dt&gt;
-    &lt;dd&gt;
-        Une piste sur les outils de documentations techniques (MS Word nous fait perdre du temps, AcsiiDoctor permet d&amp;rsquo;être beaucoup plus productif).&lt;/br&gt;
-        &lt;em&gt;à developer dans un autre post&lt;/em&gt;
-    &lt;/dd&gt;
-&lt;/dl&gt;&lt;/p&gt;
-
-&lt;p&gt;To be continued.&lt;/p&gt;</description>
+&lt;/p&gt;</description>
     </item>
     
   </channel>
