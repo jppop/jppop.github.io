@@ -89,7 +89,7 @@ class: center, middle
    Ca fait 3, mais celle la n’a rien à voir, c’est juste pour dire, qu’en fait, il n’y a qu’une règle : .focus-high[anticiper].
 
 .focus[
-Anticiper les erreurs que les Autres vont commettre.
+Anticiper les erreurs que les autres vont commettre.
 Tip : on est tous l&#39;autre de quelqu&#39;un.
 ]
 
@@ -144,6 +144,14 @@ public void order(Pizza pizza, Topping[] toppings, Drink drink) {
  …
 }
 ```
+
+.see-also[
+Quand un développeur (&#34;l&#39;Autre&#34;) utilisera l&#39;auto-complétion de son IDE favoris, il saura que plusieurs
+options existent. Il choisira la signature de méthode qu&#39;il lui convient.
+
+Peu de chance qu&#39;il commande une pizza et une boisson nulle alors qu&#39;il a un méthode de commander
+une pizza seule.
+]
 
 ---
 
@@ -300,6 +308,27 @@ public class Person {
 ```
 
 .focus[Attention! Choisir une valeur par défaut n&#39;est pas anodin. Cela doit être validé par le métier]
+
+---
+
+# Empathie
+
+Les erreurs `NullPointerException` arrivent toujours parce qu&#39;on n&#39;a pas prévu que cela pouvait
+arriver.
+
+Et parfois, parce que le développeur utilise une méthode qu&#39;il croit, de bonne foi, ne pas pouvoir
+retourner une référence nulle.  
+Parfois à cause de son nom (`getCount`).  
+D&#39;autres fois, parce la méthode est mal documentée ou d&#39;utilisation compliquée (mal conçue)...
+
+Le mieux pour éviter les `NullPointerException` est d&#39;anticiper en se mettant à la place du développeur
+qui utilisera votre code.
+
+L&#39;écriture de tests unitaires est la bonne place pour cet exercie d&#39;empathie.
+Vous êtes alors le premier utilisateur de votre code. Si l&#39;écriture du test est difficile,
+peut-être faut-il le revoir.
+
+.focus-high[Bonne anticipation.]
 </textarea>
     <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
     <script>
