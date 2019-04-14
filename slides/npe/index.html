@@ -1,0 +1,309 @@
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway|Roboto+Condensed|Ubuntu+Mono|Yanone+Kaffeesatz|Gloria+Hallelujah"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Yanone Kaffeesatz", sans-serif;
+        font-weight: normal;
+      }
+      .remark-code,
+      .remark-inline-code {
+        font-family: "Ubuntu Mono", sans-serif;
+      }
+      .focus {
+        font-weight: bold;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: 20% larger;
+      }
+      .focus-high {
+        color: darkred;
+        font-weight: bold;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: larger;
+      }
+      .see-also {
+        background: lightgoldenrodyellow;
+        border-radius: 2px;
+        display: inline-block;
+        width: 90%;
+        margin: 4px;
+        padding: 8px;
+        position: relative;
+        font-size: smaller;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      }
+      blockquote {
+        font-style: normal;
+        margin-left: 32px;
+        font-family: "Gloria Hallelujah", cursive;
+        border-left: 4px solid #ccc;
+        padding-left: 8px;
+      }
+      img.center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle
+
+# NullPointerException
+
+## La chasse aux NullPointerExceptions
+
+---
+
+# NullPointerException
+
+&gt; &lt;i&gt;I call it my billion-dollar mistake. It was the invention of the null reference in 1965… This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years.&lt;/i&gt;
+&gt;
+&gt; &lt;cite&gt;Sir Charles Antony Richard Hoare, inventor of the Null Reference&lt;/cite&gt;
+
+&lt;img src=&#34;./npe.png&#34; width=&#34;600px&#34;&gt;
+
+---
+
+# Deux règles seulement
+
+&lt;img src=&#34;./in-out.png&#34; class=&#34;center&#34;&gt;
+
+1. Les autres, c’est l’enfer  
+   .focus[Je contrôle ce que je laisse passer ou pas]
+
+2. Les autres, c’est l’enfer  
+   .focus[Je contrôle les méthodes que j’utilise]
+
+3. Pierre qui roule n’amasse pas mousse  
+   Ca fait 3, mais celle la n’a rien à voir, c’est juste pour dire, qu’en fait, il n’y a qu’une règle : .focus-high[anticiper].
+
+.focus[
+Anticiper les erreurs que les Autres vont commettre.
+Tip : on est tous l&#39;autre de quelqu&#39;un.
+]
+
+---
+
+# Validez, prévenez
+
+### Contrôler
+
+```java
+public void doSomeThing(Thing thing) {
+  Objects.requireNonNull(thing, &#34;You must give something&#34;);
+  …
+}
+```
+
+### Dites le avec des fleurs
+
+```java
+public void doSomeThing(@Nonnull Thing thing) {
+  Objects.requireNonNull(thing, &#34;You must give something&#34;);
+  …
+}
+```
+
+.see-also[
+
+- Objects fait partie du JDK depuis la version 1.7.
+- Autre choix la classe org.springframework.util.Assert (plus complète)
+  ]
+
+---
+
+# C&#39;est en option
+
+### Dites le aussi avec des fleurs
+
+```java
+public void order(Pizza pizza) {
+  order(thing, DEFAULT_TOPPINGS, Drink.NO_DRINK);
+}
+public void order(Pizza pizza, Drink drink) {
+  order(thing, DEFAULT_TOPPINGS, drink);
+}
+public void order(Pizza pizza, Topping[] toppings) {
+  order(thing, toppings, Drink.NO_DRINK);
+}
+public void order(Pizza pizza, Topping[] toppings, Drink drink) {
+ Objects.requireNonNull(pizza, &#34;A pizza is mandatory&#34;);
+ Objects.requireNonNull(toppings, &#34;I need to know toppings you want&#34;);
+ Objects.requireNonNull(drink, &#34;drink is null&#34;);
+ …
+}
+```
+
+---
+
+# Par ici la sortie
+
+### Chose vue
+
+```java
+public Integer getCountOfThing(Kind kindOfThing) {
+  // ...
+}
+ // ... Further
+  count = getCountOfThing(Kind.ThisOne);
+  if (count &gt; 0) {
+  }
+```
+
+Les mots ont un sens. Demandez à quelqu&#39;un combien il a de pièces de 1 euros dans sa poche.
+S&#39;il en a aucune, il répondra 0. Il y a peu de chance qu&#39;il parte en courant.
+
+Il a y donc pas mal de chance que le développeur (l&#39;Autre) qui utilise la méthode `getCountOfThing`
+ne s&#39;attende pas à recevoir une valeur nulle. Il ne testera pas le retour.
+
+---
+
+# Par ici la sortie
+
+### Chose vue aussi
+
+```java
+  BadGuy badGuy = findBadGuyByName(name);
+  badGuy.arms().attach();
+  badGuy.catch();
+  kill(badGuy);
+
+  List&lt;BadGuy&gt; badGuys = findBadGuyByCity(city);
+  kill(badGuys);
+```
+
+Les mots ont un sens. Un &#34;méchant&#34; sans bras ?
+
+---
+
+# Dites le avec des mots
+
+### Soyez explicite
+
+```java
+public Optional&lt;Thing&gt; findThing() {
+  // …
+  if (notFound) {
+    return Optional.empty();
+  }
+  return Optional.of(thing);
+  // ou return Optional.ofNullable(thingThasCanBeNull);
+}
+
+  Optional&lt;Thing&gt; optionalThing = findThing();
+  if (optionalThing.isPresent()) {
+    // do something
+  }
+```
+
+Optional = Je peux retourner `null`. Voilà, toi, l&#39;Autre, t&#39;es prévenu.
+
+---
+
+# Vide, c’est pas rien
+
+### Retournez une collection vide plutot que rien
+
+```java
+public List&lt;Thing&gt; findAll() {
+  List&lt;Thing&gt; things = new ArrayList&lt;&gt;();
+  Thing thing = null;
+  do {
+    thing = findNextThing();
+    if (thing != null) {
+     things.add(thing);
+    }
+  } while (thing != null);
+  return things;
+}
+
+  List&lt;Thing&gt; things = findAll();
+  if (!things.isEmpty()) {
+    // do something
+  }
+```
+
+---
+
+# Evitez les nuls
+
+```java
+public Integer getSomeMustHaveParameter() {
+  Integer param = params.get(&#34;theParam&#34;);
+  return param;
+}
+```
+
+peut devenir
+
+```java
+public class AppParam {
+
+  private Map&lt;String, Integer&gt; params = new HashMap&lt;&gt;();
+
+  public AppParam() {
+    loadParameters();
+  }
+
+  // loads application parameters
+  private void loadParameters() {
+    Integer param = load(&#34;theParam&#34;);
+    if (param == null) {
+      throw new RunTimeException(&#34;Sorry, guy! I really need this parameter&#34;);
+    }
+    params.put(&#34;theParam&#34;, param);
+  }
+  public int getSomeMustHaveParameter() {
+    Integer param = params.get(&#34;theParam&#34;);
+    // cannot be null
+    return param;
+  }
+
+}
+```
+
+---
+
+# Evitez les nuls
+
+### Et pourquoi pas des valeurs par défaut ?
+
+```java
+public Param getSomeMustHaveParameter() {
+  Param param = params.get(&#34;theParam&#34;);
+  if (param == null) {
+    param = Param.DEFAULT;
+  }
+  return param;
+}
+...
+public class Person {
+  private final String lastName;
+  private final String firstName;
+  private final String nickName;
+
+  public Person(String lastName, String firstName, String nickName) {
+    this.lastName = Optional.ofNullable(lastName).orElse(&#34;&#34;);
+  }
+  ...
+```
+
+.focus[Attention! Choisir une valeur par défaut n&#39;est pas anodin. Cela doit être validé par le métier]
+</textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script>
+      var slideshow = remark.create({});
+    </script>
+  </body>
+</html>
