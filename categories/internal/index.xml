@@ -6,10 +6,19 @@
     <description>Recent content in internal on Deux ou trois choses apprises</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 Sep 2017 17:18:55 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 13 Apr 2019 09:00:00 +0200</lastBuildDate>
     
 	<atom:link href="https://jppop.github.io/categories/internal/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Quick Tips</title>
+      <link>https://jppop.github.io/2019/04/13/quick-tips/</link>
+      <pubDate>Sat, 13 Apr 2019 09:00:00 +0200</pubDate>
+      
+      <guid>https://jppop.github.io/2019/04/13/quick-tips/</guid>
+      <description> Présentations  NullPointerException : la chasse aux références nulles Refactoring ou comment ne pas abuser du copier/coller  </description>
+    </item>
     
     <item>
       <title>Cauchemar en DEV-TU</title>
@@ -24,15 +33,6 @@
 
 &lt;p&gt;La fabrication du SI pose de nombreux problèmes aux développeurs dès que, et c’est toujours le cas, plusieurs équipes sont impliquées. Par exemple, une équipe pour développer le front, une pour le back. Et on ajoute une troisième, les utilisateurs qui testent le tout. Comment éviter que ces trois-là ne se fassent pas la guerre ?
 Le développement en parallèle n’est pas une nouveauté. Des solutions éprouvées existent. Comment les adapter à la fabrication du SI ? Comment, pratiquement, éviter de se gêner les uns les autres pendant le build et le run ?&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Quick Tips</title>
-      <link>https://jppop.github.io/1/01/01/quick-tips/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://jppop.github.io/1/01/01/quick-tips/</guid>
-      <description> Présentations  NullPointerException : la chasse aux références nulles Refactoring ou comment ne pas abuser du copier/coller  </description>
     </item>
     
   </channel>

@@ -26,43 +26,48 @@
   
   <url>
     <loc>https://jppop.github.io/categories/</loc>
-    <lastmod>2017-09-27T17:18:55+02:00</lastmod>
+    <lastmod>2019-04-13T09:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/post/</loc>
+    <lastmod>2019-04-13T09:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/2019/04/13/quick-tips/</loc>
+    <lastmod>2019-04-13T09:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/tags/</loc>
+    <lastmod>2019-04-13T09:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/tags/dev/</loc>
+    <lastmod>2019-04-13T09:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/categories/internal/</loc>
+    <lastmod>2019-04-13T09:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/tags/java/</loc>
+    <lastmod>2019-04-13T09:00:00+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/</loc>
     <lastmod>2017-09-27T17:18:55+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/post/</loc>
-    <lastmod>2017-09-27T17:18:55+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/tags/</loc>
-    <lastmod>2017-09-27T17:18:55+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/tags/dev/</loc>
-    <lastmod>2017-09-27T17:18:55+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/categories/internal/</loc>
-    <lastmod>2017-09-27T17:18:55+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/tags/java/</loc>
-    <lastmod>2017-09-27T17:18:55+02:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -97,10 +102,6 @@
     <loc>https://jppop.github.io/tags/quality/</loc>
     <lastmod>2017-04-10T00:56:44+02:00</lastmod>
     <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/1/01/01/quick-tips/</loc>
   </url>
   
 </urlset>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-    <title>idées &middot; Deux ou trois choses apprises</title>
+    <title>Quick Tips &middot; Deux ou trois choses apprises</title>
     <meta name="generator" content="Hugo 0.55.0" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -10,10 +10,7 @@
       <meta name="description" content="">
     
     
-      <link href="https://jppop.github.io/categories/id%C3%A9es/index.xml" rel="alternate" type="application/rss+xml" title="Deux ou trois choses apprises" />
-      <link href="https://jppop.github.io/categories/id%C3%A9es/index.xml" rel="feed" type="application/rss+xml" title="Deux ou trois choses apprises" />
-    
-    <link rel="canonical" href="https://jppop.github.io/categories/id%C3%A9es/"/>
+    <link rel="canonical" href="https://jppop.github.io/2019/04/13/quick-tips/"/>
     <link rel="icon" href="https://jppop.github.io/favicon.ico">
     <link rel="apple-touch-icon" href="https://jppop.github.io/apple-touch-icon.png"/>
     <link rel="stylesheet" href="https://jppop.github.io/css/style.css">
@@ -25,22 +22,30 @@
     
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
-    <meta property="og:title" content="idées" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://jppop.github.io/categories/id%C3%A9es/" />
-
-<meta property="og:updated_time" content="2017-04-10T00:56:44&#43;02:00"/>
+    <meta property="og:title" content="Quick Tips" />
+<meta property="og:description" content=" Présentations  NullPointerException : la chasse aux références nulles Refactoring ou comment ne pas abuser du copier/coller  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://jppop.github.io/2019/04/13/quick-tips/" />
+<meta property="article:published_time" content="2019-04-13T09:00:00&#43;02:00"/>
+<meta property="article:modified_time" content="2019-04-13T09:00:00&#43;02:00"/>
 
     
     
-<meta itemprop="name" content="idées">
-<meta itemprop="description" content="">
+<meta itemprop="name" content="Quick Tips">
+<meta itemprop="description" content=" Présentations  NullPointerException : la chasse aux références nulles Refactoring ou comment ne pas abuser du copier/coller  ">
 
+
+<meta itemprop="datePublished" content="2019-04-13T09:00:00&#43;02:00" />
+<meta itemprop="dateModified" content="2019-04-13T09:00:00&#43;02:00" />
+<meta itemprop="wordCount" content="16">
+
+
+
+<meta itemprop="keywords" content="dev,java," />
 
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="idées"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:title" content="Quick Tips"/>
+<meta name="twitter:description" content=" Présentations  NullPointerException : la chasse aux références nulles Refactoring ou comment ne pas abuser du copier/coller  "/>
 <meta name="twitter:site" content="@jppop"/>
 
     
@@ -161,144 +166,205 @@ if (!doNotTrack) {
    	
    	<div class="outer">
    	
-    	<aside id="profile">
-  <div class="inner profile-inner">
-    <div class="base-info profile-block">
-      
-      <img id="avatar" src="https://jppop.github.io/css/images/me.png">
-      
-      <h2 id="name">JpPop</h2>
-      <h3 id="title">Blogger - Programmer</h3>
-      <span id="location"><i class="fa fa-map-marker"></i>Earth</span>
-      
-          <a id="follow" href="https://github.com/jppop">
-              Follow
-          </a>
-      
-    </div>
-    <div class="article-info profile-block">
-      <div class="article-info-block">
-        4
-        <span>Posts</span>
-      </div>
-      <div class="article-info-block">
-        
-          4
-        
-        <span>
-            Tags
-        </span>
-      </div>
-    </div>
-    <div class="profile-block social-links">
-      <table>
-        <tr>
-          
-<td><a href="//github.com/jppop" target="_blank" title="GitHub"><i class="fa fa-github"></i></a></td>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<td><a href="//twitter.com/jppop" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></td>
-
-
-          <td><a href="https://jppop.github.io/index.xml" target="_blank" title="RSS"><i class="fa fa-rss"></i></a></td>
-        </tr>
-      </table>
-    </div>
-  </div>
-</aside>
-
-    
 
     <section id="main">
     
     
-    
-    
-    <section class="archives-wrap">
-        <div class="archive-category-wrap">
-            <span class="archive-category">idées</span>
-        </div>
-        <div class="archives">
-            
-            
-                <article class="archive-article archive-type-post">
-    <div class="archive-article-inner">
-        <div class="archive-article-thumbnail">
-            
-            <a href="https://jppop.github.io/2017/04/10/good-to-great/" class="thumbnail">
-                <span style="background-image:url(https://jppop.github.io/images/lechat-megalo.gif)" alt="good to great" class="thumbnail-image"></span>
-            </a>
-            
-        </div>
-        <header class="archive-article-header">
-            <h1 itemprop="name">
-            <a class="archive-article-title" href="https://jppop.github.io/2017/04/10/good-to-great/">good to great</a>
-            </h1>
-            <div class="archive-article-date">
-                <i class="fa fa-calendar"></i>
-                <time datetime="2017-04-10 00:56:44 &#43;0200 CEST" itemprop="datePublished">2017-04-10</time>
-            </div>
-        </header>
-    </div>
-</article>
- 
-            
-        </div>
-    </section>
-    <nav id="page-nav">
+<section id="main-article">
 
+    <article id="page-undefined" class="article article-type-page" itemscope="" itemprop="blogPost">
+        <div class="article-inner">
+            
+
+            <header class="article-header">
+    <a href="https://jppop.github.io/2019/04/13/quick-tips/">
+    <h1 class="article-title" itemprop="name">
+        Quick Tips
+    </h1>
+    </a>
+    <div class="article-meta">
+
+        
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2019-04-13 09:00:00 &#43;0200 CEST" itemprop="datePublished">2019-04-13</time>
+            &middot;
+            16
+            words
+            &middot;
+            1
+            minute read
+        </div>
+        
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-folder"></i>
+                
+                
+                <a class="article-category-link" href="https://jppop.github.io/categories/internal">internal</a>
+                
+                
+            </div>
+            
+        
+
+        
+            
+            
+            <div class="article-category">
+                <i class="fa fa-tags"></i>
+                
+                
+                <a class="article-category-link" href="https://jppop.github.io/tags/dev">dev</a>
+                &middot;
+                
+                
+                <a class="article-category-link" href="https://jppop.github.io/tags/java">java</a>
+                
+                
+            </div>
+            
+        
+    </div>
+</header>
+
+            <div class="article-entry" itemprop="articleBody">
+                
+
+<h1 id="présentations">Présentations</h1>
+
+<ul>
+<li><a href="/slides/npe/">NullPointerException</a> : la chasse aux références nulles</li>
+<li><a href="/slides/refactoring/">Refactoring</a> ou comment ne pas abuser du copier/coller</li>
+</ul>
+
+            </div>
+            <footer class="article-footer">
+    <a data-url="https://jppop.github.io/2019/04/13/quick-tips/" data-id="1507cbce4c464a2530efe3e79bb3df0b" class="article-share-link">
+        <i class="fa fa-share"></i>
+        Share
+    </a>
+    
+    <a href="https://jppop.github.io/2019/04/13/quick-tips/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+
+    <script>
+    (function ($) {
+        
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+    </script>
+</footer>
+
+        </div>
+
+        
+<nav id="article-nav">
+    
+    <a href="https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">
+          Older
+      </strong>
+      <div class="article-nav-title">Cauchemar en DEV-TU</div>
+    </a>
+    
+
+    
 </nav>
 
+
+    </article>
+
     
+    <section id="comments">
+        <div id="disqus_thread">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jppop" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+        </div>
+    </section>
+    
+</section>
+
 
     </section>
 
@@ -368,7 +434,7 @@ if (!doNotTrack) {
                 <div class="item-thumbnail">
                   <a href="https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9/" class="thumbnail">
                     
-                        <span style="background-image:url(https://jppop.github.io/images/spring-modularity.png)" alt="idées" class="thumbnail-image"></span>
+                        <span style="background-image:url(https://jppop.github.io/images/spring-modularity.png)" alt="Quick Tips" class="thumbnail-image"></span>
                     
                     </a>
                 </div>
@@ -394,7 +460,7 @@ if (!doNotTrack) {
                 <div class="item-thumbnail">
                   <a href="https://jppop.github.io/2017/04/10/good-to-great/" class="thumbnail">
                     
-                        <span style="background-image:url(https://jppop.github.io/images/lechat-megalo.gif)" alt="idées" class="thumbnail-image"></span>
+                        <span style="background-image:url(https://jppop.github.io/images/lechat-megalo.gif)" alt="Quick Tips" class="thumbnail-image"></span>
                     
                     </a>
                 </div>
