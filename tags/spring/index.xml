@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Spring on Deux ou trois choses apprises</title>
+    <title>spring on Deux ou trois choses apprises</title>
     <link>https://jppop.github.io/tags/spring/</link>
-    <description>Recent content in Spring on Deux ou trois choses apprises</description>
+    <description>Recent content in spring on Deux ou trois choses apprises</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>Powered by [Hugo](//gohugo.io). Theme by [PPOffice](http://github.com/ppoffice).</copyright>
     <lastBuildDate>Wed, 27 Sep 2017 17:18:55 +0200</lastBuildDate>
     
 	<atom:link href="https://jppop.github.io/tags/spring/index.xml" rel="self" type="application/rss+xml" />
@@ -24,9 +23,7 @@
 &lt;/div&gt;&lt;/p&gt;
 
 &lt;p&gt;La fabrication du SI pose de nombreux problèmes aux développeurs dès que, et c’est toujours le cas, plusieurs équipes sont impliquées. Par exemple, une équipe pour développer le front, une pour le back. Et on ajoute une troisième, les utilisateurs qui testent le tout. Comment éviter que ces trois-là ne se fassent pas la guerre ?
-Le développement en parallèle n’est pas une nouveauté. Des solutions éprouvées existent. Comment les adapter à la fabrication du SI ? Comment, pratiquement, éviter de se gêner les uns les autres pendant le build et le run ?&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+Le développement en parallèle n’est pas une nouveauté. Des solutions éprouvées existent. Comment les adapter à la fabrication du SI ? Comment, pratiquement, éviter de se gêner les uns les autres pendant le build et le run ?&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -35,9 +32,7 @@ Le développement en parallèle n’est pas une nouveauté. Des solutions éprou
       <pubDate>Mon, 10 Apr 2017 00:56:56 +0200</pubDate>
       
       <guid>https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9/</guid>
-      <description>&lt;p&gt;Comment éviter que l&amp;rsquo;injection de dépendances deviennent un plat de spaghettis.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+      <description>&lt;p&gt;Comment éviter que l&amp;rsquo;injection de dépendances deviennent un plat de spaghettis.&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -6,13 +6,22 @@
     <description>Recent content in Categories on Deux ou trois choses apprises</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>Powered by [Hugo](//gohugo.io). Theme by [PPOffice](http://github.com/ppoffice).</copyright>
+    <lastBuildDate>Wed, 27 Sep 2017 17:18:55 +0200</lastBuildDate>
     
 	<atom:link href="https://jppop.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Développement</title>
+      <title>internal</title>
+      <link>https://jppop.github.io/categories/internal/</link>
+      <pubDate>Wed, 27 Sep 2017 17:18:55 +0200</pubDate>
+      
+      <guid>https://jppop.github.io/categories/internal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>développement</title>
       <link>https://jppop.github.io/categories/d%C3%A9veloppement/</link>
       <pubDate>Mon, 10 Apr 2017 00:56:56 +0200</pubDate>
       
@@ -21,20 +30,11 @@
     </item>
     
     <item>
-      <title>Idées</title>
+      <title>idées</title>
       <link>https://jppop.github.io/categories/id%C3%A9es/</link>
       <pubDate>Mon, 10 Apr 2017 00:56:44 +0200</pubDate>
       
       <guid>https://jppop.github.io/categories/id%C3%A9es/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Internal</title>
-      <link>https://jppop.github.io/categories/internal/</link>
-      <pubDate>Wed, 27 Sep 2017 17:18:55 +0200</pubDate>
-      
-      <guid>https://jppop.github.io/categories/internal/</guid>
       <description></description>
     </item>
     

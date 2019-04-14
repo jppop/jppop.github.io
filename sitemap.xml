@@ -3,27 +3,41 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://jppop.github.io/</loc>
+    <lastmod>2019-04-13T16:43:02-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/slides/refactoring/</loc>
+    <lastmod>2019-04-13T16:43:02-04:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/slides/</loc>
+    <lastmod>2019-04-13T16:43:02-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/categories/</loc>
+    <lastmod>2017-09-27T17:18:55+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/</loc>
     <lastmod>2017-09-27T17:18:55+02:00</lastmod>
   </url>
   
   <url>
-    <loc>https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9/</loc>
-    <lastmod>2017-04-10T00:56:56+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/2017/04/10/good-to-great/</loc>
-    <lastmod>2017-04-10T00:56:44+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/categories/</loc>
+    <loc>https://jppop.github.io/post/</loc>
+    <lastmod>2017-09-27T17:18:55+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://jppop.github.io/</loc>
+    <loc>https://jppop.github.io/tags/</loc>
     <lastmod>2017-09-27T17:18:55+02:00</lastmod>
     <priority>0</priority>
   </url>
@@ -31,18 +45,6 @@
   <url>
     <loc>https://jppop.github.io/tags/dev/</loc>
     <lastmod>2017-09-27T17:18:55+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/categories/d%C3%A9veloppement/</loc>
-    <lastmod>2017-04-10T00:56:56+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/categories/id%C3%A9es/</loc>
-    <lastmod>2017-04-10T00:56:44+02:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -59,26 +61,36 @@
   </url>
   
   <url>
-    <loc>https://jppop.github.io/post/</loc>
-    <lastmod>2017-09-27T17:18:55+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/tags/quality/</loc>
-    <lastmod>2017-04-10T00:56:44+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://jppop.github.io/tags/spring/</loc>
     <lastmod>2017-09-27T17:18:55+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://jppop.github.io/tags/</loc>
-    <lastmod>2017-09-27T17:18:55+02:00</lastmod>
+    <loc>https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9/</loc>
+    <lastmod>2017-04-10T00:56:56+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/categories/d%C3%A9veloppement/</loc>
+    <lastmod>2017-04-10T00:56:56+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/2017/04/10/good-to-great/</loc>
+    <lastmod>2017-04-10T00:56:44+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/categories/id%C3%A9es/</loc>
+    <lastmod>2017-04-10T00:56:44+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/tags/quality/</loc>
+    <lastmod>2017-04-10T00:56:44+02:00</lastmod>
     <priority>0</priority>
   </url>
   

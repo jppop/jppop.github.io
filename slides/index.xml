@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Slides on Deux ou trois choses apprises</title>
+    <link>https://jppop.github.io/slides/</link>
+    <description>Recent content in Slides on Deux ou trois choses apprises</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 13 Apr 2019 16:43:02 -0400</lastBuildDate>
+    
+	<atom:link href="https://jppop.github.io/slides/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Quick Tips -- Refcatoring </title>
+      <link>https://jppop.github.io/slides/refactoring/</link>
+      <pubDate>Sat, 13 Apr 2019 16:43:02 -0400</pubDate>
+      
+      <guid>https://jppop.github.io/slides/refactoring/</guid>
+      <description>class: center, middle
+Refactoring Ou comment éviter le copier/coller (et faciliter la maintenance) T’es sûr, c’est mal copier/coller ?  .focus[Rapide], sûr (ca marche déjà) Quand utiliser le copier/coller ?  .focus[Forking] .focus[Templating] .focus[Tests, exploration]   &amp;ndash;
+.see-also[ Pour approfondir : Is Copy and Paste Programming Really a Problem?]
+Mais Fais quelque chose si on est on est un jour ouvré :
+public void doSomeThingAt(LocalDate when) { if (isBusinessDay(when)) { // .</description>
+    </item>
+    
+  </channel>
+</rss>

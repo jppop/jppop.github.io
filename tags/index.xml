@@ -6,14 +6,13 @@
     <description>Recent content in Tags on Deux ou trois choses apprises</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>Powered by [Hugo](//gohugo.io). Theme by [PPOffice](http://github.com/ppoffice).</copyright>
     <lastBuildDate>Wed, 27 Sep 2017 17:18:55 +0200</lastBuildDate>
     
 	<atom:link href="https://jppop.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Dev</title>
+      <title>dev</title>
       <link>https://jppop.github.io/tags/dev/</link>
       <pubDate>Wed, 27 Sep 2017 17:18:55 +0200</pubDate>
       
@@ -22,7 +21,7 @@
     </item>
     
     <item>
-      <title>Java</title>
+      <title>java</title>
       <link>https://jppop.github.io/tags/java/</link>
       <pubDate>Wed, 27 Sep 2017 17:18:55 +0200</pubDate>
       
@@ -31,20 +30,20 @@
     </item>
     
     <item>
-      <title>Quality</title>
-      <link>https://jppop.github.io/tags/quality/</link>
-      <pubDate>Mon, 10 Apr 2017 00:56:44 +0200</pubDate>
-      
-      <guid>https://jppop.github.io/tags/quality/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Spring</title>
+      <title>spring</title>
       <link>https://jppop.github.io/tags/spring/</link>
       <pubDate>Wed, 27 Sep 2017 17:18:55 +0200</pubDate>
       
       <guid>https://jppop.github.io/tags/spring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>quality</title>
+      <link>https://jppop.github.io/tags/quality/</link>
+      <pubDate>Mon, 10 Apr 2017 00:56:44 +0200</pubDate>
+      
+      <guid>https://jppop.github.io/tags/quality/</guid>
       <description></description>
     </item>
     

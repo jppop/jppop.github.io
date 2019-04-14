@@ -1,0 +1,497 @@
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway|Roboto+Condensed|Ubuntu+Mono|Yanone+Kaffeesatz"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Yanone Kaffeesatz", sans-serif;
+        font-weight: normal;
+      }
+      .remark-code,
+      .remark-inline-code {
+        font-family: "Ubuntu Mono", sans-serif;
+      }
+      .focus {
+        font-weight: bold;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: 20% larger;
+      }
+      .focus-high {
+        color: darkred;
+        font-weight: bold;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: larger;
+      }
+      .see-also {
+        background: lightgoldenrodyellow;
+        border-radius: 2px;
+        display: inline-block;
+        width: 600px;
+        margin: 4px;
+        padding: 8px;
+        position: relative;
+        font-size: smaller;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle
+
+# Refactoring
+
+## Ou comment éviter le copier/coller (et faciliter la maintenance)
+
+---
+
+# T’es sûr, c’est mal copier/coller ?
+
+- .focus[Rapide], sûr (ca marche déjà)
+- Quand utiliser le copier/coller ?
+  - .focus[Forking]
+  - .focus[Templating]
+  - .focus[Tests, exploration]
+
+--
+
+![alt text](./copy-own.png &#34;Copy and own&#34;)
+
+.see-also[
+Pour approfondir : [Is Copy and Paste Programming Really a Problem?](https://dzone.com/articles/copy-and-paste-programming)]
+
+---
+
+# Mais
+
+Fais quelque chose si on est on est un jour ouvré :
+
+```java
+public void doSomeThingAt(LocalDate when) {
+  if (isBusinessDay(when)) {
+    // ...
+  }
+}
+private boolean isBusinessDay(LocalDate when) {
+  return !isHoliday(when) &amp;&amp; !isWeekEnd(when);
+}
+private boolean isHoliday(LocalDate when) {
+  // ...
+}
+```
+
+---
+
+# Mais
+
+Puis ça aussi mais toujours si on est on est un jour ouvré,
+mais dépêche-toi, on doit livrer demain :
+
+```java
+public void doSomeThingElseAt(LocalDate when) {
+  if (isBusinessDay(when)) {
+    // ...
+  }
+}
+private boolean isBusinessDay(LocalDate when) {
+  return !isHoliday(when) &amp;&amp; !isWeekEnd(when);
+}
+private boolean isHoliday(LocalDate when) {
+  // ...
+}
+```
+
+---
+
+# Mais
+
+J&#39;avais oublié, ça encore :
+
+```java
+public void doSomeThingCompletlyDifferentAt(LocalDate when) {
+  if (isBusinessDay(when)) {
+    // ...
+  }
+}
+private boolean isBusinessDay(LocalDate when) {
+  return !isHoliday(when) &amp;&amp; !isWeekEnd(when);
+}
+private boolean isHoliday(LocalDate when) {
+  // ...
+}
+```
+
+--
+&lt;img src=&#34;./stop.png&#34; alt=&#34;stop&#34; width=&#34;160px&#34;/&gt;
+
+.focus-high[T&#39;aurais pas oublié le 11 novembre ? C&#39;est férié, le 11 novembre.]
+
+---
+
+# Refactoring
+
+- Règle de trois (three strikes and you refactor)
+- Don’t Repeat Yourself
+- Separation of Concern
+- Low coupling
+- Penser global puis local : trop dur
+
+--
+
+- .focus-high[Codez local en pensant global]
+
+--
+.see-also[
+
+&gt; .focus[Design Patterns].
+&gt;
+&gt; &lt;i&gt;In software engineering, a .focus[design pattern] is a general repeatable solution to a commonly occurring problem in software design&lt;/i&gt;
+&gt;
+&gt; -- &lt;cite&gt;[Source Making](https://sourcemaking.com/design_patterns)&lt;/cite&gt;
+
+&gt; De Martin Fowler, un [Catalog of Patterns of Enterprise Application Architecture](https://martinfowler.com/eaaCatalog/)
+&gt; ]
+
+---
+
+# Three strikes and you refactor
+
+Déplacez les méthodes dans une autre classe.
+
+```java
+public class DateUtil {
+  public static boolean isHoliday(LocalDate when) {
+    boolean isHoliday = false;
+    // ...
+    return isHoliday;
+  }
+
+  static boolean isWeekEnd(LocalDate when) {
+    return when.getDayOfWeek().equals(DayOfWeek.SATURDAY)
+      || when.getDayOfWeek().equals(DayOfWeek.SUNDAY);
+  }
+
+  static boolean isBusinessDay(LocalDate when) {
+    return !isHoliday(when) &amp;&amp; !isWeekEnd(when);
+  }
+}
+  // Further ...
+
+  public void doSomeThingAt(LocalDate when) {
+    if (DateUtil.isBusinessDay(when)) {
+      // ...
+    }
+  }
+```
+
+---
+
+layout:true
+name: dry
+
+&lt;img src=&#34;./dry.png&#34; alt=&#34;drawing&#34; width=&#34;400&#34;/&gt;
+
+---
+
+layout:true
+name: none
+
+---
+
+layout:false
+template: dry
+
+At Reynholm Industries ([The IT Crowd](https://fr.wikipedia.org/wiki/The_IT_Crowd), série britanique):
+
+```java
+public class Receptionist {
+  public String divisionFromFloor(int floor) {
+    switch (floor) {
+      case 0:
+        return &#34;reception&#34;;
+      case 1:
+        return &#34;accounting&#34;;
+      case 2:
+        return &#34;marketing&#34;;
+      case -1:
+        return &#34;IT&#34;;
+      default:
+        throw new IllegalArgumentException(&#34;unknown floor&#34;);
+    }
+  }
+  public int floorFromDivision(String division) {
+    if (&#34;reception&#34;.equals(division)) {
+      return 0;
+    } else if (&#34;accounting&#34;.equals(division)) {
+      return 1;
+    } else if (&#34;marketing&#34;.equals(division)) {
+      return 1;
+    } else if (&#34;IT&#34;.equals(division)) {
+      return -1;
+    } else {
+      throw new IllegalArgumentException(&#34;unknown division&#34;);
+    }
+  }
+}
+```
+
+---
+
+template: dry
+
+.focus-high[Dry or wet ?]
+
+--
+
+&lt;dl&gt;
+  &lt;dt&gt;Wet !&lt;/dt&gt;
+  &lt;dd&gt;Les noms des divisions, les étages sont dupliqués.&lt;/dd&gt;
+  &lt;dt&gt;Boggué&lt;/dt&gt;
+  &lt;dd&gt;La compta est annoncée au 1&lt;sup&gt;er&lt;/sup&gt; alors qu&#39;elle est au 2&lt;sup&gt;ème&lt;/sup&gt;.&lt;/dd&gt;
+&lt;/dl&gt;
+
+---
+
+template: dry
+
+Une solution : utiliser des constantes :
+
+```java
+  public static final String ACCOUNTING_DIVISION = &#34;accounting&#34;;
+  public static final int ACCOUNTING_FLOOR = 1;
+
+  //...
+
+  if (ACCOUNTING_DIVISION.equals(division)) {
+
+  }
+```
+
+--
+Mais on duplique aussi l&#39;association division/étage dans 2 méthodes.
+
+Toujours un risque d&#39;erreur.
+
+---
+
+template: dry
+
+```java
+package me.sample.refactoring.dry;
+
+import java.util.Arrays;
+import java.util.Optional;
+
+public class DryReceptionist {
+
+  private static Pair[] divisions = new Pair[]{
+    new Pair&lt;&gt;(0, &#34;reception&#34;),
+    new Pair&lt;&gt;(1, &#34;accounting&#34;),
+    new Pair&lt;&gt;(2, &#34;marketing&#34;),
+    new Pair&lt;&gt;(3, &#34;direction&#34;),
+    new Pair&lt;&gt;(-1, &#34;IT&#34;),
+  };
+
+  public String divisionFromFloor(final int floor) {
+    Optional&lt;Pair&gt; pair = Arrays.stream(divisions)
+      .filter(p -&gt; p.partA().equals(floor))
+      .findFirst();
+    if (pair.isPresent()) {
+      return (String) pair.get().partB();
+    }
+    throw new IllegalArgumentException(&#34;unknown floor&#34;);
+  }
+
+  public int floorFromDivision(String division) {
+    Optional&lt;Pair&gt; pair = Arrays.stream(divisions)
+      .filter(p -&gt; p.partB().equals(division))
+      .findFirst();
+    if (pair.isPresent()) {
+      return (int) pair.get().partA();
+    }
+    throw new IllegalArgumentException(&#34;unknown floor&#34;);
+  }
+```
+
+---
+
+template: dry
+
+```java
+  public static class Pair&lt;A, B&gt; {
+    private final A partA;
+    private final B partB;
+
+    public Pair(A partA, B partB) {
+      this.partA = partA;
+      this.partB = partB;
+    }
+
+    public A partA() {
+      return partA;
+    }
+    public B partB() {
+      return partB;
+    }
+  }
+}
+```
+
+---
+
+template: none
+
+# Abstraction
+
+Jeff Bolos le lance dans la vente en ligne de livres. Il automatise l&#39;emballage.
+
+```java
+public class Book {
+
+  private String title;
+  // constructors, getters, setters omitted for brevity
+  public Package pack() {
+    return new Package(this);
+  }
+}
+```
+
+Ca marche bien, il vend aussi des lave-linges.
+
+```java
+public class Washer {
+
+  private String brand;
+  // constructors, getters, setters omitted for brevity
+  public Package pack() {
+    return new Package(this);
+  }
+}
+```
+
+---
+
+# Abstraction : héritage
+
+Jeff Bolos se souvient qu&#39;il a hérité :
+
+```java
+public abstract class Item {
+
+  public Package pack() {
+    return new Package(this);
+  }
+}
+
+// ...
+
+public class Book extends Item {
+}
+
+public class Washer extends Item {
+}
+```
+
+--
+
+Oui mais,
+
+- Si je dois vendre des objets fournis par des partenaires et qui sont déjà emballés ?
+- Ce serait pas plus efficace de faire l&#39;emballage par un service dédié ?
+
+---
+
+# Abstraction : les interfaces à la barre
+
+```java
+public class PackageService {
+
+  public boolean addItem(Object item) {
+    if (Measurable.class.isAssignableFrom(item.getClass())) {
+      return addItem((Measurable)item);
+    } else if (Packageable.class.isAssignableFrom(item.getClass())) {
+      return addItem((Packageable)item);
+    }
+    return false;
+  }
+
+  public boolean addItem(Measurable item) {
+    int weight = item.getWeight();
+    if (weight &lt; 2) {
+      packageItem(item);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public boolean addItem(Packageable item) {
+    return true;
+  }
+
+  private void packageItem(Measurable item) {
+
+  }
+}
+```
+
+---
+
+# Abstraction : les interfaces à la barre
+
+```java
+public class Book extends Measurable {
+
+}
+public class Washer extends Measurable {
+
+}
+```
+
+.see-also[
+Les interfaces sont très largement utilisés dans le JDK : Serializable, Comparable, Runnable, ...
+]
+
+---
+
+# Abstraction : le décorateur peut nous aider
+
+Une classe qui ne supporte pas exactement ce dont nous avons besoin :
+
+```java
+public class MeasurableWeirdItem implements Measurable {
+
+  private final WeirdItem item;
+
+  @Override
+  public int getWeight() {
+    return item.getPieces() * 200; // each piece weighs 200g
+  }
+}
+```
+
+---
+
+# Pensez global, codez local
+
+- Découpez une méthode &#34;longue&#34; (pas de scroll) en plusieurs.
+- Si une classe gère trop de concepts, divisez là.
+- Préférez les variables locales aux champs de classe.
+
+Mais surtout :
+
+.focus-high[Une classe, une méthode, une variable a une seule responsabilité].
+</textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js"></script>
+    <script>
+      var slideshow = remark.create({});
+    </script>
+  </body>
+</html>

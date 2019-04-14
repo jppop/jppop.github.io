@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Idées on Deux ou trois choses apprises</title>
+    <title>idées on Deux ou trois choses apprises</title>
     <link>https://jppop.github.io/categories/id%C3%A9es/</link>
-    <description>Recent content in Idées on Deux ou trois choses apprises</description>
+    <description>Recent content in idées on Deux ou trois choses apprises</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>Powered by [Hugo](//gohugo.io). Theme by [PPOffice](http://github.com/ppoffice).</copyright>
     <lastBuildDate>Mon, 10 Apr 2017 00:56:44 +0200</lastBuildDate>
     
 	<atom:link href="https://jppop.github.io/categories/id%C3%A9es/index.xml" rel="self" type="application/rss+xml" />
@@ -18,8 +17,7 @@
       <pubDate>Mon, 10 Apr 2017 00:56:44 +0200</pubDate>
       
       <guid>https://jppop.github.io/2017/04/10/good-to-great/</guid>
-      <description>&lt;p&gt;Pourquoi ce blog.
-&lt;/p&gt;</description>
+      <description>&lt;p&gt;Pourquoi ce blog.&lt;/p&gt;</description>
     </item>
     
   </channel>

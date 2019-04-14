@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Dev on Deux ou trois choses apprises</title>
+    <title>dev on Deux ou trois choses apprises</title>
     <link>https://jppop.github.io/tags/dev/</link>
-    <description>Recent content in Dev on Deux ou trois choses apprises</description>
+    <description>Recent content in dev on Deux ou trois choses apprises</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>Powered by [Hugo](//gohugo.io). Theme by [PPOffice](http://github.com/ppoffice).</copyright>
     <lastBuildDate>Wed, 27 Sep 2017 17:18:55 +0200</lastBuildDate>
     
 	<atom:link href="https://jppop.github.io/tags/dev/index.xml" rel="self" type="application/rss+xml" />
@@ -24,9 +23,7 @@
 &lt;/div&gt;&lt;/p&gt;
 
 &lt;p&gt;La fabrication du SI pose de nombreux problèmes aux développeurs dès que, et c’est toujours le cas, plusieurs équipes sont impliquées. Par exemple, une équipe pour développer le front, une pour le back. Et on ajoute une troisième, les utilisateurs qui testent le tout. Comment éviter que ces trois-là ne se fassent pas la guerre ?
-Le développement en parallèle n’est pas une nouveauté. Des solutions éprouvées existent. Comment les adapter à la fabrication du SI ? Comment, pratiquement, éviter de se gêner les uns les autres pendant le build et le run ?&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+Le développement en parallèle n’est pas une nouveauté. Des solutions éprouvées existent. Comment les adapter à la fabrication du SI ? Comment, pratiquement, éviter de se gêner les uns les autres pendant le build et le run ?&lt;/p&gt;</description>
     </item>
     
   </channel>
