@@ -37,12 +37,25 @@ public void doSomeThingAt(LocalDate when) { if (isBusinessDay(when)) { // .</des
     </item>
     
     <item>
+      <title>Quick Tips -- Spring Batch Unit Testing</title>
+      <link>https://jppop.github.io/slides/spring-batch-test/</link>
+      <pubDate>Sat, 13 Apr 2019 16:43:02 -0400</pubDate>
+      
+      <guid>https://jppop.github.io/slides/spring-batch-test/</guid>
+      <description>class: center, middle
+Spring Batch Unit Testing Tester les applications basées sur Spring Batch Le batch Basé sur le guide Creating a Batch Service.
+@Bean public Step step1(JdbcBatchItemWriter&amp;lt;Person&amp;gt; writer) { return stepBuilderFactory.get(&amp;quot;step1&amp;quot;) .&amp;lt;Person, Person&amp;gt; chunk(10) .reader(reader()) .processor(processor()) .writer(writer) .build(); }  Et quelques &amp;ldquo;vrais&amp;rdquo; exemples.
+Nos outils La batch est testé avec :
+ JUnit, Mockito, AssertJ Le JUnit runner .focus[SpringJUnit4ClassRunner] .focus-high[spring-batch-test]  .note[ La documentation en ligne : Spring Batch Unit Testing ]</description>
+    </item>
+    
+    <item>
       <title>Quick Tips</title>
       <link>https://jppop.github.io/2019/04/13/quick-tips/</link>
       <pubDate>Sat, 13 Apr 2019 09:00:00 +0200</pubDate>
       
       <guid>https://jppop.github.io/2019/04/13/quick-tips/</guid>
-      <description> Présentations  NullPointerException : la chasse aux références nulles Refactoring ou comment ne pas abuser du copier/coller  </description>
+      <description> Présentations  NullPointerException : la chasse aux références nulles Refactoring ou comment ne pas abuser du copier/coller Spring Batch Tests ou comment automatiser les tests de jobs Spring Batch  </description>
     </item>
     
     <item>

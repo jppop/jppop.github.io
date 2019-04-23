@@ -1,0 +1,295 @@
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway|Roboto+Condensed|Ubuntu+Mono|Yanone+Kaffeesatz|Gloria+Hallelujah"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Yanone Kaffeesatz", sans-serif;
+        font-weight: normal;
+      }
+      .remark-code,
+      .remark-inline-code {
+        font-family: "Ubuntu Mono", monospace;
+      }
+      .note {
+        font-size: 16px;
+      }
+      .focus {
+        font-weight: bold;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: 20% larger;
+      }
+      .focus-high {
+        color: darkred;
+        font-weight: bold;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: larger;
+      }
+      .see-also {
+        background: lightgoldenrodyellow;
+        border-radius: 2px;
+        display: inline-block;
+        width: 90%;
+        margin: 4px;
+        padding: 8px;
+        position: relative;
+        font-size: smaller;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      }
+      blockquote {
+        font-style: normal;
+        margin-left: 32px;
+        font-family: "Gloria Hallelujah", cursive;
+        border-left: 4px solid #ccc;
+        padding-left: 8px;
+      }
+      img.center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle
+
+# Spring Batch Unit Testing
+
+## Tester les applications basées sur Spring Batch
+
+---
+
+# Le batch
+
+Basé sur le guide [Creating a Batch Service](https://spring.io/guides/gs/batch-processing/).
+
+```java
+    @Bean
+    public Step step1(JdbcBatchItemWriter&lt;Person&gt; writer) {
+        return stepBuilderFactory.get(&#34;step1&#34;)
+            .&lt;Person, Person&gt; chunk(10)
+            .reader(reader())
+            .processor(processor())
+            .writer(writer)
+            .build();
+    }
+```
+
+Et quelques &#34;vrais&#34; exemples.
+
+---
+
+# Nos outils
+
+La batch est testé avec :
+
+- JUnit, Mockito, AssertJ
+- Le _JUnit runner_ .focus[SpringJUnit4ClassRunner]
+- .focus-high[spring-batch-test]
+
+.note[
+La documentation en ligne :
+[Spring Batch Unit Testing](https://docs.spring.io/spring-batch/4.0.x/reference/html/testing.html)
+]
+
+---
+
+# Test unitaire de la phase _read_
+
+```java
+  private List&lt;Person&gt; readAll(File inputFile) throws Exception {
+
+    // build step execution context
+    StepExecution stepExecution = MetaDataInstanceFactory.createStepExecution();
+    stepExecution.getExecutionContext().putString(&#34;input.file&#34;, inputFile.getAbsolutePath());
+
+    return StepScopeTestUtils.doInStepScope(
+      stepExecution,
+      () -&gt; {
+
+        // init reader
+        reader.open(stepExecution.getExecutionContext());
+
+        List&lt;Person&gt; items = new ArrayList&lt;&gt;();
+
+        Person person;
+        while ((person = reader.read()) != null) {
+          items.add(person);
+        }
+        return items;
+      });
+  }
+```
+
+---
+
+# Pas à pas
+
+### Créez la classe de test
+
+```java
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = {BatchConfiguration.class, TestConfig.class})
+public class ReaderTest {
+}
+```
+
+`BatchConfiguration` définit le job ; `TestConfig` définit des ressources pour Spring Batch.
+
+--
+
+### Préparez le test (_Arrange_)
+
+```java
+    // Arrange
+    File dataFile = folder.newFile(&#34;data.csv&#34;);
+
+    CsvFaker&lt;Person&gt; csvFaker = new CsvFaker&lt;&gt;(Person.class);
+    csvFaker
+      .with(&#34;001&#34;, personOf(&#34;john&#34;, &#34;doe&#34;, 23))
+      .build(dataFile);
+
+```
+
+---
+
+# Pas à pas
+
+### Exécuter la méthode `read` (_Act_)
+
+```java
+    // Act
+    List&lt;Person&gt; people = readAll(dataFile);
+```
+
+### Vérifiez (_Assert_)
+
+```java
+    // Assert
+    assertThat(people).hasSize(1);
+    assertThat(people)
+      .extracting(&#34;firstName&#34;, &#34;lastName&#34;, &#34;age&#34;)
+      .contains(tuple(&#34;john&#34;, &#34;doe&#34;, 23));
+```
+
+--
+Assert that you can read more on [AssertJ](https://assertj.github.io/doc/)
+
+---
+
+# Les cas d&#39;erreur aussi
+
+```java
+  @Test
+  public void failWhenInputIsNotValid() throws Exception {
+
+    // Arrange
+    File dataFile = folder.newFile(&#34;data.csv&#34;);
+
+    CsvFaker&lt;Person&gt; csvFaker = new CsvFaker&lt;&gt;(Person.class);
+    csvFaker
+      .with(&#34;001&#34;, personOf(&#34;john&#34;, &#34;doe&#34;, 23))
+      .withFaultyRecord(&#34;002&#34;, &#34;donald&#34;, &#34;duck&#34;, &#34;xx&#34;)
+      .build(dataFile);
+
+    // Act and Assert
+    assertThatThrownBy(() -&gt; readAll(dataFile))
+      .isInstanceOf(FlatFileParseException.class)
+      .hasCauseInstanceOf(BindException.class);
+  }
+```
+
+--
+.note[Un focus sur CsvFaker et CsvNameExtractor maintenant, non ?]
+
+---
+
+# Process, sans les mains
+
+```java
+  @Test
+  public void process() throws Exception {
+
+    // Arrange
+
+    // create John
+    Person john = personOf(&#34;john&#34;, &#34;doe&#34;, 34);
+    // John has 123 as ID
+    Mockito.when(
+      nationalService.findNationalIdentifier(
+        eq(&#34;John&#34;),
+        eq(john.getLastName().toUpperCase())))
+      .thenReturn(Optional.of(&#34;123&#34;));
+
+    // Act
+    Person actualPerson = processor.process(john);
+
+    // Assert
+
+    assertThat(actualPerson.getFirstName()).isEqualTo(&#34;John&#34;);
+    assertThat(actualPerson.getLastName()).isEqualTo(&#34;DOE&#34;);
+    assertThat(actualPerson.getAge()).isEqualTo(34);
+
+    assertThat(actualPerson.getNationalId()).isEqualTo(&#34;123&#34;);
+  }
+```
+
+---
+
+# End-To-End test
+
+Les tests de bout en bout testent l&#39;exécution complète du job.
+
+```java
+JobExecution jobExecution = jobLauncherTestUtils.launchJob(
+    new JobParametersBuilder()
+        .addString(
+          CollectGIPMDSJobConfiguration.FILENAME_PARAMETER,
+          inputFile.getAbsolutePath())
+        .toJobParameters());
+```
+
+La méthode retourne un objet `JobExecution` permettant de vérifier l&#39;exécution du job.
+
+```java
+    assertEquals(BatchStatus.COMPLETED, jobExecution.getStatus());
+
+    // assert read/written items
+    final int expectedGlobalReads = fileCount * itemCount;
+    Optional&lt;StepExecution&gt; executionOpt =
+      stepExecutions.stream().filter(e -&gt; &#34;partitionStep&#34;.equals(e.getStepName())).findFirst();
+    assertTrue(executionOpt.isPresent());
+    StepExecution execution = executionOpt.get();
+    assertEquals(expectedGlobalReads, execution.getReadCount());
+```
+
+---
+
+# Derniers conseils pour la route
+
+- Utilisez une base de données en mémoire (H2 ou HSQL) pour tester les `JdbcCursorItemReader`
+  ou `JdbcBatchItemWriter`.
+
+- Appuyez vous sur Spring Configuration pour remplacer certaines implémentations par des mocks.
+  -&gt; Un exemple, `CriticalErrorTest`.
+
+- Gardez vos tests .focus[simples].  
+  Compréhensibles en un coup d&#39;oeil. N&#39;hésitez pas à cacher la &#34;plomberie&#34;.
+
+Les sources de l&#39;exemple sont sur [GitHub](https://github.com/jppop/spring-batch).
+</textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script>
+      var slideshow = remark.create({});
+    </script>
+  </body>
+</html>

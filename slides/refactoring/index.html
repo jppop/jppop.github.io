@@ -16,7 +16,10 @@
       }
       .remark-code,
       .remark-inline-code {
-        font-family: "Ubuntu Mono", sans-serif;
+        font-family: "Ubuntu Mono", monospace;
+      }
+      .note {
+        font-size: 16px;
       }
       .focus {
         font-weight: bold;
@@ -374,6 +377,28 @@ de responsabilité.
 Ajouter un étage, une division se fera à un seul endroit.
 Le risque de coder une erreur d&#39;association division/étage
 est fortement réduit (le développeur a une vue d&#39;ensemble de l&#39;immeuble).
+]
+
+---
+
+template: none
+
+# Là, je répète
+
+Une exception au DRY : les contrôles de surface vs les contrôles dans la couche métier.
+
+Par exemple, une application WEB propose un formulaire en ligne.
+Des contrôles de surface sont effectués : un montant supérieur à 0, une adresse mail correctement
+formatée, etc.
+
+Est-ce qu&#39;il faut également répéter ces contrôles dans la couche métier (l&#39;API qu&#39;appellera le frontend) ?
+
+Oui.
+
+La couche métier est une &#34;frontière&#34; du système, un point d&#39;entrée. Les &#34;consommateurs&#34; de la couche métier ne sont pas toujours &#34;clean&#34;. La douane doit les contrôler. Une fois à l&#39;intérieur, on peut être plus souple.
+
+.see-also[
+Les contrôles aussi dans la couche données ? Le moins possible. La couche données n&#39;est pas censée être exposée directement. On &#34;tolère&#34; souvent des contraintes d&#39;intégrité dans le SGBD mais on pourrait (devrait) s&#39;en passer.
 ]
 
 ---
