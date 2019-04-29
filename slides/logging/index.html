@@ -1,0 +1,618 @@
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway|Roboto+Condensed|Ubuntu+Mono|Yanone+Kaffeesatz|Gloria+Hallelujah"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Yanone Kaffeesatz", sans-serif;
+        font-weight: normal;
+      }
+      .remark-code,
+      .remark-inline-code {
+        font-family: "Ubuntu Mono", monospace;
+      }
+      .note {
+        font-size: 16px;
+      }
+      .focus {
+        font-weight: bold;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: 20% larger;
+      }
+      .focus-high {
+        color: darkred;
+        font-weight: bold;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: larger;
+      }
+      .see-also {
+        background: lightgoldenrodyellow;
+        border-radius: 2px;
+        display: inline-block;
+        width: 90%;
+        margin: 4px;
+        padding: 8px;
+        position: relative;
+        font-size: smaller;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      }
+      blockquote {
+        font-style: normal;
+        margin-left: 32px;
+        font-family: "Gloria Hallelujah", cursive;
+        border-left: 4px solid #ccc;
+        padding-left: 8px;
+      }
+      img.center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle
+
+# logger.info(&#34;Be a better logger&#34;);
+
+## Bien utiliser la journalisation Java
+
+---
+
+# La journalisation
+
+## A quoi ça sert ?
+
+- Obtenir des informations sur l&#39;exécution de l&#39;application.
+- Enregistrer les circonstances inhabituelles ou erreurs qui pourraient survenir.
+- Auditer l&#39;application
+
+--
+
+## Différents acteurs, différents besoins
+
+Une application est développée, testée et exploitée. Par des acteurs différents.
+Les journaux doivent prendre en compte les besoins de chacun.
+
+Les différent niveaux, de DEBUG à ERROR, doivent cibler ces besoins différents.
+
+La journalisation doit être configurable en fonction des circonstances.
+
+---
+
+# ERROR, WARN, INFO, DEBUG, TRACE ?
+
+### ERROR
+
+Quelque chose d&#39;inattendue est arrivé, je ne peux plus continuer.
+
+```java
+logger.error(&#34;Database unavailable&#34;);
+```
+
+&lt;img src=&#34;./arrow.png&#34; alt=&#34;purpose&#34; style=&#34;float: left; width: 20px&#34;/&gt;.focus[
+Pour les opérateurs systèmes et les systèmes de supervision
+]
+
+### WARN
+
+C&#39;est pas normal mais prévu, on peut faire sans (le système continue à fonctionner).
+
+```java
+logger.warn(&#34;This resource is unavailable. Use the default value&#34;);
+logger.warn(&#34;The mail service is mocked. No mails will be sent.&#34;);
+logger.warn(&#34;Customer has placed no orders. Cannot process this order.&#34;);
+logger.warn(&#34;Duplicate key. Ignoring the new one.&#34;);
+```
+
+&lt;img src=&#34;./arrow.png&#34; alt=&#34;purpose&#34; style=&#34;float: left; width: 20px&#34;/&gt;.focus[
+Pour les opérateurs systèmes, les systèmes de supervision et les administrateurs.
+]
+
+---
+
+# ERROR, WARN, INFO, DEBUG, TRACE ?
+
+### INFO
+
+Un évènement, changement d&#39;état s&#39;est produit.
+
+```java
+logger.info(&#34;Starting server&#34;);
+logger.info(&#34;Shutting down&#34;);
+logger.info(&#34;Starting in dry run mode&#34;);
+logger.info(&#34;Interrupt signal caught. Terminating the process&#34;);
+```
+
+&lt;img src=&#34;./arrow.png&#34; alt=&#34;purpose&#34; style=&#34;float: left; width: 20px&#34;/&gt;.focus[
+Pour les opérateurs systèmes et les systèmes de supervision, et les administrateurs. En général, permet de confirmer une action.
+]
+
+---
+
+# ERROR, WARN, INFO, DEBUG, TRACE ?
+
+### DEBUG
+
+Détaille les changements internes et les traitements.
+Les évènements de niveau DEBUG ne sont généralement pas reportés sauf pour des besoins de diagnostic.
+
+```java
+logger.debug(&#34;processing item {}&#34;, item);
+logger.info(&#34;deleting file {}&#34;, filename);
+logger.info(&#34;read {} items(s)&#34;, count);
+```
+
+&lt;img src=&#34;./arrow.png&#34; alt=&#34;purpose&#34; style=&#34;float: left; width: 20px&#34;/&gt;.focus[
+Pour les administrateurs et le support.
+]
+
+--
+
+### TRACE
+
+Idem que DEBUG mais plus verbeux.
+
+&lt;img src=&#34;./arrow.png&#34; alt=&#34;purpose&#34; style=&#34;float: left; width: 20px&#34;/&gt;.focus[
+Pour les développeurs, les administrateurs et le support pour diagnostiquer un problème.
+]
+
+---
+
+# SLF4J pour mettre tout le monde d&#39;accord
+
+Plusieurs bibliothèques de journalisation existent :
+
+- Apache Log4j 2
+- Logback
+- Java Util Logging (JDK)
+
+SLF4J, comme Apache Commons Logging (Jakarta Commons Logging, JCL), sont des facades au dessus des bibliothèque.
+
+```java
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class HelloWorld {
+  public static void main(String[] args) {
+    Logger logger = LoggerFactory.getLogger(HelloWorld.class);
+    logger.info(&#34;Hello World&#34;);
+  }
+}
+```
+
+.focus[
+Très utile lorsque vous utilisez des frameworks ayant chacun opté pour un logger différent
+(et n&#39;utilisant pas SLF4J)
+]
+
+---
+
+# Instances logger
+
+Chaque classe émettant des logs, .focus[DOIT] déclarer sa propre instance de logger :
+
+```java
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+class Foo {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Foo.class);
+
+    ...
+}
+```
+
+---
+
+# Message paramétré
+
+```java
+class Foo {
+    private static final Logger LOG = LoggerFactory.getLogger(Foo.class);
+
+    // GOOD: string literal, no dynamic objects
+    public void good_method(Object arg) {
+        LOG.debug(&#34;Method called with arg {}&#34;, arg);
+    }
+
+    // BAD: string varies with argument
+    public bad_method1(Object arg) {
+        LOG.debug(&#34;Method called with arg &#34; &#43; arg);
+    }
+
+    // BAD: code clutter
+    public void bad_method2(Object arg) {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug(&#34;Method called with arg {}&#34;, arg);
+        }
+    }
+}
+```
+
+---
+
+# Soyez sûr de ce que vous tracer
+
+Attention à ne pas provoquer d&#39;erreur :
+
+```java
+log.debug(&#34;Processing request with id: {}&#34;, request.getId());
+```
+
+`Request` n&#39;est jamais nul ?
+
+Un autre piège, les collections :
+
+```java
+log.debug(&#34;Returning users: {}&#34;, users);
+```
+
+On peut utiliser [Commons BeanUtils](http://commons.apache.org/beanutils) :
+
+```java
+log.debug(&#34;Returning user ids: {}&#34;, collect(users, &#34;id&#34;));
+```
+
+Avec :
+
+```java
+public static Collection collect(Collection collection, String propertyName) {
+  return CollectionUtils.collect(collection,
+    new BeanToPropertyValueTransformer(propertyName));
+}
+```
+
+---
+
+# Fournissez un contexte utile
+
+```java
+class Foo {
+    private static final Logger LOG = LoggerFactory.getLogger(Foo.class);
+
+    // VERY BAD:
+    // - no context provided
+    // - non-constant message string
+    // - assumes useful toString()
+    public bad_method1(Object arg) {
+        LOG.debug(arg.toString());
+    }
+
+    // VERY BAD:
+    // - no context provided
+    public bad_method2(Object arg) {
+        LOG.debug(&#34;{}&#34;, arg);
+    }
+
+    // COMPLETELY BAD:
+    // - silently ignoring errors!!!
+    public bad_method3(Object arg) {
+        try {
+            doSomething(arg);
+            ...
+        } catch (SomeException ex) {
+        }
+    }
+}
+```
+
+---
+
+# Fournissez un contexte utile
+
+```java
+class Foo {
+    private static final Logger LOG = LoggerFactory.getLogger(Foo.class);
+
+    // EXTREMELY BAD:
+    // - message is not constant
+    // - no context is provided
+    // - ex.getCause() is lost
+    // - call stack is lost
+    public void bad_method4(Object arg) {
+        try {
+            doSomething(arg);
+            ...
+        } catch (SomeException ex) {
+            LOG.warn(ex.getMessage());
+        }
+    }
+
+    // EXTREMELY BAD:
+    // - message is not constant
+    // - no context is provided
+    // - ex.getCause() is probably lost
+    // - call stack is probably lost
+    // - assumes useful toString()
+    public void bad_method5(Object arg) {
+        try {
+            doSomething(arg);
+            ...
+        } catch (SomeException ex) {
+            LOG.warn(ex.toString());
+        }
+    }
+}
+```
+
+# Fournissez un contexte utile
+
+```java
+class Foo {
+    private static final Logger LOG = LoggerFactory.getLogger(Foo.class);
+
+    // VERY BAD:
+    // - no useful context is provided
+    // - ex.getCause() is probably lost
+    // - call stack is probably lost
+    // - administrators don&#39;t know what an Exception is!
+    public void bad_method6(Object arg) {
+        try {
+            doSomething(arg);
+            ...
+        } catch (SomeException ex) {
+            LOG.warn(&#34;Exception {}&#34;, ex);
+        }
+    }
+}
+```
+
+---
+
+# Tracer les exceptions
+
+```java
+class Foo {
+    private static final Logger LOG = LoggerFactory.getLogger(Foo.class);
+
+    // GOOD:
+    // - string literal
+    // - we explain what we tried to do
+    // - we pass along information we have about the failure
+    // - we escalate the failure to our caller
+    // - we also &#39;chain&#39; the exception so it is not lost and can be
+    // correlated
+    public void good_method1(Object arg) {
+        try {
+            doSomething(arg);
+            ...
+        } catch (SomeException e) {
+            LOG.debug(&#34;Failed to do something with {}, got error {}&#34;, arg, e);
+            String msg = String.Format(&#34;Failed to do something with {}&#34;, arg);
+            throw new RuntimeException(msg, e);
+        }
+    }
+}
+```
+
+---
+
+# Tracer les exceptions ignorées
+
+```java
+class Foo {
+    private static final Logger LOG = LoggerFactory.getLogger(Foo.class);
+
+    // GOOD:
+    // - string literal
+    // - we explain what we tried to do
+    // - we pass along information we have about the failure
+    // - we explain that we recovered from the failure
+    public void good_method1(Object arg) {
+        try {
+            doSomething(arg);
+            ...
+        } catch (SomeException ignore) {
+            LOG.warn(&#34;Failed to do something with {}, ignoring it&#34;, arg, ignore);
+        }
+    }
+    // BAD:
+    // - exception is interpreted as an object
+    // - exception chaining cause is lost
+    // - stack trace is lost
+    public void bad_method(Object arg) {
+        try {
+            doSomething(arg);
+            ...
+        } catch (SomeException ex) {
+            LOG.warn(&#34;Failed to do something with {} because {}, continuing&#34;,
+                      arg, ex);
+        }
+    }
+}
+```
+
+---
+
+# is{Trace|Debug|Info|Warn|Error}Enabled ?
+
+Ne pas l&#39;utiliser. Sauf :
+
+```java
+for (int i = 0; i &lt; 100000; i&#43;&#43;) {
+    if (LOG.isDebugEnabled()) {
+        LOG.debug(&#34;The size is: {}&#34;, expensiveMethodToCalculateSize());
+    }
+}
+```
+
+Passer une référence, jamais toString()
+
+Par exemple, ceci est mal :
+
+```java
+List&lt;Interface&gt; interfaces;
+if (LOG.isDebugEnabled()) {
+    LOG.info(&#34;Interfaces: {}&#34;, interfaces.toString());
+}
+```
+
+Plus simplement :
+
+```java
+LOG.debug(&#34;Interfaces: {}&#34;, interfaces); // no need to guard this with isDebugEnabled!
+```
+
+---
+
+# Logback -- configuration
+
+Logback trouve son fichier de configuration (XML ou groovy) dans le `classpath` :
+
+1. cherche le fichier `logback-test.xml`.
+2. cherche le fichier `logback.groovy`, puis `logback.xml`
+
+Vous pouvez également fournir explicitement le chemin du fichier de configuration :
+
+```
+java -Dlogback.configurationFile=/path/to/config.xml ...
+```
+
+Pour les projets Maven, placez `logback-test.xml` dans `src/test/resources`.
+Et `logback.xml`, dans `src/main/resources`.
+
+.focus-high[
+La configuration _DOIT_ être modifiable en production sans nécessiter une relivraison.
+]
+
+--
+
+.see-also[
+Si l&#39;application peut être démarrée en fournissant l&#39;option `logback.configurationFile`,
+alors le fichier `logback.xml` peut être empaqueté dans l&#39;exécutable.
+
+Et l&#39;installation de l&#39;application permettra de prendre en compte un fichier de configuration
+externe.
+]
+
+---
+
+# Logback -- configuration : les variables.
+
+La **Production** accueille votre application chez elle, respectez leurs règles.
+
+.focus-high[
+La configuration _DOIT_ s&#39;adapter au besoin d&#39;exploitation.
+]
+
+Utilisez des variables (pour éviter de maintenir un fichier par environnement).
+
+```xml
+&lt;configuration&gt;
+
+  &lt;property name=&#34;LOGDIR&#34; value=&#34;${logging.dir:-./logs}&#34; /&gt;
+
+  &lt;appender name=&#34;FILE&#34; class=&#34;ch.qos.logback.core.FileAppender&#34;&gt;
+    &lt;file&gt;${LOGDIR}/myApp.log&lt;/file&gt;
+    &lt;encoder&gt;
+      &lt;pattern&gt;%msg%n&lt;/pattern&gt;
+    &lt;/encoder&gt;
+  &lt;/appender&gt;
+
+  &lt;root level=&#34;${logging.level:-ERROR}&#34;&gt;
+    &lt;appender-ref ref=&#34;FILE&#34; /&gt;
+  &lt;/root&gt;
+&lt;/configuration&gt;
+```
+
+.focus[
+&lt;img src=&#34;./arrow.png&#34; alt=&#34;RTFM&#34; style=&#34;float: left; width: 20px&#34;/&gt;Plus d&#39;information : [Chapter 3: Logback configuration](https://logback.qos.ch/manual/configuration.html)
+]
+
+---
+
+# Logback -- Appenders
+
+Logback délègue l&#39;écriture des logs aux [**Appenders**](https://logback.qos.ch/manual/appenders.html).
+
+```xml
+  &lt;appender name=&#34;CONSOLE&#34; class=&#34;ch.qos.logback.core.ConsoleAppender&#34;&gt;
+    &lt;encoder class=&#34;ch.qos.logback.core.encoder.LayoutWrappingEncoder&#34;&gt;
+      &lt;charset&gt;UTF-8&lt;/charset&gt;
+      &lt;layout class=&#34;ch.qos.logback.classic.PatternLayout&#34;&gt;
+        &lt;pattern&gt;%d{ISO8601}|%-5level|%-20thread|%X{uuid}|%logger{36}|%msg%n%xEx&lt;/pattern&gt;
+      &lt;/layout&gt;
+    &lt;/encoder&gt;
+  &lt;/appender&gt;
+
+  &lt;appender name=&#34;FILE&#34; class=&#34;ch.qos.logback.core.rolling.RollingFileAppender&#34;&gt;
+    &lt;File&gt;${LOG_FILE}&lt;/File&gt;
+    &lt;rollingPolicy class=&#34;ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy&#34;&gt;
+      &lt;!-- daily and size rollover --&gt;
+      &lt;fileNamePattern&gt;${LOGDIR}/${LOG_FILE}.%d{yyyy-MM-dd}.%i.zip&lt;/fileNamePattern&gt;
+      &lt;maxHistory&gt;31&lt;/maxHistory&gt;
+      &lt;maxFileSize&gt;500MB&lt;/maxFileSize&gt;
+      &lt;totalSizeCap&gt;20GB&lt;/totalSizeCap&gt;
+    &lt;/rollingPolicy&gt;
+
+    &lt;append&gt;true&lt;/append&gt;
+    &lt;encoder class=&#34;ch.qos.logback.classic.encoder.PatternLayoutEncoder&#34;&gt;
+      &lt;charset&gt;UTF-8&lt;/charset&gt;
+      &lt;pattern&gt;%d{ISO8601}|%-5level|%-20thread|%X{uuid}|%logger{36}|%msg%n%xEx&lt;/pattern&gt;
+    &lt;/encoder&gt;
+  &lt;/appender&gt;
+```
+
+---
+
+# Logback -- Loggers
+
+```xml
+&lt;logger name=&#34;my.package&#34; level=&#34;${logging.level:-info}&#34; /&gt;
+
+&lt;logger name=&#34;my.package.audit&#34; additivity=&#34;false&#34;&gt;
+  &lt;level value=&#34;trace&#34; /&gt;
+  &lt;appender-ref ref=&#34;AUDIT&#34; /&gt;
+&lt;/logger&gt;
+
+&lt;!-- Show SQL statements (set logging.sql.level to debug to enable them) --&gt;
+&lt;logger name=&#34;org.hibernate.SQL&#34; level=&#34;${logging.sql.level:-warn}&#34; /&gt;
+
+&lt;root level=&#34;INFO&#34;&gt;
+  &lt;appender-ref ref=&#34;FILE&#34;/&gt;
+  &lt;appender-ref ref=&#34;CONSOLE&#34;/&gt;
+&lt;/root&gt;
+```
+
+---
+
+# Pour la route
+
+Quelques règles :
+
+- .focus-high[Pas de log sur la console]  
+  En production, ni en dév. (ne vous mentez pas, vous ne les regardez jamais).
+
+- .focus-high[Pas de chemin en dur]  
+  Utilisez des variables. En test, appuyez vous sur Maven pour substituer les chemins.
+
+  ```xml
+  &lt;property name=&#34;logDir&#34; value=&#34;${project.build.directory}/logs}&#34;/&gt;
+  ```
+
+- .focus-high[Gardez toujours en tête à quoi servent les logs]  
+  LA principale utilisation reste l&#39;analyse de problème en production.
+
+- .focus-high[Aidez vous des autres pour améliorer la qualité des logs]  
+  Les équipes de support, de production peuvent vous indiquer quelles informations pourraient
+  faciliter leurs tâches (exploitation, analyse). Profitez d&#39;une correction, d&#39;une évolution pour
+  améliorer la journalisation.
+
+Bonus : on vous demandera surement un jour [un truc comme ça](https://moelholm.com/2016/08/16/spring-boot-enhance-your-logging/).
+</textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script>
+      var slideshow = remark.create({});
+    </script>
+  </body>
+</html>

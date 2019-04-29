@@ -6,10 +6,22 @@
     <description>Recent content on Deux ou trois choses apprises</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Apr 2019 16:43:02 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 28 Apr 2019 11:30:00 +0200</lastBuildDate>
     
 	<atom:link href="https://jppop.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Quick Tips -- Logging</title>
+      <link>https://jppop.github.io/slides/logging/</link>
+      <pubDate>Sun, 28 Apr 2019 11:30:00 +0200</pubDate>
+      
+      <guid>https://jppop.github.io/slides/logging/</guid>
+      <description>class: center, middle
+logger.info(&amp;ldquo;Be a better logger&amp;rdquo;); Bien utiliser la journalisation Java La journalisation A quoi ça sert ?  Obtenir des informations sur l&amp;rsquo;exécution de l&amp;rsquo;application. Enregistrer les circonstances inhabituelles ou erreurs qui pourraient survenir. Auditer l&amp;rsquo;application  &amp;ndash;
+Différents acteurs, différents besoins Une application est développée, testée et exploitée. Par des acteurs différents. Les journaux doivent prendre en compte les besoins de chacun.
+Les différent niveaux, de DEBUG à ERROR, doivent cibler ces besoins différents.</description>
+    </item>
     
     <item>
       <title>Quick Tips -- NullPointerException</title>

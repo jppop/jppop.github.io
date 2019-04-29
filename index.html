@@ -30,7 +30,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://jppop.github.io/" />
 
-<meta property="og:updated_time" content="2019-04-13T16:43:02-04:00"/>
+<meta property="og:updated_time" content="2019-04-28T11:30:00&#43;02:00"/>
 
     
     
@@ -268,9 +268,9 @@ if (!doNotTrack) {
         </a>
 
         <header class="article-header">
-    <a href="https://jppop.github.io/2019/04/13/quick-tips/">
+    <a href="https://jppop.github.io/slides/logging/">
     <h1 class="article-title" itemprop="name">
-        Quick Tips
+        Quick Tips -- Logging
     </h1>
     </a>
     <div class="article-meta">
@@ -278,66 +278,41 @@ if (!doNotTrack) {
         
         <div class="article-date">
             <i class="fa fa-calendar"></i>
-            <time datetime="2019-04-13 09:00:00 &#43;0200 CEST" itemprop="datePublished">2019-04-13</time>
+            <time datetime="2019-04-28 11:30:00 &#43;0200 CEST" itemprop="datePublished">2019-04-28</time>
             &middot;
-            28
+            1449
             words
             &middot;
-            1
+            7
             minute read
         </div>
         
         
-            
-            
-            <div class="article-category">
-                <i class="fa fa-folder"></i>
-                
-                
-                <a class="article-category-link" href="https://jppop.github.io/categories/internal">internal</a>
-                
-                
-            </div>
-            
-        
 
-        
-            
-            
-            <div class="article-category">
-                <i class="fa fa-tags"></i>
-                
-                
-                <a class="article-category-link" href="https://jppop.github.io/tags/dev">dev</a>
-                &middot;
-                
-                
-                <a class="article-category-link" href="https://jppop.github.io/tags/java">java</a>
-                
-                
-            </div>
-            
         
     </div>
 </header>
 
         <div class="article-entry" itemprop="articleBody">
             <p>
-                 Présentations  NullPointerException : la chasse aux références nulles Refactoring ou comment ne pas abuser du copier/coller Spring Batch Tests ou comment automatiser les tests de jobs Spring Batch  
+                class: center, middle
+logger.info(&ldquo;Be a better logger&rdquo;); Bien utiliser la journalisation Java La journalisation A quoi ça sert ?  Obtenir des informations sur l&rsquo;exécution de l&rsquo;application. Enregistrer les circonstances inhabituelles ou erreurs qui pourraient survenir. Auditer l&rsquo;application  &ndash;
+Différents acteurs, différents besoins Une application est développée, testée et exploitée. Par des acteurs différents. Les journaux doivent prendre en compte les besoins de chacun.
+Les différent niveaux, de DEBUG à ERROR, doivent cibler ces besoins différents.
             </p>
             <p class="article-more-link">
-                <a href="https://jppop.github.io/2019/04/13/quick-tips/">
+                <a href="https://jppop.github.io/slides/logging/">
                     Read more
                 </a>
             </p>
         </div>
         <footer class="article-footer">
-    <a data-url="https://jppop.github.io/2019/04/13/quick-tips/" data-id="1507cbce4c464a2530efe3e79bb3df0b" class="article-share-link">
+    <a data-url="https://jppop.github.io/slides/logging/" data-id="7dae41a455ae3a4c9bf4eb900ccfcb96" class="article-share-link">
         <i class="fa fa-share"></i>
         Share
     </a>
     
-    <a href="https://jppop.github.io/2019/04/13/quick-tips/#disqus_thread" class="article-comment-link">
+    <a href="https://jppop.github.io/slides/logging/#disqus_thread" class="article-comment-link">
         Comments
     </a>
     
@@ -417,9 +392,9 @@ if (!doNotTrack) {
         </a>
 
         <header class="article-header">
-    <a href="https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/">
+    <a href="https://jppop.github.io/slides/npe/">
     <h1 class="article-title" itemprop="name">
-        Cauchemar en DEV-TU
+        Quick Tips -- NullPointerException
     </h1>
     </a>
     <div class="article-meta">
@@ -427,323 +402,9 @@ if (!doNotTrack) {
         
         <div class="article-date">
             <i class="fa fa-calendar"></i>
-            <time datetime="2017-09-27 17:18:55 &#43;0200 CEST" itemprop="datePublished">2017-09-27</time>
+            <time datetime="2019-04-13 16:43:02 -0400 -0400" itemprop="datePublished">2019-04-13</time>
             &middot;
-            1669
-            words
-            &middot;
-            8
-            minute read
-        </div>
-        
-        
-            
-            
-            <div class="article-category">
-                <i class="fa fa-folder"></i>
-                
-                
-                <a class="article-category-link" href="https://jppop.github.io/categories/internal">internal</a>
-                
-                
-            </div>
-            
-        
-
-        
-            
-            
-            <div class="article-category">
-                <i class="fa fa-tags"></i>
-                
-                
-                <a class="article-category-link" href="https://jppop.github.io/tags/dev">dev</a>
-                &middot;
-                
-                
-                <a class="article-category-link" href="https://jppop.github.io/tags/java">java</a>
-                &middot;
-                
-                
-                <a class="article-category-link" href="https://jppop.github.io/tags/spring">spring</a>
-                
-                
-            </div>
-            
-        
-    </div>
-</header>
-
-        <div class="article-entry" itemprop="articleBody">
-            <p>
-                <p><br/>
-<div class="note">
-<strong>Avertissement : post à usage interne. Cet article s&rsquo;inscrit dans un contexte particulier, privé.</strong>
-</div></p>
-
-<p>La fabrication du SI pose de nombreux problèmes aux développeurs dès que, et c’est toujours le cas, plusieurs équipes sont impliquées. Par exemple, une équipe pour développer le front, une pour le back. Et on ajoute une troisième, les utilisateurs qui testent le tout. Comment éviter que ces trois-là ne se fassent pas la guerre ?
-Le développement en parallèle n’est pas une nouveauté. Des solutions éprouvées existent. Comment les adapter à la fabrication du SI ? Comment, pratiquement, éviter de se gêner les uns les autres pendant le build et le run ?</p>
-            </p>
-            <p class="article-more-link">
-                <a href="https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/">
-                    Read more
-                </a>
-            </p>
-        </div>
-        <footer class="article-footer">
-    <a data-url="https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/" data-id="f49a815be462790db14ee5e8e3384264" class="article-share-link">
-        <i class="fa fa-share"></i>
-        Share
-    </a>
-    
-    <a href="https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/#disqus_thread" class="article-comment-link">
-        Comments
-    </a>
-    
-
-    <script>
-    (function ($) {
-        
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-    </script>
-</footer>
-
-    </div>
-</article>
-
-<article class="article article-type-post" itemscope="" itemprop="blogPost">
-    <div class="article-inner">
-        
-        <a href="https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9/" itemprop="url">
-            <img src="https://jppop.github.io/images/spring-modularity.png" class="article-banner">
-        
-        </a>
-
-        <header class="article-header">
-    <a href="https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9/">
-    <h1 class="article-title" itemprop="name">
-        Spring config et modularité
-    </h1>
-    </a>
-    <div class="article-meta">
-
-        
-        <div class="article-date">
-            <i class="fa fa-calendar"></i>
-            <time datetime="2017-04-10 00:56:56 &#43;0200 CEST" itemprop="datePublished">2017-04-10</time>
-            &middot;
-            520
-            words
-            &middot;
-            3
-            minute read
-        </div>
-        
-        
-            
-            
-            <div class="article-category">
-                <i class="fa fa-folder"></i>
-                
-                
-                <a class="article-category-link" href="https://jppop.github.io/categories/d%C3%A9veloppement">développement</a>
-                
-                
-            </div>
-            
-        
-
-        
-            
-            
-            <div class="article-category">
-                <i class="fa fa-tags"></i>
-                
-                
-                <a class="article-category-link" href="https://jppop.github.io/tags/spring">spring</a>
-                &middot;
-                
-                
-                <a class="article-category-link" href="https://jppop.github.io/tags/java">java</a>
-                
-                
-            </div>
-            
-        
-    </div>
-</header>
-
-        <div class="article-entry" itemprop="articleBody">
-            <p>
-                Spring config et modularité
-            </p>
-            <p class="article-more-link">
-                <a href="https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9/">
-                    Read more
-                </a>
-            </p>
-        </div>
-        <footer class="article-footer">
-    <a data-url="https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9/" data-id="4caf0c8c05c05ca5998a6717da39220b" class="article-share-link">
-        <i class="fa fa-share"></i>
-        Share
-    </a>
-    
-    <a href="https://jppop.github.io/2017/04/10/spring-config-et-modularit%C3%A9/#disqus_thread" class="article-comment-link">
-        Comments
-    </a>
-    
-
-    <script>
-    (function ($) {
-        
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-    </script>
-</footer>
-
-    </div>
-</article>
-
-<article class="article article-type-post" itemscope="" itemprop="blogPost">
-    <div class="article-inner">
-        
-        <a href="https://jppop.github.io/2017/04/10/good-to-great/" itemprop="url">
-            <img src="https://jppop.github.io/images/lechat-megalo.gif" class="article-banner">
-        
-        </a>
-
-        <header class="article-header">
-    <a href="https://jppop.github.io/2017/04/10/good-to-great/">
-    <h1 class="article-title" itemprop="name">
-        good to great
-    </h1>
-    </a>
-    <div class="article-meta">
-
-        
-        <div class="article-date">
-            <i class="fa fa-calendar"></i>
-            <time datetime="2017-04-10 00:56:44 &#43;0200 CEST" itemprop="datePublished">2017-04-10</time>
-            &middot;
-            781
+            790
             words
             &middot;
             4
@@ -751,52 +412,281 @@ Le développement en parallèle n’est pas une nouveauté. Des solutions éprou
         </div>
         
         
-            
-            
-            <div class="article-category">
-                <i class="fa fa-folder"></i>
-                
-                
-                <a class="article-category-link" href="https://jppop.github.io/categories/id%C3%A9es">idées</a>
-                
-                
-            </div>
-            
-        
 
-        
-            
-            
-            <div class="article-category">
-                <i class="fa fa-tags"></i>
-                
-                
-                <a class="article-category-link" href="https://jppop.github.io/tags/quality">quality</a>
-                
-                
-            </div>
-            
         
     </div>
 </header>
 
         <div class="article-entry" itemprop="articleBody">
             <p>
-                <p>Pourquoi ce blog.</p>
+                class: center, middle
+NullPointerException La chasse aux NullPointerExceptions NullPointerException  I call it my billion-dollar mistake. It was the invention of the null reference in 1965… This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years.
+Sir Charles Antony Richard Hoare, inventor of the Null Reference
+ Deux règles seulement  Les autres, c’est l’enfer
             </p>
             <p class="article-more-link">
-                <a href="https://jppop.github.io/2017/04/10/good-to-great/">
+                <a href="https://jppop.github.io/slides/npe/">
                     Read more
                 </a>
             </p>
         </div>
         <footer class="article-footer">
-    <a data-url="https://jppop.github.io/2017/04/10/good-to-great/" data-id="f01b82b3d5aa46227d88d8833ac8732a" class="article-share-link">
+    <a data-url="https://jppop.github.io/slides/npe/" data-id="3ab41bb910fb7dcda279c9a668605607" class="article-share-link">
         <i class="fa fa-share"></i>
         Share
     </a>
     
-    <a href="https://jppop.github.io/2017/04/10/good-to-great/#disqus_thread" class="article-comment-link">
+    <a href="https://jppop.github.io/slides/npe/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+
+    <script>
+    (function ($) {
+        
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+    </script>
+</footer>
+
+    </div>
+</article>
+
+<article class="article article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+        </a>
+
+        <header class="article-header">
+    <a href="https://jppop.github.io/slides/refactoring/">
+    <h1 class="article-title" itemprop="name">
+        Quick Tips -- Refactoring
+    </h1>
+    </a>
+    <div class="article-meta">
+
+        
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2019-04-13 16:43:02 -0400 -0400" itemprop="datePublished">2019-04-13</time>
+            &middot;
+            1189
+            words
+            &middot;
+            6
+            minute read
+        </div>
+        
+        
+
+        
+    </div>
+</header>
+
+        <div class="article-entry" itemprop="articleBody">
+            <p>
+                class: center, middle
+Refactoring Ou comment éviter le copier/coller (et faciliter la maintenance) T’es sûr, c’est mal copier/coller ?  .focus[Rapide], sûr (ca marche déjà) Quand utiliser le copier/coller ?  .focus[Forking] .focus[Templating] .focus[Tests, exploration]   &ndash;
+.see-also[ Pour approfondir : Is Copy and Paste Programming Really a Problem?]
+Mais Fais quelque chose si on est on est un jour ouvré :
+public void doSomeThingAt(LocalDate when) { if (isBusinessDay(when)) { // .
+            </p>
+            <p class="article-more-link">
+                <a href="https://jppop.github.io/slides/refactoring/">
+                    Read more
+                </a>
+            </p>
+        </div>
+        <footer class="article-footer">
+    <a data-url="https://jppop.github.io/slides/refactoring/" data-id="9ac90c25f89998bdb191a79d89caf10e" class="article-share-link">
+        <i class="fa fa-share"></i>
+        Share
+    </a>
+    
+    <a href="https://jppop.github.io/slides/refactoring/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+
+    <script>
+    (function ($) {
+        
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+    </script>
+</footer>
+
+    </div>
+</article>
+
+<article class="article article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+        </a>
+
+        <header class="article-header">
+    <a href="https://jppop.github.io/slides/spring-batch-test/">
+    <h1 class="article-title" itemprop="name">
+        Quick Tips -- Spring Batch Unit Testing
+    </h1>
+    </a>
+    <div class="article-meta">
+
+        
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2019-04-13 16:43:02 -0400 -0400" itemprop="datePublished">2019-04-13</time>
+            &middot;
+            430
+            words
+            &middot;
+            3
+            minute read
+        </div>
+        
+        
+
+        
+    </div>
+</header>
+
+        <div class="article-entry" itemprop="articleBody">
+            <p>
+                class: center, middle
+Spring Batch Unit Testing Tester les applications basées sur Spring Batch Le batch Basé sur le guide Creating a Batch Service.
+@Bean public Step step1(JdbcBatchItemWriter&lt;Person&gt; writer) { return stepBuilderFactory.get(&quot;step1&quot;) .&lt;Person, Person&gt; chunk(10) .reader(reader()) .processor(processor()) .writer(writer) .build(); }  Et quelques &ldquo;vrais&rdquo; exemples.
+Nos outils La batch est testé avec :
+ JUnit, Mockito, AssertJ Le JUnit runner .focus[SpringJUnit4ClassRunner] .focus-high[spring-batch-test]  .note[ La documentation en ligne : Spring Batch Unit Testing ]
+            </p>
+            <p class="article-more-link">
+                <a href="https://jppop.github.io/slides/spring-batch-test/">
+                    Read more
+                </a>
+            </p>
+        </div>
+        <footer class="article-footer">
+    <a data-url="https://jppop.github.io/slides/spring-batch-test/" data-id="04322d4c9c866bd9eb9e0702585e5629" class="article-share-link">
+        <i class="fa fa-share"></i>
+        Share
+    </a>
+    
+    <a href="https://jppop.github.io/slides/spring-batch-test/#disqus_thread" class="article-comment-link">
         Comments
     </a>
     
