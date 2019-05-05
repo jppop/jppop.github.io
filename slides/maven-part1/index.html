@@ -1,0 +1,224 @@
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway|Roboto+Condensed|Ubuntu+Mono|Yanone+Kaffeesatz|Gloria+Hallelujah"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Yanone Kaffeesatz", sans-serif;
+        font-weight: normal;
+      }
+      .remark-code,
+      .remark-inline-code {
+        font-family: "Ubuntu Mono", monospace;
+      }
+      .note {
+        font-size: 16px;
+      }
+      .focus {
+        font-weight: bold;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: 20% larger;
+      }
+      .focus-high {
+        color: darkred;
+        font-weight: bold;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: larger;
+      }
+      .see-also {
+        background: lightgoldenrodyellow;
+        border-radius: 2px;
+        display: inline-block;
+        width: 90%;
+        margin: 4px;
+        padding: 8px;
+        position: relative;
+        font-size: smaller;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      }
+      blockquote {
+        font-style: normal;
+        margin-left: 32px;
+        font-family: "Gloria Hallelujah", cursive;
+        border-left: 4px solid #ccc;
+        padding-left: 8px;
+      }
+      img.center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle
+
+# S01E01 - Introduction à Maven
+
+## Comprendre Maven
+
+---
+
+# Maven - Saison 1
+
+- S01E1 : Le coeur de Maven
+- S01E2 : Les plugins, les dépendances, les repositories
+- S01E3 : Multi-module
+- S01E4 : Describe Once, Build Everywhere
+- S01E5 : Packaging
+
+---
+
+# Une brève histoire
+
+## Les outils
+
+- .focus[Make (1976), ant (2000)]  
+  Make très orienté &#34;langage C&#34;.  
+  Ant (2000), scripts procédural en XML (complexe), pas de gestion native de dépendance (nécessite Apache Ivy)
+
+- .focus[Maven (2004)]  
+  XML mais déclaratif, gestion de dépendance
+
+- .focus[Gradle (2012)]  
+  DSL groovy, plus concis  
+  Adopté par Google comme outils de build pour Android
+
+--
+
+.focus-high[
+La force de maven : [_Convention over configuration_](https://en.wikipedia.org/wiki/Convention_over_configuration) &lt;img src=&#34;./maven-project.png&#34; alt=&#34;common project structure&#34; style=&#34;float: right;&#34;/&gt;
+]
+Tout le monde adopte les mêmes conventions, on ne précise que le spécifique.
+
+---
+
+&lt;img src=&#34;./kiss.png&#34; alt=&#34;KISS&#34; style=&#34;display: block; margin: auto; width: 50%&#34;/&gt;
+
+En une phrase courte, Maven produit un artifact et le met à disposition dans une repository.
+
+En un peu plus alambiqué, un module Maven construit, de manière .focus-high[standard], un .focus-high[artifact] à partir des .focus-high[sources] locales et de .focus-high[dépendences] issue de la .focus-high[repository], et distribue l&#39;artifact dans une repository.
+
+--
+
+Selon Maître Ioda, pour devenir un Jedi de Maven :
+
+- L&#39;organisation de ton projet Maven, tu adopteras
+- Le processus de build Maven, tu adopeteras
+- Dans une repository Maven, ton artifact tu déposeras
+
+---
+
+# Conventions
+
+Un projet Maven :
+
+```shell
+mvn archetype:generate -DgroupId=org.sample -DartifactId=killer-app
+ -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+```
+
+&lt;img src=&#34;./simple-project.png&#34; alt=&#34;project&#34; style=&#34;float: left; width: 50%&#34;/&gt;
+&lt;img src=&#34;./pom.png&#34; alt=&#34;project&#34; style=&#34;float: right; width: 50%&#34;/&gt;
+
+---
+
+# Maven phases and goals
+
+Maven automatise la création d&#39;un _artifact_ (projet) en s&#39;appuyant sur un cycle de vie de construction (**_build lifecycle_**). Maven en définit 3 : clean, default et site.
+
+Les _build lifecycles_ sont découpés en **_phases_**.
+
+Les principales phases du cyle par défaut :
+
+- .focus-high[`validate`] : vérifie que la configuration projet est correcte (POM, pas d&#39;éléments manquants...)
+- .focus-high[`compile`] : compile les sources du projet
+- .focus-high[`test`] : teste le code compilé avec les classes de tests unitaires contenues dans le projet
+- .focus-high[`package`] : package les éléments issus de la compilation dans un format distribuable (JAR, WAR...)
+- .focus-high[`install`] : installe le package dans votre repository local
+- .focus-high[`deploy`] : envoie le package dans le repository distant défini dans le POM
+
+Chaque phase est une séquence de **_goals_** qui sera exécuté dans l&#39;ordre.
+
+.focus[
+&lt;img src=&#34;./arrow.png&#34; alt=&#34;purpose&#34; style=&#34;float: left; width: 20px&#34;/&gt;[Lifecycle Reference](http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference)
+]
+
+---
+
+# Maven plugins goals
+
+Maven est, basiquement, un moteur d&#39;exécution de plugins. Les plugins se tapent tout le boulot.
+
+Plus exactement, Maven exécutent les **_goals_** (des tâches) des plugins. Une analogie : un plugin est une classe (Maven les nomme MOJO) et les goals sont des méthodes.
+
+Quand Maven &#34;déroule&#34; une phase, il exécute tous les goals associés à cette phase.
+
+Par exemple,
+
+- compiler:compile – Le goal `compile` du plugin `compiler` est associé à la phase compile.
+- compiler:testCompile - `testCompile` est associé à la phase test.
+
+--
+
+```shell
+mvn mvn help:describe -Dcmd=compile
+mvn help:describe \
+    -DgroupId=org.apache.maven.plugins \
+    -DartifactId=maven-compiler-plugin
+```
+
+.focus[
+&lt;img src=&#34;./arrow.png&#34; alt=&#34;purpose&#34; style=&#34;float: left; width: 20px&#34;/&gt;[les principaux plugins](https://maven.apache.org/plugins/)
+]
+
+---
+
+# POM
+
+Au minimum :
+
+```xml
+&lt;project&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;groupId&gt;com.mycompany.app&lt;/groupId&gt;
+  &lt;artifactId&gt;my-app&lt;/artifactId&gt;
+  &lt;version&gt;1&lt;/version&gt;
+&lt;/project&gt;
+```
+
+packaging :
+
+```xml
+  &lt;packaging&gt;jar&lt;/packaging&gt;
+```
+
+.focus[
+&lt;img src=&#34;./arrow.png&#34; alt=&#34;purpose&#34; style=&#34;float: left; width: 20px&#34;/&gt;[POM introduction](https://maven.apache.org/guides/introduction/introduction-to-the-pom.html)
+]
+
+---
+
+# To be continued
+
+Dans le prochain épisode, vous décrouvirez
+
+- comment utiliser un plugin
+- comment gérer vos dépendances.
+- une introduction au repositories
+</textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script>
+      var slideshow = remark.create({});
+    </script>
+  </body>
+</html>
