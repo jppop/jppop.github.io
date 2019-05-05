@@ -6,10 +6,22 @@
     <description>Recent content in Slides on Deux ou trois choses apprises</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Apr 2019 11:30:00 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 03 May 2019 11:30:00 +0200</lastBuildDate>
     
 	<atom:link href="https://jppop.github.io/slides/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Quick Tips -- Maven I</title>
+      <link>https://jppop.github.io/slides/maven-part1/</link>
+      <pubDate>Fri, 03 May 2019 11:30:00 +0200</pubDate>
+      
+      <guid>https://jppop.github.io/slides/maven-part1/</guid>
+      <description>class: center, middle
+S01E01 - Introduction à Maven Comprendre Maven Maven - Saison 1  S01E1 : Le coeur de Maven S01E2 : Les plugins, les dépendances, les repositories S01E3 : Multi-module S01E4 : Describe Once, Build Everywhere S01E5 : Packaging  Une brève histoire Les outils  .focus[Make (1976), ant (2000)]
+Make très orienté &amp;ldquo;langage C&amp;rdquo;.
+Ant (2000), scripts procédural en XML (complexe), pas de gestion native de dépendance (nécessite Apache Ivy)</description>
+    </item>
     
     <item>
       <title>Quick Tips -- Logging</title>
@@ -59,18 +71,6 @@ Spring Batch Unit Testing Tester les applications basées sur Spring Batch Le ba
 @Bean public Step step1(JdbcBatchItemWriter&amp;lt;Person&amp;gt; writer) { return stepBuilderFactory.get(&amp;quot;step1&amp;quot;) .&amp;lt;Person, Person&amp;gt; chunk(10) .reader(reader()) .processor(processor()) .writer(writer) .build(); }  Et quelques &amp;ldquo;vrais&amp;rdquo; exemples.
 Nos outils La batch est testé avec :
  JUnit, Mockito, AssertJ Le JUnit runner .focus[SpringJUnit4ClassRunner] .focus-high[spring-batch-test]  .note[ La documentation en ligne : Spring Batch Unit Testing ]</description>
-    </item>
-    
-    <item>
-      <title>Quick Tips -- Maven I</title>
-      <link>https://jppop.github.io/slides/maven-part1/</link>
-      <pubDate>Tue, 05 Mar 2019 11:30:00 +0200</pubDate>
-      
-      <guid>https://jppop.github.io/slides/maven-part1/</guid>
-      <description>class: center, middle
-S01E01 - Introduction à Maven Comprendre Maven Maven - Saison 1  S01E1 : Le coeur de Maven S01E2 : Les plugins, les dépendances, les repositories S01E3 : Multi-module S01E4 : Describe Once, Build Everywhere S01E5 : Packaging  Une brève histoire Les outils  .focus[Make (1976), ant (2000)]
-Make très orienté &amp;ldquo;langage C&amp;rdquo;.
-Ant (2000), scripts procédural en XML (complexe), pas de gestion native de dépendance (nécessite Apache Ivy)</description>
     </item>
     
   </channel>
