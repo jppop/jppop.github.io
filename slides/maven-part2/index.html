@@ -1,0 +1,382 @@
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway|Roboto+Condensed|Ubuntu+Mono|Yanone+Kaffeesatz|Gloria+Hallelujah"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Yanone Kaffeesatz", sans-serif;
+        font-weight: normal;
+      }
+      .remark-code,
+      .remark-inline-code {
+        font-family: "Ubuntu Mono", monospace;
+      }
+      .note {
+        font-size: 16px;
+      }
+      .focus {
+        font-weight: bold;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: 20% larger;
+      }
+      .focus-high {
+        color: darkred;
+        font-weight: bold;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: larger;
+      }
+      .see-also {
+        background: lightgoldenrodyellow;
+        border-radius: 2px;
+        display: inline-block;
+        width: 90%;
+        margin: 4px;
+        padding: 8px;
+        position: relative;
+        font-size: smaller;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      }
+      blockquote {
+        font-style: normal;
+        margin-left: 32px;
+        font-family: "Gloria Hallelujah", cursive;
+        border-left: 4px solid #ccc;
+        padding-left: 8px;
+      }
+      img.center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+      }
+      .smaller {
+        font-size: smaller;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle
+
+# S01E02 - Maven
+
+## Les plugins, les dépendances, les repositories
+
+---
+
+# Maven - Saison 1
+
+- S01E1 : Le coeur de Maven
+- S01E2 : Les plugins, les dépendances, les repositories
+- S01E3 : Multi-module
+- S01E4 : Describe Once, Build Everywhere
+- S01E5 : Packaging
+
+---
+
+# Les plugins du cycle de vie par défaut
+
+Pour rappel, le _lifecyle build_ par défaut [associe des plugins aux différentes phases](http://maven.apache.org/ref/3.6.1/maven-core/default-bindings.html).
+
+Par exemple, pour un _packaging_ de type `jar`
+
+---
+
+# Configuration du plugin `compiler`
+
+.smaller[Exemple : compiler en 1.8]
+
+```xml
+&lt;project&gt;
+  [...]
+  &lt;properties&gt;
+    &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+    &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+  &lt;/properties&gt;
+  [...]
+&lt;/project&gt;
+```
+
+.smaller[ou]
+
+```xml
+&lt;project&gt;
+  [...]
+  &lt;build&gt;
+    [...]
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+        &lt;version&gt;3.8.1&lt;/version&gt;
+        &lt;configuration&gt;
+          &lt;source&gt;1.8&lt;/source&gt;
+          &lt;target&gt;1.8&lt;/target&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+    [...]
+  &lt;/build&gt;
+  [...]
+&lt;/project&gt;
+```
+
+---
+
+# Help !
+
+Comment se rappeler de toutes les options de tous les plugins ?
+
+Tous les plugins les plus communs sont documentés en ligne.
+
+Par exemple, le plugin [compiler](https://maven.apache.org/plugins/maven-compiler-plugin/index.html)
+
+| **phase**              | **plugin goals**                                                  |
+| ---------------------- | ----------------------------------------------------------------- |
+| process-resources      | org.apache.maven.plugins:maven-resources-plugin:2.6:resources     |
+| compile                | org.apache.maven.plugins:maven-compiler-plugin:3.1:compile        |
+| process-test-resources | org.apache.maven.plugins:maven-resources-plugin:2.6:testResources |
+| test-compile           | org.apache.maven.plugins:maven-compiler-plugin:3.1:testCompile    |
+| test                   | org.apache.maven.plugins:maven-surefire-plugin:2.12.4:test        |
+| package                | org.apache.maven.plugins:maven-jar-plugin:2.4:jar                 |
+| install                | org.apache.maven.plugins:maven-install-plugin:2.4:install         |
+| deploy                 | org.apache.maven.plugins:maven-deploy-plugin:2.7:deploy           |
+
+---
+
+# Configuration d&#39;un plugin
+
+```xml
+&lt;project&gt;
+  [...]
+  &lt;build&gt;
+    &lt;plugins&gt;
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-enforcer-plugin&lt;/artifactId&gt;
+        &lt;version&gt;3.0.0-M2&lt;/version&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;id&gt;enforce-property&lt;/id&gt;
+            &lt;phase&gt;validate&lt;/phase&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;enforce&lt;/goal&gt;
+            &lt;/goals&gt;
+            &lt;configuration&gt;
+              &lt;rules&gt;
+                &lt;requireProperty&gt;
+                  &lt;property&gt;port&lt;/property&gt;
+                  &lt;message&gt;&#34;port number must be specified.&#34;&lt;/message&gt;
+                  &lt;regex&gt;\d&#43;&lt;/regex&gt;
+                  &lt;regexMessage&gt;&#34;The port property must contain at least one digit.&#34;&lt;/regexMessage&gt;
+                &lt;/requireProperty&gt;
+              &lt;/rules&gt;
+              &lt;fail&gt;true&lt;/fail&gt;
+            &lt;/configuration&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+```
+
+---
+
+# Un privilégié : le plugin `resources`
+
+Copie les ressources principales (goal resource) et de test (goal testResources) du projet.
+Ils accèdent aux éléments du pom `project.build.resources` et `project.build.testResources`.
+
+```xml
+&lt;project&gt;
+  ...
+  &lt;name&gt;My Resources Plugin Practice Project&lt;/name&gt;
+  ...
+  &lt;build&gt;
+    ...
+    &lt;resources&gt;
+      &lt;resource&gt;
+        &lt;directory&gt;src/main/resources&lt;/directory&gt;
+      &lt;/resource&gt;
+      ...
+    &lt;/resources&gt;
+    ...
+  &lt;/build&gt;
+  ...
+&lt;/project&gt;
+```
+
+---
+
+# Resources filtering
+
+Le plugin [`resources`](https://maven.apache.org/plugins/maven-resources-plugin/) peut substituer des variables dans les ressources :
+
+```shell
+$ cat src/main/resources/version.properties
+project: ${project.name}
+version: ${project.version}
+```
+
+```xml
+    &lt;resources&gt;
+      &lt;resource&gt;
+        &lt;directory&gt;src/main/resources&lt;/directory&gt;
+        &lt;filtering&gt;true&lt;/filtering&gt;
+      &lt;/resource&gt;
+    &lt;/resources&gt;
+```
+
+```shell
+$ cat target/classes/version.properties
+project: My Resources Plugin Practice Project
+version: 1.0.0-SNAPSHOT
+```
+
+--
+Attention aux fichiers binaires !
+
+```xml
+    &lt;resources&gt;
+      &lt;resource&gt;
+        &lt;directory&gt;src/main/resources-non-filtered&lt;/directory&gt;
+        &lt;filtering&gt;false&lt;/filtering&gt;
+      &lt;/resource&gt;
+    &lt;/resources&gt;
+```
+
+---
+
+# Les dépendences
+
+Les dépendances sont transitives.
+
+Quelques règles pour contrôler quelles dépendances sont inclues :
+
+- .focus[_Dependency mediation_]  
+   Si une dépendance apparaît plusieurs fois, la &#34;plus proche&#34; est retenue.  
+   Déclarer une dépendance explicitement évite des suprises.
+
+--
+
+- .focus[_Dependency management_]  
+  Permet de fixer les versions des dépendances trouvées dans le graphe des dépendances tranistives ou quand la version n&#39;est pas spécifiée.
+
+--
+
+- .focus[_Dependency scope_]  
+  Pour une dépendance spécifique à une étape du build (détaillé juste après).
+
+--
+
+- .focus[_Excluded dependencies_]  
+  Exclusion explicite d&#39;une dépendance transitive.
+
+--
+
+- .focus[_Optional dependencies_]  
+  Les dépendances optionnelles sont exclues par défaut. Le projet doit l&#39;inclure explicitement.
+
+--
+.focus[
+
+```shell
+mvn dependency:tree
+```
+
+]
+
+---
+
+# Dependency scope
+
+- .focus-high[compile]  
+  Nécessaire à la compilation.
+
+- .focus-high[provided]  
+  Idem mais non empaquetée car fournit par le JDK ou le &#34;container&#34; à l&#39;exécution.
+
+- .focus[runtime]  
+  Pas nécessaire à la compilation mais doit être présent dans le _classpath_ à l&#39;exécution.
+
+- .focus-high[test]  
+  Pour les tests uniquement.
+
+- .focus[system]  
+  Idem que `provided` mais le chemin du jar doit être fourni.
+
+- .focus-high[import]  
+  Pour les dépendances de type `pom` et inclues dans la section `&lt;dependencyManagement&gt;`. La dépendance importée est remplacée par la liste qu&#39;elle définit.
+
+---
+
+# Déclaration d&#39;un dépendance
+
+```xml
+&lt;dependencies&gt;
+
+  &lt;dependency&gt;
+    &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+    &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;
+    &lt;version&gt;3.9&lt;/version&gt;
+  &lt;/dependency&gt;
+
+  &lt;dependency&gt;
+    &lt;groupId&gt;my.project&lt;/groupId&gt;
+    &lt;artifactId&gt;configuration&lt;/artifactId&gt;
+    &lt;version&gt;${project.version}&lt;/version&gt;
+    &lt;type&gt;zip&lt;/type&gt;
+  &lt;/dependency&gt;
+
+  &lt;dependency&gt;
+    &lt;groupId&gt;junit&lt;/groupId&gt;
+    &lt;artifactId&gt;junit&lt;/artifactId&gt;
+    &lt;version&gt;4.12&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+  &lt;/dependency&gt;
+
+&lt;/dependencies&gt;
+```
+
+.focus[
+Pour trouver une version, consultez le [catalogue en ligne](https://search.maven.org/)
+]
+
+---
+
+# Les _repositories_
+
+Une _repository_ est un catalogue de dépendance.  
+Deux types de repo : _local_ et _remote_.
+Elles sont structurée de la même manière (groupId/articfactId/version)
+
+### Local repository.
+
+Elle agit comme un cache local. Elle est stockée sous `%USERPROFILE%/.m2/repository` (`$HOME`)
+
+### Remote repository.
+
+Accédée par HTTP:// (ou FTP:// ou FILE://).  
+La repo par défaut est la _central_ : [repo.maven.apache.org](http://repo.maven.apache.org/maven2/).
+
+Généralement, d&#39;autres repo sont nécessaires : internes à une entreprise ou à un projet.
+
+---
+
+# To Be Continued
+
+Episode suivant : le multi-module.
+</textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script>
+      var slideshow = remark.create({});
+    </script>
+  </body>
+</html>
