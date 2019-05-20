@@ -6,10 +6,21 @@
     <description>Recent content on Deux ou trois choses apprises</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 May 2019 11:30:00 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 20 May 2019 11:30:00 +0200</lastBuildDate>
     
 	<atom:link href="https://jppop.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Quick Tips -- Maven S01E02</title>
+      <link>https://jppop.github.io/slides/maven-part3/</link>
+      <pubDate>Mon, 20 May 2019 11:30:00 +0200</pubDate>
+      
+      <guid>https://jppop.github.io/slides/maven-part3/</guid>
+      <description>class: center, middle
+S01E02 - Maven Multi-module Maven - Saison 1  S01E1 : Le coeur de Maven S01E2 : Les plugins, les dépendances, les repositories S01E3 : Multi-module S01E4 : Describe Once, Build Everywhere S01E5 : Packaging  POM Parent Un projet Maven multi-module gère un groupe de sous-modules.
+Dans la majorité des cas, le pom &amp;ldquo;parent&amp;rdquo; est à la racine du projet. Son packaging est de type pom.</description>
+    </item>
     
     <item>
       <title>Quick Tips -- Maven S01E01</title>

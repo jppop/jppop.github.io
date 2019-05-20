@@ -30,7 +30,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://jppop.github.io/" />
 
-<meta property="og:updated_time" content="2019-05-03T11:30:00&#43;02:00"/>
+<meta property="og:updated_time" content="2019-05-20T11:30:00&#43;02:00"/>
 
     
     
@@ -261,6 +261,129 @@ if (!doNotTrack) {
     <section id="main">
     
     
+
+<article class="article article-type-post" itemscope="" itemprop="blogPost">
+    <div class="article-inner">
+        
+        </a>
+
+        <header class="article-header">
+    <a href="https://jppop.github.io/slides/maven-part3/">
+    <h1 class="article-title" itemprop="name">
+        Quick Tips -- Maven S01E02
+    </h1>
+    </a>
+    <div class="article-meta">
+
+        
+        <div class="article-date">
+            <i class="fa fa-calendar"></i>
+            <time datetime="2019-05-20 11:30:00 &#43;0200 CEST" itemprop="datePublished">2019-05-20</time>
+            &middot;
+            322
+            words
+            &middot;
+            2
+            minute read
+        </div>
+        
+        
+
+        
+    </div>
+</header>
+
+        <div class="article-entry" itemprop="articleBody">
+            <p>
+                class: center, middle
+S01E02 - Maven Multi-module Maven - Saison 1  S01E1 : Le coeur de Maven S01E2 : Les plugins, les dépendances, les repositories S01E3 : Multi-module S01E4 : Describe Once, Build Everywhere S01E5 : Packaging  POM Parent Un projet Maven multi-module gère un groupe de sous-modules.
+Dans la majorité des cas, le pom &ldquo;parent&rdquo; est à la racine du projet. Son packaging est de type pom.
+            </p>
+            <p class="article-more-link">
+                <a href="https://jppop.github.io/slides/maven-part3/">
+                    Read more
+                </a>
+            </p>
+        </div>
+        <footer class="article-footer">
+    <a data-url="https://jppop.github.io/slides/maven-part3/" data-id="ec147d47d89349d2c41765a6e869c2da" class="article-share-link">
+        <i class="fa fa-share"></i>
+        Share
+    </a>
+    
+    <a href="https://jppop.github.io/slides/maven-part3/#disqus_thread" class="article-comment-link">
+        Comments
+    </a>
+    
+
+    <script>
+    (function ($) {
+        
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+    </script>
+</footer>
+
+    </div>
+</article>
 
 <article class="article article-type-post" itemscope="" itemprop="blogPost">
     <div class="article-inner">

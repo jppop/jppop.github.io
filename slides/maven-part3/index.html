@@ -1,0 +1,297 @@
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway|Roboto+Condensed|Ubuntu+Mono|Yanone+Kaffeesatz|Gloria+Hallelujah"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Raleway", sans-serif;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Yanone Kaffeesatz", sans-serif;
+        font-weight: normal;
+      }
+      .remark-code,
+      .remark-inline-code {
+        font-family: "Ubuntu Mono", monospace;
+      }
+      .note {
+        font-size: 16px;
+      }
+      .focus {
+        font-weight: bold;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: 20% larger;
+      }
+      .focus-high {
+        color: darkred;
+        font-weight: bold;
+        font-family: "Roboto Condensed", sans-serif;
+        font-size: larger;
+      }
+      .see-also {
+        background: lightgoldenrodyellow;
+        border-radius: 2px;
+        display: inline-block;
+        width: 90%;
+        margin: 4px;
+        padding: 8px;
+        position: relative;
+        font-size: smaller;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      }
+      blockquote {
+        font-style: normal;
+        margin-left: 32px;
+        font-family: "Gloria Hallelujah", cursive;
+        border-left: 4px solid #ccc;
+        padding-left: 8px;
+      }
+      img.center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+      }
+      .smaller {
+        font-size: smaller;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle
+
+# S01E02 - Maven
+
+## Multi-module
+
+---
+
+# Maven - Saison 1
+
+- S01E1 : Le coeur de Maven
+- S01E2 : Les plugins, les dépendances, les repositories
+- S01E3 : Multi-module
+- S01E4 : Describe Once, Build Everywhere
+- S01E5 : Packaging
+
+---
+
+# POM Parent
+
+Un projet Maven multi-module gère un groupe de sous-modules.
+
+Dans la majorité des cas, le pom &#34;parent&#34; est à la racine du projet. Son _packaging_ est de type pom.
+
+Les sous-modules sont des projets Maven &#34;classiques&#34;. Ils peuvent être contruits indépendemment ou globalement.
+
+```xml
+&lt;project&gt;
+[...]
+  &lt;groupId&gt;me.sample&lt;/groupId&gt;
+  &lt;artifactId&gt;killerapp&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0-SNAPSHOT&lt;/version&gt;
+  &lt;packaging&gt;pom&lt;/packaging&gt;
+
+  &lt;modules&gt;
+    &lt;module&gt;killerapp-core&lt;/module&gt;
+    &lt;module&gt;killerapp-services&lt;/module&gt;
+    &lt;module&gt;killerapp-app&lt;/module&gt;
+    &lt;module&gt;killerapp-batches&lt;/module&gt;
+  &lt;/modules&gt;
+&lt;/project&gt;
+[...]
+```
+
+---
+
+# Structure classique
+
+&lt;img src=&#34;./multi-module-dir.png&#34; alt=&#34;multi-module directory&#34; style=&#34;height: 75%; display: block; margin: auto; width: 50%&#34;/&gt;
+
+--
+
+D&#39;autres organisations sont possibles. Par exemple [flat](http://www.codetab.org/tutorial/apache-maven/multi-module/hierarchical-project/).
+
+---
+
+# Gestion des dépendances
+
+### Dependency Management
+
+Dans le pom parent :
+
+```xml
+[...]
+  &lt;dependencyManagement&gt;
+    &lt;dependencies&gt;
+      &lt;dependency&gt;
+          &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+          &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;
+          &lt;version&gt;${commons-lang3.version}&lt;/version&gt;
+      &lt;/dependency&gt;
+
+      &lt;dependency&gt;
+          &lt;groupId&gt;me.sample&lt;/groupId&gt;
+          &lt;artifactId&gt;killerapp-services-api&lt;/artifactId&gt;
+          &lt;version&gt;${project.version}&lt;/version&gt;
+      &lt;/dependency&gt;
+  &lt;dependencyManagement&gt;
+[...]
+```
+
+--
+.focus-high[Pas de scope dans `&lt;dependencyManagement&gt;`]
+
+---
+
+# Gestion des dépendances
+
+Ou dans un module dédié (`killerapp-dep/pom.xml`), puis dans le pom parent ou dans le sous-module :
+
+```xml
+[...]
+  &lt;dependencyManagement&gt;
+    &lt;dependencies&gt;
+      &lt;dependency&gt;
+          &lt;groupId&gt;me.sample&lt;/groupId&gt;
+          &lt;artifactId&gt;killerapp-dep&lt;/artifactId&gt;
+          &lt;version&gt;${project.version}&lt;/version&gt;
+          &lt;scope&gt;import&lt;/scope&gt;
+          &lt;type&gt;pom&lt;/type&gt;
+      &lt;/dependency&gt;
+  &lt;dependencyManagement&gt;
+[...]
+```
+
+--
+.focus[
+Pour en savoir plus sur la notion de BOM avec Maven, un article de [Xebia](https://blog.xebia.fr/2014/02/28/la-notion-de-bom-avec-maven/).
+]
+
+---
+
+# Gestion des dépendances
+
+Dans les sous-modules, la version n&#39;est plus précisée, mais le scope oui :
+
+```xml
+&lt;dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.commons&lt;/groupId&gt;
+        &lt;artifactId&gt;commons-lang3&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+      &lt;groupId&gt;junit&lt;/groupId&gt;
+      &lt;artifactId&gt;junit&lt;/artifactId&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+
+&lt;/dependency&gt;
+```
+
+---
+
+# Gestion des plugins
+
+La section `&lt;pluginManagement&gt;`
+
+```xml
+  &lt;build&gt;
+    &lt;pluginManagement&gt;
+      &lt;plugins&gt;
+
+        &lt;plugin&gt;
+          &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+          &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+          &lt;version&gt;3.8.1&lt;/version&gt;
+        &lt;/plugin&gt;
+
+        &lt;plugin&gt;
+          &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+          &lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt;
+          &lt;version&gt;3.1.0&lt;/version&gt;
+          &lt;executions&gt;
+            &lt;execution&gt;
+              &lt;id&gt;attach-sources&lt;/id&gt;
+              &lt;goals&gt;
+                &lt;goal&gt;jar&lt;/goal&gt;
+              &lt;/goals&gt;
+            &lt;/execution&gt;
+          &lt;/executions&gt;
+        &lt;/plugin&gt;
+      &lt;/plugins&gt;
+
+    &lt;/pluginManagement&gt;
+  &lt;/build&gt;
+```
+
+---
+
+# Héritage des propriétés
+
+```xml
+  &lt;properties&gt;
+
+    &lt;nexus.url&gt;http://nexus.altair.recouv/nexus/content&lt;/nexus.url&gt;
+
+    &lt;svn.tag.url&gt;http://svn.altair.recouv/svn/gci/tags/releases&lt;/svn.tag.url&gt;
+
+  &lt;/properties&gt;
+```
+
+--
+Attention aux propriétés fournissant des chemins relatifs :
+
+```xml
+    &lt;property.filter&gt;${project.basedir}/../killerapp-configuration/
+    src/main/filters/${env}-filter.properties&lt;/property.filter&gt;
+```
+
+--
+.focus[
+Pour voir le pom effectif : `mvn help:effective-pom`
+]
+
+---
+
+# Build
+
+Build global
+
+```shell
+cd killerapp
+mvn clean install
+```
+
+Si le build d&#39;un des modules a échoué
+
+```shell
+mvn clean install -rf :killerapp-services
+```
+
+Ou build séparé
+
+```shell
+cd killerapp/killerapp-services
+mvn clean install
+```
+
+---
+
+# To be continued
+
+La semaine prochaine, comment faire un build qui marche sur mon poste, sur le poste Jean, de Jenkins...
+</textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script>
+      var slideshow = remark.create({});
+    </script>
+  </body>
+</html>
