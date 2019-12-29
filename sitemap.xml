@@ -3,6 +3,12 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://jppop.github.io/categories/</loc>
+    <lastmod>2019-05-20T11:30:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://jppop.github.io/</loc>
     <lastmod>2019-05-20T11:30:00+02:00</lastmod>
     <priority>0</priority>
@@ -15,6 +21,30 @@
   
   <url>
     <loc>https://jppop.github.io/slides/</loc>
+    <lastmod>2019-05-20T11:30:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/tags/</loc>
+    <lastmod>2019-05-20T11:30:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/tags/dev/</loc>
+    <lastmod>2019-05-20T11:30:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/tags/java/</loc>
+    <lastmod>2019-05-20T11:30:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jppop.github.io/categories/tips/</loc>
     <lastmod>2019-05-20T11:30:00+02:00</lastmod>
     <priority>0</priority>
   </url>
@@ -50,12 +80,6 @@
   </url>
   
   <url>
-    <loc>https://jppop.github.io/categories/</loc>
-    <lastmod>2019-04-13T09:00:00+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://jppop.github.io/post/</loc>
     <lastmod>2019-04-13T09:00:00+02:00</lastmod>
     <priority>0</priority>
@@ -67,32 +91,14 @@
   </url>
   
   <url>
-    <loc>https://jppop.github.io/tags/</loc>
-    <lastmod>2019-04-13T09:00:00+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/tags/dev/</loc>
-    <lastmod>2019-04-13T09:00:00+02:00</lastmod>
-    <priority>0</priority>
+    <loc>https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/</loc>
+    <lastmod>2017-09-27T17:18:55+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://jppop.github.io/categories/internal/</loc>
-    <lastmod>2019-04-13T09:00:00+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/tags/java/</loc>
-    <lastmod>2019-04-13T09:00:00+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/</loc>
     <lastmod>2017-09-27T17:18:55+02:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>

@@ -6,10 +6,94 @@
     <description>Recent content in java on Deux ou trois choses apprises</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Apr 2019 09:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 20 May 2019 11:30:00 +0200</lastBuildDate>
     
 	<atom:link href="https://jppop.github.io/tags/java/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Quick Tips -- Maven S01E02</title>
+      <link>https://jppop.github.io/slides/maven-part3/</link>
+      <pubDate>Mon, 20 May 2019 11:30:00 +0200</pubDate>
+      
+      <guid>https://jppop.github.io/slides/maven-part3/</guid>
+      <description>class: center, middle
+S01E03 - Maven Multi-module Maven - Saison 1  S01E1 : Le coeur de Maven S01E2 : Les plugins, les dépendances, les repositories S01E3 : Multi-module S01E4 : Describe Once, Build Everywhere S01E5 : Packaging  POM Parent Un projet Maven multi-module gère un groupe de sous-modules.
+Dans la majorité des cas, le pom &amp;ldquo;parent&amp;rdquo; est à la racine du projet. Son packaging est de type pom.</description>
+    </item>
+    
+    <item>
+      <title>Quick Tips -- Maven S01E01</title>
+      <link>https://jppop.github.io/slides/maven-part1/</link>
+      <pubDate>Fri, 03 May 2019 11:30:00 +0200</pubDate>
+      
+      <guid>https://jppop.github.io/slides/maven-part1/</guid>
+      <description>class: center, middle
+S01E01 - Introduction à Maven Comprendre Maven Maven - Saison 1  S01E1 : Le coeur de Maven S01E2 : Les plugins, les dépendances, les repositories S01E3 : Multi-module S01E4 : Describe Once, Build Everywhere S01E5 : Packaging  Une brève histoire Les outils  .focus[Make (1976), ant (2000)]
+Make très orienté &amp;ldquo;langage C&amp;rdquo;.
+Ant (2000), scripts procédural en XML (complexe), pas de gestion native de dépendance (nécessite Apache Ivy)</description>
+    </item>
+    
+    <item>
+      <title>Quick Tips -- Maven S01E02</title>
+      <link>https://jppop.github.io/slides/maven-part2/</link>
+      <pubDate>Fri, 03 May 2019 11:30:00 +0200</pubDate>
+      
+      <guid>https://jppop.github.io/slides/maven-part2/</guid>
+      <description>class: center, middle
+S01E02 - Maven Les plugins, les dépendances, les repositories Maven - Saison 1  S01E1 : Le coeur de Maven S01E2 : Les plugins, les dépendances, les repositories S01E3 : Multi-module S01E4 : Describe Once, Build Everywhere S01E5 : Packaging  Les plugins du cycle de vie par défaut Pour rappel, le lifecyle build par défaut associe des plugins aux différentes phases.
+Par exemple, pour un packaging de type jar</description>
+    </item>
+    
+    <item>
+      <title>Quick Tips -- Logging</title>
+      <link>https://jppop.github.io/slides/logging/</link>
+      <pubDate>Sun, 28 Apr 2019 11:30:00 +0200</pubDate>
+      
+      <guid>https://jppop.github.io/slides/logging/</guid>
+      <description>class: center, middle
+logger.info(&amp;ldquo;Be a better logger&amp;rdquo;); Bien utiliser la journalisation Java La journalisation A quoi ça sert ?  Obtenir des informations sur l&amp;rsquo;exécution de l&amp;rsquo;application. Enregistrer les circonstances inhabituelles ou erreurs qui pourraient survenir. Auditer l&amp;rsquo;application  &amp;ndash;
+Différents acteurs, différents besoins Une application est développée, testée et exploitée. Par des acteurs différents. Les journaux doivent prendre en compte les besoins de chacun.
+Les différent niveaux, de DEBUG à ERROR, doivent cibler ces besoins différents.</description>
+    </item>
+    
+    <item>
+      <title>Quick Tips -- NullPointerException</title>
+      <link>https://jppop.github.io/slides/npe/</link>
+      <pubDate>Sat, 13 Apr 2019 16:43:02 -0400</pubDate>
+      
+      <guid>https://jppop.github.io/slides/npe/</guid>
+      <description>class: center, middle
+NullPointerException La chasse aux NullPointerExceptions NullPointerException  I call it my billion-dollar mistake. It was the invention of the null reference in 1965… This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years.
+Sir Charles Antony Richard Hoare, inventor of the Null Reference
+ Deux règles seulement  Les autres, c’est l’enfer</description>
+    </item>
+    
+    <item>
+      <title>Quick Tips -- Refactoring</title>
+      <link>https://jppop.github.io/slides/refactoring/</link>
+      <pubDate>Sat, 13 Apr 2019 16:43:02 -0400</pubDate>
+      
+      <guid>https://jppop.github.io/slides/refactoring/</guid>
+      <description>class: center, middle
+Refactoring Ou comment éviter le copier/coller (et faciliter la maintenance) T’es sûr, c’est mal copier/coller ?  .focus[Rapide], sûr (ca marche déjà) Quand utiliser le copier/coller ?  .focus[Forking] .focus[Templating] .focus[Tests, exploration]   &amp;ndash;
+.see-also[ Pour approfondir : Is Copy and Paste Programming Really a Problem?]
+Mais Fais quelque chose si on est on est un jour ouvré :
+public void doSomeThingAt(LocalDate when) { if (isBusinessDay(when)) { // .</description>
+    </item>
+    
+    <item>
+      <title>Quick Tips -- Spring Batch Unit Testing</title>
+      <link>https://jppop.github.io/slides/spring-batch-test/</link>
+      <pubDate>Sat, 13 Apr 2019 16:43:02 -0400</pubDate>
+      
+      <guid>https://jppop.github.io/slides/spring-batch-test/</guid>
+      <description>class: center, middle
+Spring Batch Unit Testing Tester les applications basées sur Spring Batch Le batch Basé sur le guide Creating a Batch Service.
+@Bean public Step step1(JdbcBatchItemWriter&amp;lt;Person&amp;gt; writer) { return stepBuilderFactory.get(&amp;quot;step1&amp;quot;) .&amp;lt;Person, Person&amp;gt; chunk(10) .reader(reader()) .processor(processor()) .writer(writer) .build(); }  Et quelques &amp;ldquo;vrais&amp;rdquo; exemples.
+Nos outils La batch est testé avec :
+ JUnit, Mockito, AssertJ Le JUnit runner .focus[SpringJUnit4ClassRunner] .focus-high[spring-batch-test]  .note[ La documentation en ligne : Spring Batch Unit Testing ]</description>
+    </item>
     
     <item>
       <title>Quick Tips</title>
@@ -17,7 +101,7 @@
       <pubDate>Sat, 13 Apr 2019 09:00:00 +0200</pubDate>
       
       <guid>https://jppop.github.io/2019/04/13/quick-tips/</guid>
-      <description> Présentations  NullPointerException : la chasse aux références nulles Refactoring ou comment ne pas abuser du copier/coller Spring Batch Tests ou comment automatiser les tests de jobs Spring Batch  </description>
+      <description> Présentations  NullPointerException : la chasse aux références nulles Refactoring ou comment ne pas abuser du copier/coller Spring Batch Tests ou comment automatiser les tests de jobs Spring Batch Logging All you need is log Maven S01E01 Maven : une introduction Maven S01E02 Maven : Les plugins, les dépendances, les repositories Maven S01E03 Maven : Multi-module  </description>
     </item>
     
     <item>

@@ -6,19 +6,10 @@
     <description>Recent content in internal on Deux ou trois choses apprises</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Apr 2019 09:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Wed, 27 Sep 2017 17:18:55 +0200</lastBuildDate>
     
 	<atom:link href="https://jppop.github.io/categories/internal/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Quick Tips</title>
-      <link>https://jppop.github.io/2019/04/13/quick-tips/</link>
-      <pubDate>Sat, 13 Apr 2019 09:00:00 +0200</pubDate>
-      
-      <guid>https://jppop.github.io/2019/04/13/quick-tips/</guid>
-      <description> Présentations  NullPointerException : la chasse aux références nulles Refactoring ou comment ne pas abuser du copier/coller Spring Batch Tests ou comment automatiser les tests de jobs Spring Batch  </description>
-    </item>
     
     <item>
       <title>Cauchemar en DEV-TU</title>

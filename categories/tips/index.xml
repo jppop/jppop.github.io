@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>dev on Deux ou trois choses apprises</title>
-    <link>https://jppop.github.io/tags/dev/</link>
-    <description>Recent content in dev on Deux ou trois choses apprises</description>
+    <title>tips on Deux ou trois choses apprises</title>
+    <link>https://jppop.github.io/categories/tips/</link>
+    <description>Recent content in tips on Deux ou trois choses apprises</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 20 May 2019 11:30:00 +0200</lastBuildDate>
     
-	<atom:link href="https://jppop.github.io/tags/dev/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://jppop.github.io/categories/tips/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -102,21 +102,6 @@ Nos outils La batch est testé avec :
       
       <guid>https://jppop.github.io/2019/04/13/quick-tips/</guid>
       <description> Présentations  NullPointerException : la chasse aux références nulles Refactoring ou comment ne pas abuser du copier/coller Spring Batch Tests ou comment automatiser les tests de jobs Spring Batch Logging All you need is log Maven S01E01 Maven : une introduction Maven S01E02 Maven : Les plugins, les dépendances, les repositories Maven S01E03 Maven : Multi-module  </description>
-    </item>
-    
-    <item>
-      <title>Cauchemar en DEV-TU</title>
-      <link>https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/</link>
-      <pubDate>Wed, 27 Sep 2017 17:18:55 +0200</pubDate>
-      
-      <guid>https://jppop.github.io/2017/09/27/cauchemar-en-dev-tu/</guid>
-      <description>&lt;p&gt;&lt;br/&gt;
-&lt;div class=&#34;note&#34;&gt;
-&lt;strong&gt;Avertissement : post à usage interne. Cet article s&amp;rsquo;inscrit dans un contexte particulier, privé.&lt;/strong&gt;
-&lt;/div&gt;&lt;/p&gt;
-
-&lt;p&gt;La fabrication du SI pose de nombreux problèmes aux développeurs dès que, et c’est toujours le cas, plusieurs équipes sont impliquées. Par exemple, une équipe pour développer le front, une pour le back. Et on ajoute une troisième, les utilisateurs qui testent le tout. Comment éviter que ces trois-là ne se fassent pas la guerre ?
-Le développement en parallèle n’est pas une nouveauté. Des solutions éprouvées existent. Comment les adapter à la fabrication du SI ? Comment, pratiquement, éviter de se gêner les uns les autres pendant le build et le run ?&lt;/p&gt;</description>
     </item>
     
   </channel>
